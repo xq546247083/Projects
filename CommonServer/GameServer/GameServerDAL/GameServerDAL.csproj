@@ -48,7 +48,7 @@
     <Compile Include="CommonDAL\SqlFactory.cs" />
     <Compile Include="CommonDAL\SqlConst.cs" />
     <Compile Include="CommonDAL\SqlType.cs" />
-    <Compile Include="PlayerDal.cs" />
+    <Compile Include="Player\PlayerDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Other\FileBase\ReferenceFiles\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Other\FileBase\ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,10 +49,14 @@
   <ItemGroup>
     <Compile Include="CommonModel\ModelHandler.cs" />
     <Compile Include="CommonModel\BaseModelDal.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Const\CommonConst.cs" />
+    <Compile Include="DataObject\RequestDataObject.cs" />
+    <Compile Include="DataObject\ResponseDataObject.cs" />
+    <Compile Include="Enum\ResultStatus.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerConfigModel.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="ServerConfig\ServerConfig.cs" />
+    <Compile Include="World\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Other\Tool\Tool.csproj">

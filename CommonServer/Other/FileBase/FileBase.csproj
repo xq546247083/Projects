@@ -51,6 +51,7 @@
     <Content Include="ReferenceFiles\Ionic.Zip.dll" />
     <Content Include="ReferenceFiles\Ionic.Zlib.dll" />
     <Content Include="ReferenceFiles\MySql.Data.dll" />
+    <Content Include="ReferenceFiles\newtonsoft.json.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQL\" />

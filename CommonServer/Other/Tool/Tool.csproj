@@ -48,6 +48,8 @@
     <Compile Include="Common\ReflectionTool.cs" />
     <Compile Include="Common\ThreadTool.cs" />
     <Compile Include="Common\WebConfig.cs" />
+    <Compile Include="CustomAttribute\MethodDescribeAttribute.cs" />
+    <Compile Include="CustomAttribute\InvokeClassAttribute.cs" />
     <Compile Include="CustomAttribute\PrimaryKeyAttribute.cs" />
     <Compile Include="CustomAttribute\IgnoreAttribute.cs" />
     <Compile Include="CustomAttribute\DataBaseTableAttribute.cs" />

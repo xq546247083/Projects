@@ -39,6 +39,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Other\FileBase\ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -57,6 +61,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="API\GetMethodDescribe.ashx" />
+    <Content Include="API\ClientHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -68,10 +74,18 @@
     <Content Include="Default.aspx" />
     <Content Include="error.html" />
     <Content Include="Global.asax" />
+    <Content Include="MethodDescribe.html" />
     <Content Include="ReferenceFiles\jquery-3.2.1.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\BaseAPI.cs" />
+    <Compile Include="API\GetMethodDescribe.ashx.cs">
+      <DependentUpon>GetMethodDescribe.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="API\ClientHandler.ashx.cs">
+      <DependentUpon>ClientHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -93,7 +107,16 @@
       <Project>{8E854791-6E31-4112-8098-8EA251E6F197}</Project>
       <Name>GameServerBLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameServerDAL\GameServerDAL.csproj">
+      <Project>{0E215A06-BE8D-482F-BBAB-E40A13DCC058}</Project>
+      <Name>GameServerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameServerModel\GameServerModel.csproj">
+      <Project>{46400664-7111-45C8-938A-094013AC6786}</Project>
+      <Name>GameServerModel</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
