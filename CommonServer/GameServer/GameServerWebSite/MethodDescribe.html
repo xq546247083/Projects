@@ -1,10 +1,96 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>方法描述</title>
+    <link href="ReferenceFiles/CSS/dashboard.css" rel="stylesheet" />
+    <link href="ReferenceFiles/BootStrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="ReferenceFiles/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "API/GetMethodDescribe.ashx",
+                success: function (data) {
+                    var jsonData = eval('(' + data.Data + ')');
+                    var chartDivContent = "";
+                    for (var i = 0; i < jsonData.length; i++) {
+                        chartDivContent += jsonData[i].UserName + "   " + jsonData[i].Points + "<br\>";
+                    }
+                },
+                error: function (request, textStatus, errorThrown) {
+                    alert(request.status + "-" + textStatus);
+                }
+            });
+        });
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>接口文档</title>
 </head>
 <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
 
+            <div class="col-sm-3 col-md-2 sidebar">
+                
+                    <form class="navbar-form navbar-left">
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </form>    
+                
+
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li><li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Nav item</a></li>
+                    <li><a href="">Navt item</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
