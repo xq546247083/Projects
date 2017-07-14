@@ -28,14 +28,16 @@ namespace GameServer.BLL
         /// <param name="random">random</param>
         [MethodDescribe(
             "登录", "肖强", "2017-7-13 10:59:13",
-            @"
-[
-]
-            ",
-            @"
-[
-]
-            ")]
+@"{
+    serverId:服务器Id
+    userId:用户Id
+    userPwd:用户密码
+    inputEncryptedString：加密字符串
+    random:随机数
+}           ",
+@"[
+    IsSuccess:是否成功登陆
+]            ")]
         public static void I_Login(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
         {
 
