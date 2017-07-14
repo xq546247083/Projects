@@ -59,7 +59,7 @@ namespace Tool.CustomAttribute
             Creator = creator;
             CreateDate = createDate;
             ParameterDescribe = parameterDescribe;
-            ReturnDescribe = ReturnDescribe;
+            ReturnDescribe = returnDescribe;
         }
     }
 }

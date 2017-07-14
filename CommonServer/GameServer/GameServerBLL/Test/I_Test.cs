@@ -6,6 +6,7 @@
 * 版本：V1
 *************************************************************************/
 using System;
+using GameServer.Model;
 
 
 namespace GameServer.BLL
@@ -15,7 +16,7 @@ namespace GameServer.BLL
     /// <summary>
     /// 玩家类
     /// </summary>
-    [InvokeClassAttribute("玩家类", "肖强", "2017-7-13 10:44:02")]
+    [InvokeClassAttribute("测试所用类", "肖强", "2017-7-13 10:44:02")]
     public static partial class TestLBLL
     {
         /// <summary>
@@ -27,7 +28,7 @@ namespace GameServer.BLL
         /// <param name="inputEncryptedString">inputEncryptedString</param>
         /// <param name="random">random</param>
         [MethodDescribe(
-            "Test", "肖强", "2017-7-13 10:59:13",
+            "测试方法", "肖强", "2017-7-13 10:59:13",
             @"
 [
 ]
@@ -36,9 +37,11 @@ namespace GameServer.BLL
 [
 ]
             ")]
-        public static void I_Test(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
+        public static ResponseDataObject I_Test(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
         {
+            ResponseDataObject responseDataObject = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
+            return responseDataObject;
         }
 
         /// <summary>
@@ -50,18 +53,22 @@ namespace GameServer.BLL
         /// <param name="inputEncryptedString">inputEncryptedString</param>
         /// <param name="random">random</param>
         [MethodDescribe(
-            "Test2", "肖强", "2017-7-13 10:59:13",
-            @"
-[
-]
-            ",
-            @"
-[
-]
-            ")]
-        public static void I_Test2(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
+            "测试方法2", "肖强", "2017-7-13 10:59:13",
+@"{
+    serverId:服务器Id
+    userId:用户Id
+    userPwd:用户密码
+    inputEncryptedString：加密字符串
+    random:随机数
+}           ",
+@"[
+    IsSuccess:是否成功登陆
+]            ")]
+        public static ResponseDataObject I_ATest2(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
         {
+            ResponseDataObject responseDataObject=new ResponseDataObject(){ResultStatus = ResultStatus.Fail};
 
+            return responseDataObject;
         }
     }
 }

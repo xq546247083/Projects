@@ -83,7 +83,6 @@
     <Content Include="Default.aspx" />
     <Content Include="error.html" />
     <Content Include="Global.asax" />
-    <Content Include="MethodDescribe.html" />
     <Content Include="ReferenceFiles\BootStrap\css\bootstrap-theme.css" />
     <Content Include="ReferenceFiles\BootStrap\css\bootstrap-theme.min.css" />
     <Content Include="ReferenceFiles\BootStrap\css\bootstrap.css" />
@@ -91,8 +90,13 @@
     <Content Include="ReferenceFiles\BootStrap\js\bootstrap.js" />
     <Content Include="ReferenceFiles\BootStrap\js\bootstrap.min.js" />
     <Content Include="ReferenceFiles\BootStrap\js\npm.js" />
-    <Content Include="ReferenceFiles\CSS\dashboard.css" />
+    <Content Include="ReferenceFiles\CSS\debut_dark.png" />
+    <Content Include="ReferenceFiles\CSS\hamburger.gif" />
+    <Content Include="ReferenceFiles\CSS\styles.css" />
     <Content Include="ReferenceFiles\jquery-3.2.1.js" />
+    <Content Include="ReferenceFiles\JS\ga.js" />
+    <Content Include="ReferenceFiles\JS\responsive-nav.js" />
+    <Content Include="MethodDescribe.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
