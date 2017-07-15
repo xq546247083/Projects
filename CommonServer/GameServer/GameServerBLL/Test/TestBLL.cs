@@ -29,13 +29,13 @@ namespace GameServer.BLL
 
 
 
-            var sdas2 = PlayerDal.Insert(Guid.NewGuid(), "546247083", "xq", "123456", false, DateTime.Now);
-            var sdas561 = PlayerDal.Insert(Guid.NewGuid(), "5462470831", "xq", "123456", false, DateTime.Now);
-            var sdas = PlayerDal.GetAllList();
+            //var sdas2 = PlayerDal.Insert(Guid.NewGuid(), "546247083", "xq", "123456", false, DateTime.Now);
+            //var sdas561 = PlayerDal.Insert(Guid.NewGuid(), "5462470831", "xq", "123456", false, DateTime.Now);
+            //var sdas = PlayerDal.GetAllList();
 
-            var sdas1 = PlayerDal.Update(Guid.Parse(sdas.Rows[0][0].ToString()), "546247083t", "xqt", "123456", false, DateTime.Now);
-            var sdas3 = PlayerDal.GetList(Guid.Parse(sdas.Rows[0][0].ToString()));
-            var sdas4 = PlayerDal.Delete(Guid.Parse(sdas.Rows[0][0].ToString()));
+            //var sdas1 = PlayerDal.Update(Guid.Parse(sdas.Rows[0][0].ToString()), "546247083t", "xqt", "123456", false, DateTime.Now);
+            //var sdas3 = PlayerDal.GetList(Guid.Parse(sdas.Rows[0][0].ToString()));
+            //var sdas4 = PlayerDal.Delete(Guid.Parse(sdas.Rows[0][0].ToString()));
         }
     }
 }
