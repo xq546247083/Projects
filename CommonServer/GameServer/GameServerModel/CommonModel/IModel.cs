@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace GameServer.Model.CommonModel
+namespace GameServer.Model
 {
     public interface IModel
     {

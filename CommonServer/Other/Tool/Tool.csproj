@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Common\DateTimeTool.cs" />
     <Compile Include="Common\ExHandler.cs" />
+    <Compile Include="Common\ReaderWriterLockTool.cs" />
     <Compile Include="Common\ReflectionTool.cs" />
     <Compile Include="Common\ThreadTool.cs" />
     <Compile Include="Common\WebConfig.cs" />
