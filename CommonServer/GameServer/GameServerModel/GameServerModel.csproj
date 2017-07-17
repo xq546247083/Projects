@@ -47,15 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonModel\IModel.cs" />
-    <Compile Include="CommonModel\ModelHandler.cs" />
-    <Compile Include="CommonModel\BaseModelDal.cs" />
-    <Compile Include="Const\CommonConst.cs" />
-    <Compile Include="Const\PropertyConst.cs" />
-    <Compile Include="DataObject\RequestDataObject.cs" />
-    <Compile Include="DataObject\ResponseDataObject.cs" />
-    <Compile Include="Enum\ResultStatus.cs" />
-    <Compile Include="Exception\SelfDefinedException.cs" />
+    <Compile Include="Common\CommonModel\IModel.cs" />
+    <Compile Include="Common\CommonModel\ModelHandler.cs" />
+    <Compile Include="Common\CommonModel\BaseModelDal.cs" />
+    <Compile Include="Common\Const\CommonConst.cs" />
+    <Compile Include="Common\Const\PropertyConst.cs" />
+    <Compile Include="Common\DataObject\RequestDataObject.cs" />
+    <Compile Include="Common\DataObject\ResponseDataObject.cs" />
+    <Compile Include="Common\Enum\ResultStatus.cs" />
+    <Compile Include="Common\Exception\SelfDefinedException.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConfig\ServerConfig.cs" />
