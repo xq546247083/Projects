@@ -53,9 +53,11 @@ namespace GameServer.DAL
         /// <param name="userName">用户名</param>
         /// <param name="userPwd">用户密码</param>
         /// <param name="gend">性别</param>
+        /// <param name="isOnline">是否在线</param>
+        /// <param name="onlieTime">在线时间</param>
         /// <param name="registerTime">注册时间</param>
         /// <returns>更新</returns>
-        public static Int32 Update(Guid id, String userId, String userName, String userPwd, Boolean gend, DateTime registerTime)
+        public static Int32 Update(Guid id, String userId, String userName, String userPwd, Boolean gend, Boolean isOnline, DateTime onlieTime, DateTime registerTime)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -64,6 +66,8 @@ namespace GameServer.DAL
                 new MySqlParameter(FiledConst.UserName,userName),
                 new MySqlParameter(FiledConst.UserPwd,userPwd),
                 new MySqlParameter(FiledConst.Gend,gend),
+                new MySqlParameter(FiledConst.IsOnline,isOnline),
+                new MySqlParameter(FiledConst.OnlieTime,onlieTime),
                 new MySqlParameter(FiledConst.RegisterTime,registerTime)
             };
 
@@ -92,9 +96,11 @@ namespace GameServer.DAL
         /// <param name="userName">用户名</param>
         /// <param name="userPwd">用户密码</param>
         /// <param name="gend">性别</param>
+        /// <param name="isOnline">是否在线</param>
+        /// <param name="onlieTime">在线时间</param>
         /// <param name="registerTime">注册时间</param>
         /// <returns></returns>
-        public static Int32 Insert(Guid id, String userId, String userName, String userPwd, Boolean gend, DateTime registerTime)
+        public static Int32 Insert(Guid id, String userId, String userName, String userPwd, Boolean gend, Boolean isOnline, DateTime onlieTime, DateTime registerTime)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -103,6 +109,8 @@ namespace GameServer.DAL
                 new MySqlParameter(FiledConst.UserName,userName),
                 new MySqlParameter(FiledConst.UserPwd,userPwd),
                 new MySqlParameter(FiledConst.Gend,gend),
+                new MySqlParameter(FiledConst.IsOnline,isOnline),
+                new MySqlParameter(FiledConst.OnlieTime,onlieTime),
                 new MySqlParameter(FiledConst.RegisterTime,registerTime)
             };
 

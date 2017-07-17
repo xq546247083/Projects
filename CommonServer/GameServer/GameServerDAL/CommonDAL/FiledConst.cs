@@ -19,6 +19,8 @@ namespace GameServer.DAL
         public const String UserName = "@UserName";
         public const String UserPwd = "@UserPwd";
         public const String Gend = "@Gend";
+        public const String IsOnline = "@IsOnline";
+        public const String OnlieTime = "@OnlieTime";
         public const String RegisterTime = "@RegisterTime";
     }
 }

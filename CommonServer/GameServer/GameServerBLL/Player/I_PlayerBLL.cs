@@ -6,9 +6,12 @@
 * 版本：V1
 *************************************************************************/
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace GameServer.BLL
 {
+    using GameServer.Model;
     using Tool.CustomAttribute;
 
     /// <summary>
@@ -37,9 +40,52 @@ namespace GameServer.BLL
 @"[
     IsSuccess:是否成功登陆
 ]            ")]
-        public static void I_Login(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
+        public static ResponseDataObject I_Login(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
         {
+            ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
+            #region 检测请求
+
+
+            Player player = PlayerBLL.GetItem(userId);
+
+            if (player.UserPwd != userPwd)
+            {
+                result.ResultStatus = ResultStatus.PwdError;
+                return result;
+            }
+
+            //检测密码
+            String loginStr = String.Format("{0}{1}{2}{3}", serverId, userId, userPwd, random);
+            var md5 = new MD5CryptoServiceProvider();
+            string loginStrMd = BitConverter.ToString(md5.ComputeHash(Encoding.Default.GetBytes(loginStr)));
+            if (inputEncryptedString != loginStrMd)
+            {
+                result.ResultStatus = ResultStatus.PwdError;
+                return result;
+            }
+
+            #endregion
+
+            #region 处理请求
+
+            TransactionHandler.Handle(() =>
+            {
+                player.IsOnline = true;
+                player.OnlieTime = DateTime.Now;
+                Update(player);
+            }, null);
+
+            #endregion
+
+            #region 处理返回
+
+            result.ResultStatus = ResultStatus.Success;
+            result.Value = AssembleToClient(player);
+
+            return result;
+
+            #endregion
         }
     }
 }

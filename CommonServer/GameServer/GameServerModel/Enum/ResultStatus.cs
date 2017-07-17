@@ -27,5 +27,15 @@ namespace GameServer.Model
         /// 失败
         /// </summary>
         Fail = 2,
+
+        #region player
+        
+        /// <summary>
+        /// 密码错误
+        /// </summary>
+        PwdError=10001,
+
+        #endregion
+
     }
 }

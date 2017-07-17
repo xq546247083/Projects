@@ -93,6 +93,19 @@ namespace GameServer.BLL
         }
 
         /// <summary>
+        /// 获取某一个玩家
+        /// </summary>
+        /// <param name="userId">userId</param>
+        /// <returns>玩家</returns>
+        public static Player GetItem(String userId)
+        {
+            using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
+            {
+                return GetData().Values.FirstOrDefault(r => r.UserId == userId);
+            }
+        }
+
+        /// <summary>
         /// 获取在线玩家列表
         /// </summary>
         /// <returns>在线玩家</returns>
@@ -102,6 +115,37 @@ namespace GameServer.BLL
             {
                 return GetData().Values.Where(r => r.IsOnline).ToList();
             }
+        }
+
+        /// <summary>
+        /// 获取在线玩家列表
+        /// </summary>
+        /// <returns>在线玩家</returns>
+        private static void Update(Player player)
+        {
+            PlayerDal.Update(player.Id, player.UserId, player.UserName, player.UserPwd, player.Gend, player.IsOnline, player.OnlieTime, player.RegisterTime);
+        }
+
+        #endregion
+
+        #region 组装客户端数据
+
+        /// <summary>
+        /// 组装客户端数据
+        /// </summary>
+        /// <param name="player">玩家对象</param>
+        /// <returns>客户端数据</returns>
+        public static Dictionary<String, Object> AssembleToClient(Player player)
+        {
+            Dictionary<String, Object> clientInfo = new Dictionary<String, Object>();
+
+            clientInfo[PropertyConst.UserName] = player.UserName;
+            clientInfo[PropertyConst.Gend] = player.Gend;
+            clientInfo[PropertyConst.IsOnline] = player.IsOnline;
+            clientInfo[PropertyConst.OnlieTime] = player.OnlieTime;
+            clientInfo[PropertyConst.RegisterTime] = player.RegisterTime;
+
+            return clientInfo;
         }
 
         #endregion
