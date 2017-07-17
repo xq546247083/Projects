@@ -6,8 +6,6 @@
 * 版本：V1
 *************************************************************************/
 using System;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace GameServer.BLL
 {
