@@ -1,14 +1,20 @@
-﻿using GameServer.BLL.Common;
-using GameServer.DAL;
-using GameServer.Model;
+﻿/************************************************************************
+* 标题: 玩家类
+* 描述: 玩家类
+* 作者： 肖强
+* 日期：2017-7-17 15:38:04
+* 版本：V1
+*************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Tool.Common;
 
 namespace GameServer.BLL
 {
+    using GameServer.DAL;
+    using GameServer.Model;
+
     /// <summary>
     /// 玩家类
     /// </summary>
@@ -66,8 +72,9 @@ namespace GameServer.BLL
         /// 获取某一个玩家
         /// </summary>
         /// <param name="playerId">playerId</param>
+        /// <param name="ifCastException">是否抛出异常</param>
         /// <returns>玩家</returns>
-        public static Player GetItem(Guid playerId)
+        public static Player GetItem(Guid playerId, Boolean ifCastException = false)
         {
             using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
             {
@@ -75,6 +82,11 @@ namespace GameServer.BLL
                 {
                     return mData[playerId];
                 }
+            }
+
+            if (ifCastException)
+            {
+                throw new SelfDefinedException(ResultStatus.Exception, String.Format("p_player未找到id为{0}的玩家", playerId));
             }
 
             return null;

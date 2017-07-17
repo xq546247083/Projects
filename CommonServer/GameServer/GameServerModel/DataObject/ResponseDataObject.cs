@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 /************************************************************************
 * 标题: 响应数据对象
 * 描述: 响应数据对象
@@ -11,6 +10,8 @@ using System;
 
 namespace GameServer.Model
 {
+    using Newtonsoft.Json;
+
     /// <summary>
     /// 响应数据对象
     /// </summary>

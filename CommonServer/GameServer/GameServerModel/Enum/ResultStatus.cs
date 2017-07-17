@@ -5,11 +5,6 @@
 * 日期：2017-5-3 10:43:36
 * 版本：V1
 *************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameServer.Model
 {
@@ -26,11 +21,11 @@ namespace GameServer.Model
         /// <summary>
         /// 出现异常
         /// </summary>
-        Exception=1,
+        Exception = 1,
 
         /// <summary>
         /// 失败
         /// </summary>
-        Fail=2,
+        Fail = 2,
     }
 }

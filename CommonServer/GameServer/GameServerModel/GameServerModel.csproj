@@ -55,6 +55,7 @@
     <Compile Include="DataObject\RequestDataObject.cs" />
     <Compile Include="DataObject\ResponseDataObject.cs" />
     <Compile Include="Enum\ResultStatus.cs" />
+    <Compile Include="Exception\SelfDefinedException.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConfig\ServerConfig.cs" />

@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/************************************************************************
+* 标题: 常量
+* 描述: 通用常量
+* 作者： 肖强
+* 日期：2017-7-17 15:55:11
+* 版本：V1
+*************************************************************************/
+using System;
 
 namespace GameServer.Model.Const
 {
+    /// <summary>
+    /// 通用常量
+    /// </summary>
     public class CommonConst
     {
         public const String Name = "Name";

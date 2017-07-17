@@ -1,13 +1,18 @@
-﻿using System;
+﻿/************************************************************************
+* 标题: 扩展方法类
+* 描述: 扩展方法类
+* 作者： 肖强
+* 日期：2017-7-17 15:38:04
+* 版本：V1
+*************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameServer.Model;
 
-namespace GameServer.BLL.Common
+namespace GameServer.BLL
 {
+    using GameServer.Model;
+
     /// <summary>
     /// 扩展方法类
     /// </summary>

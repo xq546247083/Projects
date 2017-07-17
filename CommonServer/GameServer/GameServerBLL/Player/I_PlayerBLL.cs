@@ -7,7 +7,6 @@
 *************************************************************************/
 using System;
 
-
 namespace GameServer.BLL
 {
     using Tool.CustomAttribute;

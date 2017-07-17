@@ -45,11 +45,23 @@ namespace GameServerWebSite.API
             {
                 if (responseDataObject != null)
                 {
-                    responseDataObject.ResultStatus = ResultStatus.Exception;
-                    responseDataObject.Value = ExHandler.Handle(ex);
+                    //自定义错误处理
+                    if (ex.InnerException is SelfDefinedException)
+                    {
+                        SelfDefinedException innerEx = ex.InnerException as SelfDefinedException;
+                        responseDataObject.ResultStatus = innerEx.ResultStatus;
+                        if (innerEx.IfNeedLog)
+                        {
+                            Log.Write(ExHandler.Handle(ex), LogType.Error);
+                        }
+                    }
+                    else
+                    {
+                        responseDataObject.ResultStatus = ResultStatus.Exception;
+                        Log.Write(ExHandler.Handle(ex), LogType.Error);
+                    }
 
-                    //写日志
-                    Log.Write(ExHandler.Handle(ex), LogType.Error);
+                    responseDataObject.Value = ExHandler.Handle(ex);
                 }
             }
             finally
