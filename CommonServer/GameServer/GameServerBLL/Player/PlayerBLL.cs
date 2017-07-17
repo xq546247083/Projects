@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tool.Common;
 
 namespace GameServer.BLL
 {
     using GameServer.DAL;
     using GameServer.Model;
+    using Tool.Common;
 
     /// <summary>
     /// 玩家类
@@ -22,6 +22,9 @@ namespace GameServer.BLL
     {
         #region 属性
 
+        /// <summary>
+        /// 类名
+        /// </summary>
         private const String mClassName = "PlayerBLL";
 
         /// <summary>
@@ -40,6 +43,9 @@ namespace GameServer.BLL
 
         #region 初始化
 
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
         public void Init()
         {
             //查询数据
