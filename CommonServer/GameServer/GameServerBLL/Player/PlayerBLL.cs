@@ -48,11 +48,11 @@ namespace GameServer.BLL
         /// </summary>
         public void Init()
         {
-            //查询数据
-            var dataList = PlayerDal.GetAllList().ToList<Player>();
             //赋值
             var dataTemp = new Dictionary<Guid, Player>();
 
+            //查询数据
+            var dataList = PlayerDal.GetAllList().ToList<Player>();
             foreach (var dr in dataList)
             {
                 dataTemp[dr.Id] = dr;
