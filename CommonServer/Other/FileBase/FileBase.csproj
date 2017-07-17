@@ -52,10 +52,9 @@
     <Content Include="ReferenceFiles\Ionic.Zlib.dll" />
     <Content Include="ReferenceFiles\MySql.Data.dll" />
     <Content Include="ReferenceFiles\newtonsoft.json.dll" />
+    <Content Include="SQL\gameserver.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SQL\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="ReferenceFiles\Web-Bak.config" />
   </ItemGroup>
