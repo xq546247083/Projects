@@ -41,13 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\1ExtensionBLL.cs" />
     <Compile Include="Common\TransactionHandler.cs" />
+    <Compile Include="Interface\ICheck.cs" />
+    <Compile Include="Interface\IGlobal.cs" />
+    <Compile Include="Interface\IInit.cs" />
     <Compile Include="Interface\IConfig.cs" />
     <Compile Include="Test\I_Test.cs" />
     <Compile Include="Player\I_PlayerBLL.cs" />
     <Compile Include="Player\PlayerBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConfig\SqlConfigBLL.cs" />
+    <Compile Include="World\GlobalBLL.cs" />
+    <Compile Include="World\InitBLL.cs" />
     <Compile Include="World\ConfigBLL.cs" />
     <Compile Include="Test\TestBLL.cs" />
     <Compile Include="World\WorldBLL.cs" />

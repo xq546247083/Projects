@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonModel\BaseModel.cs" />
     <Compile Include="CommonModel\ModelHandler.cs" />
     <Compile Include="CommonModel\BaseModelDal.cs" />
     <Compile Include="Const\CommonConst.cs" />

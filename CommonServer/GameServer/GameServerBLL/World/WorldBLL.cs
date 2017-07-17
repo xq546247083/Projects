@@ -20,8 +20,21 @@ namespace GameServer.BLL
     {
         public static void Start()
         {
+            #region 加载数据
+
             //开启配置
             ConfigBLL.Start();
+
+            //检测配置数据
+            ConfigBLL.Check();
+
+            //全局数据初始化
+            GlobalBLL.Start();
+
+            //要初始化的数据初始化
+            InitBLL.Start();
+
+            #endregion
 
             //声明并启动定时线程
             Task.Run(() => RunThread());

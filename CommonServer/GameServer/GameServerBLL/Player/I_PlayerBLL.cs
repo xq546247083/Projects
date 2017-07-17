@@ -16,7 +16,7 @@ namespace GameServer.BLL
     /// 玩家类
     /// </summary>
     [InvokeClassAttribute("玩家类", "肖强", "2017-7-13 10:44:02")]
-    public static partial class PlayerBLL
+    public partial class PlayerBLL
     {
         /// <summary>
         /// 登录

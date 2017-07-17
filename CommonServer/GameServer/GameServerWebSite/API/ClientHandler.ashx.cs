@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using Tool.Log;
 
 namespace GameServerWebSite.API
 {
@@ -24,7 +25,7 @@ namespace GameServerWebSite.API
         /// <summary>
         /// 方法添加
         /// </summary>
-        private const String mMethodFlag = "i_";
+        private const String mMethodFlag = "I_";
 
         /// <summary>
         /// 处理数据
@@ -46,6 +47,9 @@ namespace GameServerWebSite.API
                 {
                     responseDataObject.ResultStatus = ResultStatus.Exception;
                     responseDataObject.Value = ExHandler.Handle(ex);
+
+                    //写日志
+                    Log.Write(ExHandler.Handle(ex), LogType.Error);
                 }
             }
             finally

@@ -10,6 +10,7 @@ namespace GameServer.BLL
 {
     /// <summary>
     /// 配置接口
+    ///</summary>
     public interface IConfig
     {
         /// <summary>

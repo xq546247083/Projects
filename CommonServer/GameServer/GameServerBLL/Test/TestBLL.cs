@@ -22,10 +22,10 @@ namespace GameServer.BLL
         /// </summary>
         public void Init()
         {
-            //测试写日志傻吊
-            Log.Write("dasdas", LogType.Error);
+            //测试写日志
+            //Log.Write("dasdas", LogType.Error);
 
-            Log.ZipLog(DateTime.Now);
+            //Log.ZipLog(DateTime.Now);
 
 
 
