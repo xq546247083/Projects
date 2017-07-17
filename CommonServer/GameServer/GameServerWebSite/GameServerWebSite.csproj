@@ -95,8 +95,10 @@
     <Content Include="ReferenceFiles\CSS\styles.css" />
     <Content Include="ReferenceFiles\jquery-3.2.1.js" />
     <Content Include="ReferenceFiles\JS\ga.js" />
+    <Content Include="ReferenceFiles\JS\json2.js" />
     <Content Include="ReferenceFiles\JS\responsive-nav.js" />
     <Content Include="MethodDescribe.html" />
+    <Content Include="Test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

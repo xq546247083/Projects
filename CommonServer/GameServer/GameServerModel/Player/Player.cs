@@ -101,13 +101,13 @@ namespace GameServer.Model
         public void Construct(DataRow dr)
         {
             this.Id = Guid.Parse(dr[PropertyConst.Id].ToString());
-            this.UserId = Convert.ToString(dr[PropertyConst.UserId].ToString());
-            this.UserName = Convert.ToString(dr[PropertyConst.UserName].ToString());
-            this.UserPwd = Convert.ToString(dr[PropertyConst.UserPwd].ToString());
-            this.Gend = Convert.ToBoolean(dr[PropertyConst.Gend].ToString());
-            this.IsOnline = Convert.ToBoolean(dr[PropertyConst.IsOnline].ToString());
-            this.OnlieTime = Convert.ToDateTime(dr[PropertyConst.OnlieTime].ToString());
-            this.RegisterTime = Convert.ToDateTime(dr[PropertyConst.RegisterTime].ToString());
+            this.UserId = Convert.ToString(dr[PropertyConst.UserId]);
+            this.UserName = Convert.ToString(dr[PropertyConst.UserName]);
+            this.UserPwd = Convert.ToString(dr[PropertyConst.UserPwd]);
+            this.Gend = Convert.ToBoolean(dr[PropertyConst.Gend]);
+            this.IsOnline = Convert.ToBoolean(dr[PropertyConst.IsOnline]);
+            this.OnlieTime = Convert.ToDateTime(dr[PropertyConst.OnlieTime]);
+            this.RegisterTime = Convert.ToDateTime(dr[PropertyConst.RegisterTime]);
         }
     }
 }

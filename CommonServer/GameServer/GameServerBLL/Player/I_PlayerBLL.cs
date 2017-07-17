@@ -46,7 +46,6 @@ namespace GameServer.BLL
 
             #region 检测请求
 
-
             Player player = PlayerBLL.GetItem(userId);
 
             if (player.UserPwd != userPwd)
@@ -56,14 +55,14 @@ namespace GameServer.BLL
             }
 
             //检测密码
-            String loginStr = String.Format("{0}{1}{2}{3}", serverId, userId, userPwd, random);
-            var md5 = new MD5CryptoServiceProvider();
-            string loginStrMd = BitConverter.ToString(md5.ComputeHash(Encoding.Default.GetBytes(loginStr)));
-            if (inputEncryptedString != loginStrMd)
-            {
-                result.ResultStatus = ResultStatus.PwdError;
-                return result;
-            }
+            //String loginStr = String.Format("{0}{1}{2}{3}", serverId, userId, userPwd, random);
+            //var md5 = new MD5CryptoServiceProvider();
+            //string loginStrMd = BitConverter.ToString(md5.ComputeHash(Encoding.Default.GetBytes(loginStr)));
+            //if (inputEncryptedString != loginStrMd)
+            //{
+            //    result.ResultStatus = ResultStatus.PwdError;
+            //    return result;
+            //}
 
             #endregion
 
