@@ -1,9 +1,11 @@
 ﻿using Spider.Model;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -39,6 +41,11 @@ namespace Spider.BLL
         private static AutoResetEvent mLinkResetEvent = new AutoResetEvent(true);
 
         /// <summary>
+        /// 连接缓存
+        /// </summary>
+        List<Link> linkCache = new List<Link>();
+
+        /// <summary>
         /// 启动
         /// </summary>
         public void Start()
@@ -54,6 +61,7 @@ namespace Spider.BLL
                     Uri = new Uri(ConfigurationManager.AppSettings[key])
                 };
 
+                linkCache.Add(link);
                 mLinkQueue.Enqueue(link);
                 mLinkResetEvent.Set();
             }
@@ -64,7 +72,7 @@ namespace Spider.BLL
         /// </summary>
         public void LadySpider(string linkUrl)
         {
-            if(DeepCount>=10000) return;
+            if (DeepCount >= 10000) return;
 
             var simpleCrawler = new SimpleCrawler();
             simpleCrawler.OnStart += (s, e) =>
@@ -82,24 +90,26 @@ namespace Spider.BLL
                 var links = Regex.Matches(e.PageSource, @"(?is)<a[^>]*?href=(['""]?)(?<url>[^'""\s>]+)\1[^>]*>(?<text>(?:(?!</?a\b).)*)</a>", RegexOptions.IgnoreCase);
                 var linkImgs = Regex.Matches(e.PageSource, @"<img\b[^<>]*?\bsrc[\s\t\r\n]*=[\s\t\r\n]*[""']?[\s\t\r\n]*(?<imgUrl>[^\s\t\r\n""'<>]*)[^<>]*?/?[\s\t\r\n]*>", RegexOptions.IgnoreCase);
 
-
                 //获取连接
                 foreach (Match item in links)
                 {
                     var link = new Link();
 
-                    if (item.Groups["href"].Value.StartsWith("http"))
+                    if (item.Groups["url"].Value.StartsWith("http"))
                     {
-                        link.Uri = new Uri(item.Groups["href"].Value);
+                        link.Uri = new Uri(item.Groups["url"].Value);
                     }
                     else
                     {
-                        link.Uri = new Uri(linkUrl + item.Groups["href"].Value);
+                        link.Uri = new Uri(linkUrl + item.Groups["url"].Value);
                     }
 
-                    mLinkQueue.Enqueue(link);
-                    mLinkResetEvent.Set();
-
+                    if (linkCache.Count(r => r.Uri.AbsoluteUri == link.Uri.AbsoluteUri) == 0)
+                    {
+                        linkCache.Add(link);
+                        mLinkQueue.Enqueue(link);
+                        mLinkResetEvent.Set();
+                    }
                 }
 
                 //获取图片连接
