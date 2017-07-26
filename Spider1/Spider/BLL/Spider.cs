@@ -51,7 +51,6 @@ namespace Spider.BLL
                 //把任务加入队列
                 var link = new Link
                 {
-                    Name = ConfigurationManager.AppSettings[key],
                     Uri = new Uri(ConfigurationManager.AppSettings[key])
                 };
 
@@ -65,9 +64,7 @@ namespace Spider.BLL
         /// </summary>
         public void LadySpider(string linkUrl)
         {
-            //最多抓五层
-            DeepCount++;
-            if (DeepCount == 5) return;
+            if(DeepCount>=10000) return;
 
             var simpleCrawler = new SimpleCrawler();
             simpleCrawler.OnStart += (s, e) =>
@@ -82,17 +79,14 @@ namespace Spider.BLL
             simpleCrawler.OnCompleted += (s, e) =>
             {
                 //使用正则表达式清洗网页源代码中的数据
-                var links = Regex.Matches(e.PageSource, @"<a[^>]+href=""*(?<href>/[^>\s]+)""\s*[^>]*>(?<text>(?!.*img).*?)</a>", RegexOptions.IgnoreCase);
+                var links = Regex.Matches(e.PageSource, @"(?is)<a[^>]*?href=(['""]?)(?<url>[^'""\s>]+)\1[^>]*>(?<text>(?:(?!</?a\b).)*)</a>", RegexOptions.IgnoreCase);
                 var linkImgs = Regex.Matches(e.PageSource, @"<img\b[^<>]*?\bsrc[\s\t\r\n]*=[\s\t\r\n]*[""']?[\s\t\r\n]*(?<imgUrl>[^\s\t\r\n""'<>]*)[^<>]*?/?[\s\t\r\n]*>", RegexOptions.IgnoreCase);
 
 
                 //获取连接
                 foreach (Match item in links)
                 {
-                    var link = new Link
-                    {
-                        Name = item.Groups["text"].Value,
-                    };
+                    var link = new Link();
 
                     if (item.Groups["href"].Value.StartsWith("http"))
                     {
@@ -105,6 +99,7 @@ namespace Spider.BLL
 
                     mLinkQueue.Enqueue(link);
                     mLinkResetEvent.Set();
+
                 }
 
                 //获取图片连接

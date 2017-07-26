@@ -8,11 +8,6 @@ namespace Spider.Model
     public class Link
     {
         /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; set; }
-        
-        /// <summary>
         /// Uri
         /// </summary>
         public Uri Uri { get; set; }
