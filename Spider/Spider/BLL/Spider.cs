@@ -13,6 +13,11 @@ namespace Spider.BLL
     class Spider
     {
         /// <summary>
+        /// 要抓取的深度
+        /// </summary>
+        public static Int32 DeepCount = 0;
+
+        /// <summary>
         /// 下载图片队列
         /// </summary>
         private static readonly ConcurrentQueue<Img> mImgQueue = new ConcurrentQueue<Img>();
@@ -48,14 +53,18 @@ namespace Spider.BLL
         /// </summary>
         public void LadySpider(string linkUrl)
         {
+            //最多抓五层
+            DeepCount++;
+            if (DeepCount == 5) return;
+
             var simpleCrawler = new SimpleCrawler();
             simpleCrawler.OnStart += (s, e) =>
             {
-                Console.WriteLine("爬虫开始抓取");
+                Console.WriteLine("爬虫开始抓取:{0}", linkUrl);
             };
             simpleCrawler.OnError += (s, e) =>
             {
-                Console.WriteLine("爬虫抓取出现错误：" + e.Uri.ToString() + "，异常消息：" + e.Exception.Message);
+                Console.WriteLine("爬虫抓取出现错误：{0}，异常消息：{1}",linkUrl, e.Exception.Message);
             };
 
             simpleCrawler.OnCompleted += (s, e) =>
@@ -64,16 +73,14 @@ namespace Spider.BLL
                 var links = Regex.Matches(e.PageSource, @"<a[^>]+href=""*(?<href>/[^>\s]+)""\s*[^>]*>(?<text>(?!.*img).*?)</a>", RegexOptions.IgnoreCase);
                 var linkImgs = Regex.Matches(e.PageSource, @"<img\b[^<>]*?\bsrc[\s\t\r\n]*=[\s\t\r\n]*[""']?[\s\t\r\n]*(?<imgUrl>[^\s\t\r\n""'<>]*)[^<>]*?/?[\s\t\r\n]*>", RegexOptions.IgnoreCase);
 
-                Int32 count = 1;
+                
                 //获取连接
                 foreach (Match item in links)
                 {
                     var link = new Link
                     {
                         Name = item.Groups["text"].Value,
-                        Count = count
                     };
-                    count++;
 
                     if (item.Groups["href"].Value.StartsWith("http"))
                     {
@@ -181,7 +188,7 @@ namespace Spider.BLL
 
                 downImage.Save(path + fileName);
                 downImage.Dispose();
-                Console.WriteLine(String.Format("下载图片成功：{0}", fileName));
+                Console.WriteLine("下载图片成功：{0}", fileName);
             }
         }
     }

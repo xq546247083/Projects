@@ -16,10 +16,5 @@ namespace Spider.Model
         /// Uri
         /// </summary>
         public Uri Uri { get; set; }
-
-        /// <summary>
-        /// Count
-        /// </summary>
-        public Int32 Count { get; set; }
     }
 }
