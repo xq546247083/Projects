@@ -41,7 +41,6 @@ namespace Spider.BLL
         /// <summary>
         /// 启动
         /// </summary>
-        /// <param name="linkUrl"></param>
         public void Start()
         {
             Task.Run(() => { DownImage(); });
