@@ -21,40 +21,17 @@ b_marquee_template_c配置，前端配置
 
 
 三：ro
-商店：这周做完
-1、配置设计修改，末尾不动的，不添加
-2、store整理
-3、从新还珠合并
+公会功能
+建设不一样
+公会其他建筑受公会大厅等级限制。
+p表  `g_guild_angel``g_guild_boss``p_guild_boss_info``p_guild_reward``p_guild_shop_buy``p_guild_shop_buy`删除
 
-商城招募，（已同步）
-添加【recruit】删除【recruit_hero】
-
-宠物商城
-添加【pet_shop】-----询问是否删除【mysteryshop】
-
-商店道具兑换，shop_goods
-b_vip_buy_limit_shop_c改为了b_vip_buy_limit_c
-b_vip_buy_limit_c删除
-
-会员等级兑换商店,shop_vip_gift
-d_shop_gift_c表删除
-shop_vip_gift
-
-时装商城，
-fashion_shop
-
-
-（只移动了代码）
-竞技场商城，
-格斗大会商城
+b_vip_c有修改
 
 
 
 
-
-
-
-
+go:反射，redis，remark（接口文档）
 
 
 人员相关：
@@ -70,8 +47,11 @@ fashion_shop
 SVN地址：https://10.1.0.0/svn/xueyinglingzhu/trunk/Design
 功能测试服：710977117@qq.com 710977118@qq.com 密码都是123qwe123
 外网测试服：710977119@qq.com            123456
-
-
+远程桌面地址：
+1、雪鹰线上中心：gmo-axylz.moqikaka.com
+2、雪鹰开发地址：10.1.0.16
+3、ro开发地址：10.1.0.31
+4、雪鹰黑桃线上中心：gmoht-xylz.moqikaka.com
 
 
 
@@ -140,3 +120,16 @@ b_system_c：系统配置表，不要复制
 git push -u origin master
 git push <远程库名> <本地分支名>:<远程分支名>
 克隆远程库到本地库：git clone git@github.com:xq546247083/TestTwo.git
+---------------------------------------------------发布版本--数据方面-----------------------------------------------------------------
+数据库更新:
+1.b表可以直接整表更新(b_system_c除外)
+2.d,c,p,g开头的表都需要用脚本更新（增删字段等）
+3.d表内容我们不能配置，需要运营配置（d_server_group_setting_c 表需要运维自行配制）
+4.c表只能运维配置，我们只能增删字段，字段内容需要运维根据线上情况配置
+5.g，p表我们可以自行设置对应的值，需要确保正确
+
+
+对于发布脚本，各个功能模块各自提供给发布人员，需要确保脚本正确。对于本地和线上不同的配置，单独提示出来，方便发布人员告知运维做对应调整
+
+
+发布人员需要检查所有提交过来的脚本，看是否正确，是否违反规范
