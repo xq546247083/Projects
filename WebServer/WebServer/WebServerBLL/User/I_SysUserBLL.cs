@@ -38,7 +38,7 @@ namespace WebServer.BLL
 @"[
     IsSuccess:是否成功登陆
 ]            ")]
-        public static ResponseDataObject I_Login(String serverId, String userId, String userPwd, String inputEncryptedString, String random)
+        public static ResponseDataObject I_Login(String userId, String userPwd)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 

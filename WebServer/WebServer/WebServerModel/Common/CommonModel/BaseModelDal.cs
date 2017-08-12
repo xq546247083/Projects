@@ -12,7 +12,9 @@ using System.Reflection;
 
 namespace WebServer.Model
 {
+    using Dapper;
     using MySql.Data.MySqlClient;
+    using System.Linq;
     using Tool.Common;
     using Tool.CustomAttribute;
 
@@ -58,18 +60,15 @@ namespace WebServer.Model
 
             using (MySqlConnection connection = new MySqlConnection(Conn))
             {
-                cmd.Connection = connection;
-                cmd.CommandText = sql;
-                cmd.CommandType = cType;
-
-                MySqlDataAdapter adapter = new MySqlDataAdapter { SelectCommand = cmd };
-                DataSet ds = new DataSet();
-                adapter.Fill(ds);
-
-                //清除参数
-                cmd.Parameters.Clear();
-
-                return DataSetToList<T>(ds, 0);
+                switch (cType)
+                {
+                    case CommandType.StoredProcedure:
+                        return connection.Query<T>(sql, null, null, true, null, CommandType.StoredProcedure).ToList();
+                    case CommandType.TableDirect:
+                    case CommandType.Text:
+                    default:
+                        return connection.Query<T>(sql).ToList();
+                }
             }
         }
 
