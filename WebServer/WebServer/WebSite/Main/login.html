@@ -1,14 +1,11 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>xiaoqiang</title>
     <meta name="keywords" content="个人管理系统">
     <meta name="description" content="这是基于H+的一个个人管理系统">
-
     <link rel="shortcut icon" href="favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -17,20 +14,15 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
-    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <script>if (window.top !== window.self) { window.top.location = window.location; }</script>
 </head>
-
 <body class="gray-bg">
-
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
             <div>
-
                 <h1 class="logo-name">H+</h1>
-
             </div>
             <h3>欢迎</h3>
-
             <form id="mainForm" class="m-t" role="form" action="index.html">
                 <div class="form-group">
                     <input id="userName" type="email" class="form-control" placeholder="用户名" required="">
@@ -40,15 +32,15 @@
                 </div>
                 <button type="button" onclick="Login()" class="btn btn-primary block full-width m-b">登 录</button>
 
-
-                <p class="text-muted text-center"> <a href="#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
+                <p class="text-muted text-center">
+                    <a href="#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
                 </p>
-
             </form>
         </div>
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
     <script type="text/javascript">
         //获取接口文档
         function Login() {
@@ -61,30 +53,13 @@
             data[1] = userPassword;
             data[2] = 1;
 
-            //调用参数
-            var params = {
-                ClassName: 'SysUser',
-                MethodName: 'Login',
-                Data: data
-            };
+            WebMain.Post("SysUser", "Login", data, LoginCallBack);
+        }
 
-            var paramStr = JSON.stringify(params);;
-
-            $.ajax({
-                dataType: "text",
-                type: "POST",
-                url: "../API/ClientHandler.ashx",
-                data: paramStr,
-                success: function (returnData) {
-                    document.getElementById("mainForm").submit()
-                },
-                error: function (request, textStatus, errorThrown) {
-
-                }
-            });
+        function LoginCallBack(returnData) {
+            alert("LoginCallBack" + returnData);
         }
     </script>
 
 </body>
-
 </html>

@@ -172,6 +172,7 @@
     <Content Include="Main\img\user.png" />
     <Content Include="Main\img\wenku_logo.png" />
     <Content Include="Main\index.html" />
+    <Content Include="Main\js\main.js" />
     <Content Include="Main\js\bootstrap.min.js" />
     <Content Include="Main\js\contabs.min.js" />
     <Content Include="Main\js\content.min.js" />
