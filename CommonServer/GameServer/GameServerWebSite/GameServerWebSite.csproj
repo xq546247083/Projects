@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +42,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Other\FileBase\ReferenceFiles\newtonsoft.json.dll</HintPath>
+      <HintPath>..\..\..\CommonCore\FileBase\ReferenceFiles\newtonsoft.json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -122,7 +123,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\Tool\Tool.csproj">
+    <ProjectReference Include="..\..\..\CommonCore\Tool\Tool.csproj">
       <Project>{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}</Project>
       <Name>Tool</Name>
     </ProjectReference>

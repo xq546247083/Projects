@@ -11,6 +11,7 @@ using System.Transactions;
 namespace GameServer.BLL
 {
     using Tool.Common;
+    using Tool.Extension;
     using Tool.Log;
 
     /// <summary>
@@ -41,7 +42,7 @@ namespace GameServer.BLL
                 catch (Exception ex)
                 {
                     isError = true;
-                    Log.Write(ExHandler.Handle(ex), LogType.Error);
+                    Log.Write(ex.ToMessage(), LogType.Error);
                 }
             }
 
