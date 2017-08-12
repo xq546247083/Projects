@@ -22,7 +22,7 @@ namespace WebServer.BLL
         /// 登录
         /// </summary>
         /// <param name="serverId">serverId</param>
-        /// <param name="userId">userId</param>
+        /// <param name="userName">userName</param>
         /// <param name="userPwd">userPwd</param>
         /// <param name="inputEncryptedString">inputEncryptedString</param>
         /// <param name="random">random</param>
@@ -38,13 +38,19 @@ namespace WebServer.BLL
 @"[
     IsSuccess:是否成功登陆
 ]            ")]
-        public static ResponseDataObject I_Login(String userId, String userPwd)
+        public static ResponseDataObject I_Login(String userName, String userPwd, Int32 number)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
             #region 检测请求
 
-            SysUser sysUser = SysUserBLL.GetItem(Guid.Parse(userId));
+            SysUser sysUser = SysUserBLL.GetItemByUserName(userName);
+
+            if (sysUser == null)
+            {
+                result.ResultStatus = ResultStatus.UserIsNotExist;
+                return result;
+            }
 
             if (sysUser.Password != userPwd)
             {

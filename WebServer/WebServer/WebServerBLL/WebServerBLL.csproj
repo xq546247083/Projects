@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\CommonCore\FileBase\ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
@@ -42,12 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ExtensionBLL.cs" />
+    <Compile Include="Common\MethodInfoBLL.cs" />
     <Compile Include="Common\TransactionHandler.cs" />
     <Compile Include="Interface\ICheck.cs" />
     <Compile Include="Interface\IGlobal.cs" />
     <Compile Include="Interface\IInit.cs" />
     <Compile Include="Interface\IConfig.cs" />
-    <Compile Include="Test\I_Test.cs" />
     <Compile Include="User\I_SysUserBLL.cs" />
     <Compile Include="User\SysUserBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,7 +59,6 @@
     <Compile Include="World\GlobalBLL.cs" />
     <Compile Include="World\InitBLL.cs" />
     <Compile Include="World\ConfigBLL.cs" />
-    <Compile Include="Test\TestBLL.cs" />
     <Compile Include="World\WorldBLL.cs" />
   </ItemGroup>
   <ItemGroup>

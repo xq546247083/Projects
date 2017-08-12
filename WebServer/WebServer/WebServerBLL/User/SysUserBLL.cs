@@ -77,22 +77,22 @@ namespace WebServer.BLL
         /// <summary>
         /// 获取某一个玩家
         /// </summary>
-        /// <param name="SysUserId">SysUserId</param>
+        /// <param name="sysUserId">玩家id</param>
         /// <param name="ifCastException">是否抛出异常</param>
         /// <returns>玩家</returns>
-        public static SysUser GetItem(Guid SysUserId, Boolean ifCastException = false)
+        public static SysUser GetItem(Guid sysUserId, Boolean ifCastException = false)
         {
             using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
             {
-                if (GetData().ContainsKey(SysUserId))
+                if (GetData().ContainsKey(sysUserId))
                 {
-                    return mData[SysUserId];
+                    return mData[sysUserId];
                 }
             }
 
             if (ifCastException)
             {
-                throw new SelfDefinedException(ResultStatus.Exception, String.Format("p_SysUser未找到id为{0}的玩家", SysUserId));
+                throw new SelfDefinedException(ResultStatus.Exception, String.Format("SysUser未找到id为{0}的玩家", sysUserId));
             }
 
             return null;
@@ -103,11 +103,11 @@ namespace WebServer.BLL
         /// </summary>
         /// <param name="userId">userId</param>
         /// <returns>玩家</returns>
-        public static SysUser GetItem(Guid userId)
+        public static SysUser GetItemByUserName(String userName)
         {
             using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
             {
-                return GetData().Values.FirstOrDefault(r => r.UserID == userId);
+                return GetData().Values.FirstOrDefault(r => r.UserName == userName);
             }
         }
 

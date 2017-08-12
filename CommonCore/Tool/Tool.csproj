@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DateTimeTool.cs" />
+    <Compile Include="Common\ParseTool.cs" />
     <Compile Include="Extension\ExExtention.cs" />
     <Compile Include="Common\ReaderWriterLockTool.cs" />
     <Compile Include="Common\ReflectionTool.cs" />

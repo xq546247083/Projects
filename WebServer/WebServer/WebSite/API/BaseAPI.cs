@@ -15,6 +15,8 @@ using System.Web;
 namespace WebSite.API
 {
     using Newtonsoft.Json;
+    using Tool.Common;
+    using WebServer.BLL;
     using WebServer.Model;
 
     /// <summary>
@@ -34,7 +36,10 @@ namespace WebSite.API
             String value = Encoding.UTF8.GetString(byteArray);
 
             //将客户端请求的数据反序列化
-            return JsonConvert.DeserializeObject<RequestDataObject>(value);
+            var result= JsonConvert.DeserializeObject<RequestDataObject>(value);
+            result.Data = MethodInfoBLL.ConvertParameters(result.Data, result.ClassName, result.MethodName);
+
+            return result;
         }
 
         /// <summary>
