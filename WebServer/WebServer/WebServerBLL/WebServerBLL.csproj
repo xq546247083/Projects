@@ -48,8 +48,8 @@
     <Compile Include="Interface\IInit.cs" />
     <Compile Include="Interface\IConfig.cs" />
     <Compile Include="Test\I_Test.cs" />
-    <Compile Include="Player\I_PlayerBLL.cs" />
-    <Compile Include="Player\PlayerBLL.cs" />
+    <Compile Include="User\I_SysUserBLL.cs" />
+    <Compile Include="User\SysUserBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConfig\SqlConfigBLL.cs" />
     <Compile Include="World\GlobalBLL.cs" />

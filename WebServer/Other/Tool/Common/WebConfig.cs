@@ -50,7 +50,7 @@ namespace Tool.Common
         /// </summary>
         static WebConfig()
         {
-            //连接
+            //连接（此处两种连接方式都用的一个数据库）
             CommonConnString = ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString;
             ConfigConneString = ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString;
 

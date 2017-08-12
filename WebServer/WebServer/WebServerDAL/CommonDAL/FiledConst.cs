@@ -14,13 +14,19 @@ namespace WebServer.DAL
     /// </summary>
     public static class FiledConst
     {
-        public const String Id = "@Id";
-        public const String UserId = "@UserId";
+        public const String UserID = "@UserID";
         public const String UserName = "@UserName";
-        public const String UserPwd = "@UserPwd";
-        public const String Gend = "@Gend";
-        public const String IsOnline = "@IsOnline";
-        public const String OnlieTime = "@OnlieTime";
-        public const String RegisterTime = "@RegisterTime";
+        public const String FullName = "@FullName";
+        public const String Password = "@Password";
+        public const String PwdExpiredTime = "@PwdExpiredTime";
+        public const String Sex = "@Sex";
+        public const String Phone = "@Phone";
+        public const String Email = "@Email";
+        public const String Status = "@Status";
+        public const String LoginCount = "@LoginCount";
+        public const String LastLoginTime = "@LastLoginTime";
+        public const String LastLoginIP = "@LastLoginIP";
+        public const String RoleIDs = "@RoleIDs";
+        public const String CreateTime = "@CreateTime";
     }
 }

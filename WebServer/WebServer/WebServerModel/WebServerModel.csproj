@@ -56,7 +56,7 @@
     <Compile Include="Common\DataObject\ResponseDataObject.cs" />
     <Compile Include="Common\Enum\ResultStatus.cs" />
     <Compile Include="Common\Exception\SelfDefinedException.cs" />
-    <Compile Include="Player\Player.cs" />
+    <Compile Include="User\SysUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConfig\ServerConfig.cs" />
     <Compile Include="World\World.cs" />
