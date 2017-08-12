@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Tool.Common;
+using Tool.Extension;
 
 namespace WebServer.BLL
 {
@@ -58,7 +59,7 @@ namespace WebServer.BLL
                     }
                     catch (Exception ex)
                     {
-                        errorList.Add(ExHandler.Handle(ex));
+                        errorList.Add(ex.ToMessage());
                     }
                 }
             }

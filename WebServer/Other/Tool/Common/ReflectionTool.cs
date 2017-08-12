@@ -12,6 +12,8 @@ using System.Reflection;
 
 namespace Tool.Common
 {
+    using Tool.Extension;
+
     /// <summary>
     /// 反射工具
     /// </summary>
@@ -101,7 +103,7 @@ namespace Tool.Common
             }
             catch (Exception ex)
             {
-                throw new AmbiguousMatchException(string.Format("{0}.{1}方法名重复。ex:{2}", className, methodName, ExHandler.Handle(ex)));
+                throw new AmbiguousMatchException(string.Format("{0}.{1}方法名重复。ex:{2}", className, methodName, ex.ToMessage()));
             }
 
             if (method == null)

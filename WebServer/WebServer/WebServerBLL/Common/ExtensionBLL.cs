@@ -11,6 +11,7 @@ using System.Data;
 
 namespace WebServer.BLL
 {
+    using System.Reflection;
     using WebServer.Model;
 
     /// <summary>
@@ -18,6 +19,8 @@ namespace WebServer.BLL
     /// </summary>
     public static class ExtensionBLL
     {
+        #region DataTable
+
         /// <summary>
         /// 扩展方法类
         /// </summary>
@@ -61,5 +64,7 @@ namespace WebServer.BLL
 
             return resultDic;
         }
+
+        #endregion
     }
 }

@@ -12,6 +12,7 @@ namespace WebServer.DAL
 {
     using MySql.Data.MySqlClient;
     using Tool.Common;
+    using Tool.Extension;
 
     /// <summary>
     ///操作数据库类
@@ -37,7 +38,7 @@ namespace WebServer.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(ExHandler.Handle(ex, commandText, commandParameters));
+                throw new Exception(ex.ToMessage(commandText, commandParameters));
             }
         }
 
@@ -55,7 +56,7 @@ namespace WebServer.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(ExHandler.Handle(ex, commandText, commandParameters));
+                throw new Exception(ex.ToMessage(commandText, commandParameters));
             }
         }
 
@@ -79,7 +80,7 @@ namespace WebServer.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception(ExHandler.Handle(ex, commandText, commandParameters));
+                throw new Exception(ex.ToMessage(commandText, commandParameters));
             }
         }
     }

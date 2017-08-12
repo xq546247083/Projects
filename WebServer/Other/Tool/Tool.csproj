@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DateTimeTool.cs" />
-    <Compile Include="Common\ExHandler.cs" />
+    <Compile Include="Extension\ExExtention.cs" />
     <Compile Include="Common\ReaderWriterLockTool.cs" />
     <Compile Include="Common\ReflectionTool.cs" />
     <Compile Include="Common\ThreadTool.cs" />
@@ -55,6 +55,10 @@
     <Compile Include="CustomAttribute\IgnoreAttribute.cs" />
     <Compile Include="CustomAttribute\DataBaseTableAttribute.cs" />
     <Compile Include="Common\FileTool.cs" />
+    <Compile Include="Extension\EnumExtensions.cs" />
+    <Compile Include="Extension\ObjectExtensions.cs" />
+    <Compile Include="Extension\StringExtention.cs" />
+    <Compile Include="Extension\TypeExtensions.cs" />
     <Compile Include="LogTool\Log.cs" />
     <Compile Include="LogTool\LogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

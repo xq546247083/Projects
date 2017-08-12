@@ -14,6 +14,7 @@ using System.Text;
 namespace Tool.Common
 {
     using Ionic.Zip;
+    using Tool.Extension;
     using Tool.Log;
 
     /// <summary>
@@ -46,7 +47,7 @@ namespace Tool.Common
                 }
                 catch (Exception ex)
                 {
-                    Log.Write(ExHandler.Handle(ex), LogType.Error);
+                    Log.Write(ex.ToMessage(), LogType.Error);
                     throw;
                 }
             }
@@ -83,7 +84,7 @@ namespace Tool.Common
                 }
                 catch (Exception ex)
                 {
-                    Log.Write(ExHandler.Handle(ex), LogType.Error);
+                    Log.Write(ex.ToMessage(), LogType.Error);
                     throw;
                 }
             }

@@ -1,19 +1,19 @@
 ﻿/************************************************************************
-* 标题: 错误处理
-* 描述: 错误处理
+* 标题: 错误扩展
+* 描述: 错误扩展
 * 作者：肖强
-* 日期：2017-5-3 10:43:36
+* 日期：2017-8-12 10:43:04
 * 版本：V1
 *************************************************************************/
 using System;
 using System.Text;
 
-namespace Tool.Common
+namespace Tool.Extension
 {
     /// <summary>
-    /// 错误处理
+    /// 错误扩展
     /// </summary>
-    public static class ExHandler
+    public static class ExExtention
     {
         /// <summary>
         /// 处理错误，返回字符串
@@ -21,7 +21,7 @@ namespace Tool.Common
         /// <param name="ex">错误</param>
         /// <param name="objects">要输出的消息</param>
         /// <returns>错误字符串</returns>
-        public static String Handle(Exception ex, params object[] objects)
+        public static String ToMessage(this Exception ex, params object[] objects)
         {
             Int32 i = 1;
             StringBuilder sb = new StringBuilder();
