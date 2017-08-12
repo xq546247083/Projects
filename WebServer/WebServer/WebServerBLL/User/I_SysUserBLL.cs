@@ -69,6 +69,8 @@ namespace WebServer.BLL
             TransactionHandler.Handle(() =>
             {
                 sysUser.LastLoginTime = DateTime.Now;
+                sysUser.LoginCount += 1;
+
                 Update(sysUser);
             }, null);
 
