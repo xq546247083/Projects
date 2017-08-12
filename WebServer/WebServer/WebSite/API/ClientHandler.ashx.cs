@@ -13,6 +13,7 @@ namespace WebSite.API
     using WebServer.Model;
     using Tool.Common;
     using Tool.Log;
+    using Tool.Extension;
 
     /// <summary>
     /// Handler 的摘要说明
@@ -46,7 +47,7 @@ namespace WebSite.API
                 //获取请求
                 RequestDataObject requestDataObject = GetRequestDataObject(context);
                 //处理请求
-                responseDataObject = ReflectionTool.CallStaticMethod(mAssemblyName, String.Format("{0}.{1}{2}", mAssemblyName,requestDataObject.ClassName, mClassFlag), String.Format("{0}{1}", mMethodFlag, requestDataObject.MethodName), requestDataObject.Data) as ResponseDataObject;
+                responseDataObject = ReflectionTool.CallStaticMethod(mAssemblyName, String.Format("{0}.{1}{2}", mAssemblyName, requestDataObject.ClassName, mClassFlag), String.Format("{0}{1}", mMethodFlag, requestDataObject.MethodName), requestDataObject.Data) as ResponseDataObject;
             }
             catch (Exception ex)
             {
@@ -59,16 +60,16 @@ namespace WebSite.API
                         responseDataObject.ResultStatus = innerEx.ResultStatus;
                         if (innerEx.IfNeedLog)
                         {
-                            Log.Write(ExHandler.Handle(ex), LogType.Error);
+                            Log.Write(ex.ToMessage(), LogType.Error);
                         }
                     }
                     else
                     {
                         responseDataObject.ResultStatus = ResultStatus.Exception;
-                        Log.Write(ExHandler.Handle(ex), LogType.Error);
+                        Log.Write(ex.ToMessage(), LogType.Error);
                     }
 
-                    responseDataObject.Value = ExHandler.Handle(ex);
+                    responseDataObject.Value = ex.ToMessage();
                 }
             }
             finally
