@@ -192,6 +192,7 @@
     <Content Include="Main\js\jquery-ui-1.10.4.min.js" />
     <Content Include="Main\js\jquery-ui.custom.min.js" />
     <Content Include="Main\js\jquery.min.js" />
+    <Content Include="Main\js\md5.js" />
     <Content Include="Main\js\plugins\beautifyhtml\beautifyhtml.js" />
     <Content Include="Main\js\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Main\js\plugins\bootstrap-table\bootstrap-table-mobile.min.js" />
@@ -336,6 +337,7 @@
     <Content Include="Main\js\plugins\validate\messages_zh.min.js" />
     <Content Include="Main\js\plugins\webuploader\webuploader.min.js" />
     <Content Include="Main\js\welcome.min.js" />
+    <Content Include="Main\lockscreen.html" />
     <Content Include="Main\login.html" />
     <Content Include="Main\plugins\fullavatareditor\expressInstall.swf" />
     <Content Include="Main\plugins\fullavatareditor\fullAvatarEditor.swf" />

@@ -11,6 +11,7 @@ namespace WebServer.BLL
 {
     using WebServer.Model;
     using Tool.CustomAttribute;
+    using Tool.Common;
 
     /// <summary>
     /// 玩家类
@@ -21,30 +22,33 @@ namespace WebServer.BLL
         /// <summary>
         /// 登录
         /// </summary>
-        /// <param name="serverId">serverId</param>
         /// <param name="userName">userName</param>
         /// <param name="userPwd">userPwd</param>
-        /// <param name="inputEncryptedString">inputEncryptedString</param>
-        /// <param name="random">random</param>
         [MethodDescribe(
             "登录", "肖强", "2017-7-13 10:59:13",
 @"{
-    serverId:服务器Id
-    userId:用户Id
-    userPwd:用户密码
-    inputEncryptedString：加密字符串
-    random:随机数
+    UserName:用户名
+    UserPwd:用户密码
 }           ",
 @"[
-    IsSuccess:是否成功登陆
+    UserName:是否成功登陆
+    FullName:用户名
+    Sex:性别
+    Phone：电话
+    Email：邮箱
+    LastLoginTime:最后登录名
+    LastLoginIP：最近登录ip
+    LoginCount:登录次数
+    Status：状态
+    CreateTime:创建时间
 ]            ")]
-        public static ResponseDataObject I_Login(String userName, String userPwd, Int32 number)
+        public static ResponseDataObject I_Login(String userName, String userPwd)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
             #region 检测请求
 
-            SysUser sysUser = SysUserBLL.GetItemByUserName(userName);
+            SysUser sysUser = GetItemByUserName(userName);
 
             if (sysUser == null)
             {
@@ -52,21 +56,11 @@ namespace WebServer.BLL
                 return result;
             }
 
-            if (sysUser.Password != userPwd)
+            if (sysUser.Password != EncrpytTool.Encrypt(userPwd))
             {
                 result.ResultStatus = ResultStatus.PwdError;
                 return result;
             }
-
-            //检测密码
-            //String loginStr = String.Format("{0}{1}{2}{3}", serverId, userId, userPwd, random);
-            //var md5 = new MD5CryptoServiceProvider();
-            //string loginStrMd = BitConverter.ToString(md5.ComputeHash(Encoding.Default.GetBytes(loginStr)));
-            //if (inputEncryptedString != loginStrMd)
-            //{
-            //    result.ResultStatus = ResultStatus.PwdError;
-            //    return result;
-            //}
 
             #endregion
 
@@ -78,6 +72,84 @@ namespace WebServer.BLL
                 sysUser.LoginCount += 1;
 
                 Update(sysUser);
+            }, null);
+
+            #endregion
+
+            #region 处理返回
+
+            result.ResultStatus = ResultStatus.Success;
+            result.Value = AssembleToClient(sysUser);
+
+            return result;
+
+            #endregion
+        }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="userName">userName</param>
+        /// <param name="userPwd">userPwd</param>
+        [MethodDescribe(
+            "注册", "肖强", "2017-8-13 15:35:14",
+@"{
+    UserName:用户名
+    UserPwd:密码
+    FullName:用户名称
+    Sex：性别
+    Phone：电话
+    Email：邮箱
+}           ",
+@"[
+    UserName:是否成功登陆
+    FullName:用户名
+    Sex:性别
+    Phone：电话
+    Email：邮箱
+    LastLoginTime:最后登录名
+    LastLoginIP：最近登录ip
+    LoginCount:登录次数
+    Status：状态
+    CreateTime:创建时间
+]            ")]
+        public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String phone, String email)
+        {
+            ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
+
+            #region 检测请求
+
+            SysUser sysUser = GetItemByUserName(userName);
+
+            if (sysUser != null)
+            {
+                result.ResultStatus = ResultStatus.UserNameIsExist;
+                return result;
+            }
+            var sexFlag = true;
+            Boolean.TryParse(sex.ToString(), out sexFlag);
+
+            sysUser = new SysUser()
+            {
+                UserID = Guid.NewGuid(),
+                UserName = userName,
+                Password = EncrpytTool.Encrypt(userPwd),
+                FullName = fullName,
+                Sex = sexFlag,
+                Phone = phone,
+                Email = email,
+                Status = 1,
+                LoginCount = 0,
+                CreateTime = DateTime.Now
+            };
+
+            #endregion
+
+            #region 处理请求
+
+            TransactionHandler.Handle(() =>
+            {
+                Insert(sysUser);
             }, null);
 
             #endregion

@@ -121,6 +121,20 @@ namespace WebServer.BLL
             SysUserDAL.Update(sysUser.UserID, sysUser.UserName, sysUser.FullName, sysUser.Password, sysUser.PwdExpiredTime, sysUser.Sex, sysUser.Phone, sysUser.Email, sysUser.Status, sysUser.LoginCount, sysUser.LastLoginTime, sysUser.LastLoginIP, sysUser.RoleIDs, sysUser.CreateTime);
         }
 
+        /// <summary>
+        /// 插入玩家数据
+        /// </summary>
+        /// <param name="sysUser">用户</param>
+        /// <returns>用户</returns>
+        public static void Insert(SysUser sysUser)
+        {
+            SysUserDAL.Insert(sysUser.UserID, sysUser.UserName, sysUser.FullName, sysUser.Password, sysUser.PwdExpiredTime, sysUser.Sex, sysUser.Phone, sysUser.Email, sysUser.Status, sysUser.LoginCount, sysUser.LastLoginTime, sysUser.LastLoginIP, sysUser.RoleIDs, sysUser.CreateTime);
+
+            //更新内存
+            var data = GetData();
+            data[sysUser.UserID] = sysUser;
+        }
+
         #endregion
 
         #region 组装客户端数据
@@ -137,7 +151,12 @@ namespace WebServer.BLL
             clientInfo[PropertyConst.UserName] = SysUser.UserName;
             clientInfo[PropertyConst.FullName] = SysUser.FullName;
             clientInfo[PropertyConst.Sex] = SysUser.Sex;
+            clientInfo[PropertyConst.Phone] = SysUser.Phone;
+            clientInfo[PropertyConst.Email] = SysUser.Email;
             clientInfo[PropertyConst.LastLoginTime] = SysUser.LastLoginTime;
+            clientInfo[PropertyConst.LastLoginIP] = SysUser.LastLoginIP;
+            clientInfo[PropertyConst.LoginCount] = SysUser.LoginCount;
+            clientInfo[PropertyConst.Status] = SysUser.Status;
             clientInfo[PropertyConst.CreateTime] = SysUser.CreateTime;
 
             return clientInfo;

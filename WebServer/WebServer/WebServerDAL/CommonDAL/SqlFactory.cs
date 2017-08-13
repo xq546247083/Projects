@@ -55,7 +55,7 @@ namespace WebServer.DAL
             //该处配置要自动生成的表的表名
             List<String> tableNamelist = new List<String>
             {
-                "p_player",
+                "sys_user",
             };
 
             InitType(tableNamelist);

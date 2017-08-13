@@ -11,6 +11,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -23,7 +24,7 @@
                 <h1 class="logo-name">H+</h1>
             </div>
             <h3>欢迎</h3>
-            <form id="mainForm" class="m-t" role="form" action="index.html">
+            <form id="mainForm" class="m-t" role="form">
                 <div class="form-group">
                     <input id="userName" type="email" class="form-control" placeholder="用户名" required="">
                 </div>
@@ -40,24 +41,48 @@
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/content.min.js"></script>
+    <script src="js/plugins/toastr/toastr.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/md5.js"></script>
     <script type="text/javascript">
         //获取接口文档
         function Login() {
             var userName = $("#userName").val();
             var userPassword = $("#userPassword").val();
+            var pwd = md5(userPassword);
 
             //方法参数
             var data = new Array();
             data[0] = userName;
-            data[1] = userPassword;
-            data[2] = 1;
+            data[1] = pwd;
 
             WebMain.Post("SysUser", "Login", data, LoginCallBack);
         }
 
-        function LoginCallBack(returnData) {
-            alert("LoginCallBack" + returnData);
+        function LoginCallBack(data) {
+            if (data == {}) retun;
+
+            if (data.Status == 0) {
+                window.location.href = 'index.html';
+            } else {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "onclick": null,
+                    "showDuration": "2000",
+                    "hideDuration": "1000",
+                    "timeOut": "7000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.error("提示", data.StatusValue)
+            }
         }
     </script>
 

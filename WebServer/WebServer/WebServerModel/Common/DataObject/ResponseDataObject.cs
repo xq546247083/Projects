@@ -11,6 +11,7 @@ using System;
 namespace WebServer.Model
 {
     using Newtonsoft.Json;
+    using Tool.Extension;
 
     /// <summary>
     /// 响应数据对象
@@ -28,6 +29,17 @@ namespace WebServer.Model
             get
             {
                 return (Int32)ResultStatus;
+            }
+        }
+
+        /// <summary>
+        /// 状态文本
+        /// </summary>
+        public String StatusValue
+        {
+            get
+            {
+                return ResultStatus.ToDescription();
             }
         }
 

@@ -32,17 +32,13 @@ namespace WebServer.BLL
             {
                 try
                 {
-                    if (tranAction != null)
-                    {
-                        tranAction();
-                    }
-
+                    tranAction?.Invoke();
                     sope.Complete();
                 }
                 catch (Exception ex)
                 {
                     isError = true;
-                    Log.Write(ex.ToMessage(), LogType.Error);
+                    throw ex;
                 }
             }
 
