@@ -78,28 +78,12 @@
             })
         });
 
-        //获取接口文档
+        //注册
         function Register() {
             var userPassword1 = $("#userPassword1").val();
             var userPassword2 = $("#userPassword2").val();
             if (userPassword1 != userPassword2)
             {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "onclick": null,
-                    "showDuration": "2000",
-                    "hideDuration": "1000",
-                    "timeOut": "7000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-
                 toastr.error("提示", "密码不相同");
                 return;
             }
@@ -136,21 +120,6 @@
                 toastr.success("提示", "注册成功");
                 window.location.href = 'Login.html';
             } else {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "onclick": null,
-                    "showDuration": "2000",
-                    "hideDuration": "1000",
-                    "timeOut": "7000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
                 toastr.error("提示", data.StatusValue)
             }
         }

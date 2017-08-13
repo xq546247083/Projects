@@ -1,11 +1,13 @@
 ﻿//如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
 var WebMain = {
     Get: function (className, methodName, data, callback) {
-        return ajax.call(this, className, methodName, data, 'Get', callback)
+        return ajax.call(this, className, methodName, data, 'Get', callback);
     },
-
     Post: function (className, methodName, data, callback) {
-        return ajax.call(this, className, methodName, data, 'Post', callback)
+        return ajax.call(this, className, methodName, data, 'Post', callback);
+    },
+    Init: function () {
+        return init.call();
     }
 }
 
@@ -68,4 +70,28 @@ function handle(returnData) {
     }
 
     return data;
+}
+
+function init() {
+    var result = {}
+
+    //设置默认的提示框
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "2000",
+        "hideDuration": "1000",
+        "timeOut": "7000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    //检测是否登录，超时等等
+
+    return result;
 }

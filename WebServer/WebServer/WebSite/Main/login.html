@@ -46,6 +46,10 @@
     <script src="js/main.js"></script>
     <script src="js/md5.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
+            WebMain.Init();
+        }); 
+
         //获取接口文档
         function Login() {
             var userName = $("#userName").val();
@@ -66,21 +70,6 @@
             if (data.Status == 0) {
                 window.location.href = 'index.html';
             } else {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "onclick": null,
-                    "showDuration": "2000",
-                    "hideDuration": "1000",
-                    "timeOut": "7000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
                 toastr.error("提示", data.StatusValue)
             }
         }
