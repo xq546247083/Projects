@@ -39,6 +39,13 @@ namespace WebServer.BLL
         /// </summary>
         private static ReaderWriterLockTool readerWriterLockTool = new ReaderWriterLockTool();
 
+        /// <summary>
+        /// 玩家数据集合
+        /// key:邮箱地址
+        /// value:验证码
+        /// </summary>
+        private static Dictionary<String, String> mEmailData = new Dictionary<String, String>();
+
         #endregion
 
         #region 初始化

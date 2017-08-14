@@ -15,7 +15,6 @@ namespace Tool.Common
 {
     using Ionic.Zip;
     using Tool.Extension;
-    using Tool.Log;
 
     /// <summary>
     /// 文件工具

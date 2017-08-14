@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\RandomTool.cs" />
     <Compile Include="Common\DateTimeTool.cs" />
+    <Compile Include="Common\EmailTool.cs" />
     <Compile Include="Common\EncrpytTool.cs" />
     <Compile Include="Common\ParseTool.cs" />
     <Compile Include="Extension\ExExtention.cs" />
@@ -62,8 +65,7 @@
     <Compile Include="Extension\ObjectExtensions.cs" />
     <Compile Include="Extension\StringExtention.cs" />
     <Compile Include="Extension\TypeExtensions.cs" />
-    <Compile Include="LogTool\Log.cs" />
-    <Compile Include="LogTool\LogType.cs" />
+    <Compile Include="Common\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

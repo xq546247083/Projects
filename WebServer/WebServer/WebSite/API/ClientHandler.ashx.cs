@@ -12,7 +12,6 @@ namespace WebSite.API
 {
     using WebServer.Model;
     using Tool.Common;
-    using Tool.Log;
     using Tool.Extension;
 
     /// <summary>

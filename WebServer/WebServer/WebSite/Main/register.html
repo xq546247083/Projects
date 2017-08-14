@@ -43,6 +43,10 @@
                 </div>
                 <div class="form-group">
                     <input id="email" type="email" class="form-control" placeholder="请输入邮箱" required="">
+                    <button type="button" onclick="Identify()" class="btn btn-primary block full-width m-b">发送验证码</button>
+                </div>
+                <div class="form-group">
+                    <input id="identifyCode" type="text" class="form-control" placeholder="请输入验证码" required="">
                 </div>
                 <div class="form-group">
                     <input id="userPassword1" type="password" class="form-control" placeholder="请输入密码" required="">
@@ -82,6 +86,20 @@
             })
         });
 
+        function Identify() {
+            var email = $("#email").val();
+            var data = new Array();
+            data[0] = email;
+            var data = WebMain.Post("SysUser", "Identify", data);
+            if (data == {}) retun;
+
+            if (data.Status == 0) {
+                toastr.error("提示", "邮件已发送")
+            } else {
+                toastr.error("提示", data.StatusValue)
+            }
+        }
+
         //注册
         function Register() {
             var userPassword1 = $("#userPassword1").val();
@@ -100,7 +118,8 @@
             var fullName = $("#userName").val();
             var phone = $("#phone").val();
             var email = $("#email").val();
-
+            var identifyCode = $("#identifyCode").val();
+            
             var pwd = md5(userPassword1);
 
             //方法参数
@@ -111,6 +130,7 @@
             data[3] = 1;
             data[4] = phone;
             data[5] = email;
+            data[6] = identifyCode;
 
             WebMain.Post("SysUser", "Register", data, RegisterCallBack);
         }

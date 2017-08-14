@@ -1,12 +1,13 @@
-﻿using WebServer.BLL;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Tool.Log;
 
 namespace WebSite
 {
+    using WebServer.BLL;
+    using Tool.Common;
+
     /// <summary>
     /// 网站启动页面
     /// </summary>
@@ -20,6 +21,7 @@ namespace WebSite
         protected void Application_Start(object sender, EventArgs e)
         {
             Log.LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+            EmailTool.SetSenderInfo(WebConfig.EmailHost, WebConfig.EmailAddress, WebConfig.EmailPass);
 
             //启动服务器
             Log.Write("服务器开始启动", LogType.Info);

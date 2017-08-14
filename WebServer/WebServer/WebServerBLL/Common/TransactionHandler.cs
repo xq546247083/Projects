@@ -12,7 +12,6 @@ namespace WebServer.BLL
 {
     using Tool.Common;
     using Tool.Extension;
-    using Tool.Log;
 
     /// <summary>
     /// 事务提交类

@@ -108,6 +108,11 @@ namespace WebServer.BLL
         /// </summary>
         /// <param name="userName">userName</param>
         /// <param name="userPwd">userPwd</param>
+        /// <param name="fullName">fullName</param>
+        /// <param name="sex">sex</param>
+        /// <param name="phone">phone</param>
+        /// <param name="email">email</param>
+        /// <param name="identifyCode">验证码</param>
         [MethodDescribe(
             "注册", "肖强", "2017-8-13 15:35:14",
 @"{
@@ -117,6 +122,7 @@ namespace WebServer.BLL
     Sex：性别
     Phone：电话
     Email：邮箱
+    identifyCode:验证码
 }           ",
 @"[
     UserName:是否成功登陆
@@ -130,7 +136,7 @@ namespace WebServer.BLL
     Status：状态
     CreateTime:创建时间
 ]            ")]
-        public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String phone, String email)
+        public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String phone, String email, String identifyCode)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
@@ -188,6 +194,24 @@ namespace WebServer.BLL
                 return result;
             }
 
+            if (String.IsNullOrEmpty(identifyCode))
+            {
+                result.ResultStatus = ResultStatus.PlsEnterIdentifyCode;
+                return result;
+            }
+
+            if (!mEmailData.ContainsKey(email))
+            {
+                result.ResultStatus = ResultStatus.IdentifyCodeNoThisEmail;
+                return result;
+            }
+
+            if (mEmailData[email] != identifyCode)
+            {
+                result.ResultStatus = ResultStatus.IdentifyCodeIsError;
+                return result;
+            }
+
             //判断密码是否为空密码
             if (userPwd == "d41d8cd98f00b204e9800998ecf8427e")
             {
@@ -231,6 +255,61 @@ namespace WebServer.BLL
 
             result.ResultStatus = ResultStatus.Success;
             result.Value = AssembleToClient(sysUser);
+
+            return result;
+
+            #endregion
+        }
+
+        /// <summary>
+        /// 验证邮箱
+        /// </summary>
+        /// <param name="email">email</param>
+        [MethodDescribe(
+            "验证邮箱", "肖强", "2017-8-13 15:35:14",
+@"{
+    Email：邮箱
+}           ", @"[]")]
+        public static ResponseDataObject I_Identify(String email)
+        {
+            ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
+
+            #region 检测请求
+
+            if (String.IsNullOrEmpty(email))
+            {
+                result.ResultStatus = ResultStatus.EmailCanBeNotEmpty;
+                return result;
+            }
+
+            if (!email.IsValidEmail())
+            {
+                result.ResultStatus = ResultStatus.EmailStyleIsError;
+                return result;
+            }
+
+            //判断邮箱是否已注册
+            var allUser = GetData();
+            if (allUser.Any(r => r.Value.Email == email))
+            {
+                result.ResultStatus = ResultStatus.EmailAlreadyExist;
+                return result;
+            }
+
+            #endregion
+
+            #region 处理请求
+
+            var keyStr = RandomTool.GetRandomStr(6);
+
+            EmailTool.SendMail(new String[] { email }, "注册验证码", String.Format("验证码:{0}", keyStr), SendPattern.Synchronous);
+            mEmailData[email] = keyStr;
+
+            #endregion
+
+            #region 处理返回
+
+            result.ResultStatus = ResultStatus.Success;
 
             return result;
 

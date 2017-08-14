@@ -11,8 +11,6 @@ using System.Threading;
 
 namespace Tool.Common
 {
-    using Tool.Log;
-
     /// <summary>
     /// 用队列控制线程数量
     /// </summary>

@@ -46,6 +46,21 @@ namespace Tool.Common
         public static Boolean LogErrorFlag { get; set; }
 
         /// <summary>
+        /// 邮箱主机
+        /// </summary>
+        public static String EmailHost { get; set; }
+
+        /// <summary>
+        /// 邮箱地址
+        /// </summary>
+        public static String EmailAddress { get; set; }
+
+        /// <summary>
+        /// 邮箱密码
+        /// </summary>
+        public static String EmailPass { get; set; }
+
+        /// <summary>
         /// 构造方法
         /// </summary>
         static WebConfig()
@@ -59,6 +74,9 @@ namespace Tool.Common
             LogDebugFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogDebugFlag"]);
             LogWarnFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogWarnFlag"]);
             LogErrorFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogErrorFlag"]);
+            EmailHost = ConfigurationManager.AppSettings["EmailHost"];
+            EmailAddress = ConfigurationManager.AppSettings["EmailAddress"];
+            EmailPass = ConfigurationManager.AppSettings["EmailPass"];
         }
     }
 }

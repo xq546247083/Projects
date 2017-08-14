@@ -137,6 +137,24 @@ namespace WebServer.Model
         [Description("请输入密码")]
         PlsEnterPassword = 10011,
 
+        /// <summary>
+        /// 请输入验证码
+        /// </summary>
+        [Description("请输入验证码")]
+        PlsEnterIdentifyCode = 10012,
+
+        /// <summary>
+        /// 该邮箱还未发送验证码
+        /// </summary>
+        [Description("该邮箱还未发送验证码")]
+        IdentifyCodeNoThisEmail = 10013,
+
+        /// <summary>
+        /// 验证码错误
+        /// </summary>
+        [Description("验证码错误")]
+        IdentifyCodeIsError = 10014,
+
         #endregion
 
     }

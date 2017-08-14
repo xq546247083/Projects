@@ -12,10 +12,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Tool.Log
+namespace Tool.Common
 {
-    using Tool.Common;
-
     /// <summary>
     /// 日志工具
     /// </summary>
@@ -351,5 +349,31 @@ namespace Tool.Log
 
             }
         }
+    }
+
+    /// <summary>
+    /// 日志类型
+    /// </summary>
+    public enum LogType : byte
+    {
+        /// <summary>
+        /// Info
+        /// </summary>
+        Info = 0,
+
+        /// <summary>
+        /// Debug
+        /// </summary>
+        Debug = 2,
+
+        /// <summary>
+        /// Warn
+        /// </summary>
+        Warn = 1,
+
+        /// <summary>
+        /// Error
+        /// </summary>
+        Error = 3,
     }
 }
