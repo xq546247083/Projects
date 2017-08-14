@@ -155,6 +155,12 @@ namespace WebServer.Model
         [Description("验证码错误")]
         IdentifyCodeIsError = 10014,
 
+        /// <summary>
+        /// 发送邮件失败，请检查邮箱
+        /// </summary>
+        [Description("发送邮件失败，请检查邮箱")]
+        SendEmailFail = 10015,
+
         #endregion
 
     }

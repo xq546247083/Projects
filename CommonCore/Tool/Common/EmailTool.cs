@@ -5,10 +5,12 @@
 * 日期：2017-5-3 10:43:36
 * 版本：V1
 *************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 using Tool.Extension;
 
 namespace Tool.Common
@@ -39,7 +41,7 @@ namespace Tool.Common
         /// <exception cref="T:System.ObjectDisposedException"></exception>
         /// <exception cref="T:System.Net.Mail.SmtpException"></exception>
         /// <exception cref="T:System.Net.Mail.SmtpFailedRecipientsException"></exception>        
-        private static void Send(IEnumerable<string> mailTo, string subject, string body, IEnumerable<string> attachFiles, bool isBodyHtml)
+        private static Boolean Send(IEnumerable<string> mailTo, string subject, string body, IEnumerable<string> attachFiles, bool isBodyHtml)
         {
             MailMessage mailMessage = new MailMessage();
             try
@@ -69,7 +71,8 @@ namespace Tool.Common
             }
             catch (System.Exception ex)
             {
-                throw ex;
+                Log.Write(ex.ToMessage(), LogType.Warn);
+                return false;
             }
             finally
             {
@@ -78,6 +81,8 @@ namespace Tool.Common
                     mailMessage.Attachments.Dispose();
                 }
             }
+
+            return true;
         }
 
         /// <summary>
@@ -134,31 +139,33 @@ namespace Tool.Common
         /// <exception cref="T:System.ObjectDisposedException"></exception>
         /// <exception cref="T:System.Net.Mail.SmtpException"></exception>
         /// <exception cref="T:System.Net.Mail.SmtpFailedRecipientsException"></exception>
-        public static void SendMail(string[] mailTo, string subject, string body, SendPattern sendPattern, bool isBodyHtml = false)
+        public static Boolean SendMail(string[] mailTo, string subject, string body, SendPattern sendPattern, bool isBodyHtml = false)
         {
             if (mailTo == null || mailTo.Length == 0)
             {
-                throw new System.ArgumentNullException("mailTo", "mailTo can't be null or empty");
+                throw new ArgumentNullException("mailTo", "mailTo can't be null or empty");
             }
             if (string.IsNullOrEmpty(subject))
             {
-                throw new System.ArgumentNullException("subject", "subject can't be null or empty");
+                throw new ArgumentNullException("subject", "subject can't be null or empty");
             }
             if (string.IsNullOrEmpty(body))
             {
-                throw new System.ArgumentNullException("body", "body can't be null or empty");
+                throw new ArgumentNullException("body", "body can't be null or empty");
             }
             if (sendPattern == SendPattern.Synchronous)
             {
-                Send(mailTo, subject, body, null, isBodyHtml);
-                return;
+                return Send(mailTo, subject, body, null, isBodyHtml);
             }
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             dictionary["MailTo"] = mailTo;
             dictionary["Subject"] = subject;
             dictionary["Body"] = body;
             dictionary["IsBodyHtml"] = isBodyHtml;
-            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(Send), dictionary);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(Send), dictionary);
+
+            //采用异步方式发送邮件，直接默认为发送成功
+            return true;
         }
 
         /// <summary>
@@ -170,7 +177,7 @@ namespace Tool.Common
         /// <param name="attachFiles">附件</param>
         /// <param name="sendPattern">发送模式</param>
         /// <param name="isBodyHtml">内容是否为Html</param>
-        public static void SendMail(IEnumerable<string> mailTo, string subject, string body, IEnumerable<string> attachFiles, SendPattern sendPattern, bool isBodyHtml = false)
+        public static Boolean SendMail(IEnumerable<string> mailTo, string subject, string body, IEnumerable<string> attachFiles, SendPattern sendPattern, bool isBodyHtml = false)
         {
             if (mailTo == null || mailTo.Count<string>() == 0)
             {
@@ -186,8 +193,7 @@ namespace Tool.Common
             }
             if (sendPattern == SendPattern.Synchronous)
             {
-                Send(mailTo, subject, body, attachFiles, isBodyHtml);
-                return;
+                return Send(mailTo, subject, body, attachFiles, isBodyHtml);
             }
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             dictionary["MailTo"] = mailTo;
@@ -198,7 +204,10 @@ namespace Tool.Common
             {
                 dictionary["AttachFiles"] = attachFiles;
             }
-            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(Send), dictionary);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(Send), dictionary);
+
+            //采用异步方式发送邮件，直接默认为发送成功
+            return true;
         }
     }
 

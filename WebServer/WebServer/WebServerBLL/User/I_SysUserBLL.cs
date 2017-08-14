@@ -206,7 +206,7 @@ namespace WebServer.BLL
                 return result;
             }
 
-            if (mEmailData[email] != identifyCode)
+            if (mEmailData[email] != identifyCode.ToUpper())
             {
                 result.ResultStatus = ResultStatus.IdentifyCodeIsError;
                 return result;
@@ -302,7 +302,13 @@ namespace WebServer.BLL
 
             var keyStr = RandomTool.GetRandomStr(6);
 
-            EmailTool.SendMail(new String[] { email }, "注册验证码", String.Format("验证码:{0}", keyStr), SendPattern.Synchronous);
+            var flag = EmailTool.SendMail(new String[] { email }, "注册验证码", String.Format("验证码:{0}", keyStr), SendPattern.Synchronous);
+            if (!flag)
+            {
+                result.ResultStatus = ResultStatus.SendEmailFail;
+                return result;
+            }
+
             mEmailData[email] = keyStr;
 
             #endregion
