@@ -11,13 +11,15 @@
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
-    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script>if (window.top !== window.self) { window.top.location = window.location; }</script>
 
 </head>
 
@@ -37,9 +39,6 @@
                     <input id="userName" type="text" class="form-control" placeholder="请输入登录账号" required="">
                 </div>
                 <div class="form-group">
-                    <input id="fullName" type="text" class="form-control" placeholder="请输入用户名" required="">
-                </div>
-                <div class="form-group">
                     <input id="phone" type="number" class="form-control" placeholder="请输入电话号码" required="">
                 </div>
                 <div class="form-group">
@@ -54,12 +53,14 @@
                 <div class="form-group text-left">
                     <div class="checkbox i-checks">
                         <label class="no-padding">
-                            <input id="protocolCb" type="checkbox"><i></i> 我同意注册协议</label>
+                            <input id="protocolCb" class="i-checks" type="checkbox" checked><i></i> 我同意注册协议
+                        </label>
                     </div>
                 </div>
                 <button type="button" onclick="Register()" class="btn btn-primary block full-width m-b">注 册</button>
 
-                <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
+                <p class="text-muted text-center">
+                    <small>已经有账户了？</small><a href="login.html">点此登录</a>
                 </p>
 
             </form>
@@ -69,10 +70,13 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/iCheck/icheck.min.js"></script>
     <script src="js/plugins/toastr/toastr.min.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/md5.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            WebMain.Init();
+
             $(".i-checks").iCheck({
                 checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",
             })
@@ -82,20 +86,18 @@
         function Register() {
             var userPassword1 = $("#userPassword1").val();
             var userPassword2 = $("#userPassword2").val();
-            if (userPassword1 != userPassword2)
-            {
+            if (userPassword1 != userPassword2) {
                 toastr.error("提示", "密码不相同");
                 return;
             }
             var protocolCb = $("#protocolCb").is(':checked');
-            if (protocolCb == false)
-            {
+            if (protocolCb == false) {
                 toastr.warning("提示", "协议未勾选");
                 return;
             }
 
             var userName = $("#userName").val();
-            var fullName = $("#fullName").val();
+            var fullName = $("#userName").val();
             var phone = $("#phone").val();
             var email = $("#email").val();
 
@@ -117,8 +119,29 @@
             if (data == {}) retun;
 
             if (data.Status == 0) {
-                toastr.success("提示", "注册成功");
-                window.location.href = 'Login.html';
+                swal({
+                    title: "注册成功",
+                    text: "点击OK跳转登录页面，3s后自动跳转登录页面...",
+                    timer: 1000,
+                    showConfirmButton: true
+                }, function () {
+                    swal({
+                        title: "注册成功",
+                        text: "点击OK跳转登录页面，2s后自动跳转登录页面...",
+                        timer: 1000,
+                        showConfirmButton: true
+                    }, function () {
+                        swal({
+                            title: "注册成功",
+                            text: "点击OK跳转登录页面，1s后自动跳转登录页面...",
+                            timer: 1000,
+                            showConfirmButton: true
+                        }, function () {
+                            window.location.href = 'login.html';
+                        });
+                    });
+                });
+
             } else {
                 toastr.error("提示", data.StatusValue)
             }

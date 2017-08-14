@@ -163,7 +163,9 @@ namespace WebServer.BLL
             {
                 if (objs[i] == null)
                 {
-                    throw new SelfDefinedException(ResultStatus.NullParameter, "不支持传递null参数");
+                    result[i] = types[i].IsValueType ? Activator.CreateInstance(types[i]) : null;
+                    continue;
+                    //throw new SelfDefinedException(ResultStatus.NullParameter, "不支持传递null参数");
                 }
 
                 Type tempT = objs[i].GetType();

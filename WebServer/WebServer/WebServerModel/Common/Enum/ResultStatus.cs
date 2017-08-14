@@ -83,6 +83,60 @@ namespace WebServer.Model
         [Description("用户名已被注册")]
         UserNameIsExist = 10003,
 
+        /// <summary>
+        /// 用户名必须以字母开头
+        /// </summary>
+        [Description("用户名必须以字母开头")]
+        UserNameMustBeginWithLetter = 10004,
+
+        /// <summary>
+        /// 用户名只能由字母和数字构成
+        /// </summary>
+        [Description("用户名只能由字母和数字构成")]
+        UserNameMustBeLetterOrNum = 10005,
+
+        /// <summary>
+        /// 密码不能为空
+        /// </summary>
+        [Description("密码不能为空")]
+        UserPasswordCanBeNotEmpty = 10006,
+
+        /// <summary>
+        /// 邮箱不能为空
+        /// </summary>
+        [Description("邮箱不能为空")]
+        EmailCanBeNotEmpty = 10007,
+
+        /// <summary>
+        /// 邮箱格式错误
+        /// </summary>
+        [Description("邮箱格式错误")]
+        EmailStyleIsError = 10008,
+
+        /// <summary>
+        /// 邮箱已被注册
+        /// </summary>
+        [Description("邮箱已被注册")]
+        EmailAlreadyExist = 10009,
+
+        /// <summary>
+        /// 用户名不能为空
+        /// </summary>
+        [Description("用户名不能为空")]
+        UserNameCantBeEmpty = 10010,
+
+        /// <summary>
+        /// 电话号码格式错误
+        /// </summary>
+        [Description("电话号码格式错误")]
+        PhoneStyleIsError = 10011,
+
+        /// <summary>
+        /// 请输入密码
+        /// </summary>
+        [Description("请输入密码")]
+        PlsEnterPassword = 10011,
+
         #endregion
 
     }

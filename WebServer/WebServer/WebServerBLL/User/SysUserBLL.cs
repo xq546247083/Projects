@@ -101,13 +101,26 @@ namespace WebServer.BLL
         /// <summary>
         /// 获取某一个玩家
         /// </summary>
-        /// <param name="userId">userId</param>
+        /// <param name="userName">userName</param>
         /// <returns>玩家</returns>
         public static SysUser GetItemByUserName(String userName)
         {
             using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
             {
                 return GetData().Values.FirstOrDefault(r => r.UserName == userName);
+            }
+        }
+
+        /// <summary>
+        /// 获取某一个玩家,通过邮箱
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>玩家</returns>
+        public static SysUser GetItemByEmail(String email)
+        {
+            using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
+            {
+                return GetData().Values.FirstOrDefault(r => r.Email == email);
             }
         }
 

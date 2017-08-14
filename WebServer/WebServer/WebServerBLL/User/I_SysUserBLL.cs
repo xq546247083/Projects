@@ -12,6 +12,8 @@ namespace WebServer.BLL
     using WebServer.Model;
     using Tool.CustomAttribute;
     using Tool.Common;
+    using System.Linq;
+    using Tool.Extension;
 
     /// <summary>
     /// 玩家类
@@ -48,11 +50,26 @@ namespace WebServer.BLL
 
             #region 检测请求
 
-            SysUser sysUser = GetItemByUserName(userName);
+            SysUser sysUser = null;
+            if (userName.IsValidEmail())
+            {
+                sysUser = GetItemByEmail(userName);
+            }
+            else
+            {
+                sysUser = GetItemByUserName(userName);
+            }
 
             if (sysUser == null)
             {
                 result.ResultStatus = ResultStatus.UserIsNotExist;
+                return result;
+            }
+
+            //判断密码是否为空密码
+            if (userPwd == "d41d8cd98f00b204e9800998ecf8427e")
+            {
+                result.ResultStatus = ResultStatus.PlsEnterPassword;
                 return result;
             }
 
@@ -126,6 +143,62 @@ namespace WebServer.BLL
                 result.ResultStatus = ResultStatus.UserNameIsExist;
                 return result;
             }
+
+            if (String.IsNullOrEmpty(userName))
+            {
+                result.ResultStatus = ResultStatus.UserNameCantBeEmpty;
+                return result;
+            }
+
+            if (!char.IsLetter(userName[0]))
+            {
+                result.ResultStatus = ResultStatus.UserNameMustBeginWithLetter;
+                return result;
+            }
+
+            if (userName.ToCharArray().Any(r => !char.IsLetterOrDigit(r)))
+            {
+                result.ResultStatus = ResultStatus.UserNameMustBeLetterOrNum;
+                return result;
+            }
+
+            if (!phone.IsValidPhone())
+            {
+                result.ResultStatus = ResultStatus.PhoneStyleIsError;
+                return result;
+            }
+
+            if (String.IsNullOrEmpty(email))
+            {
+                result.ResultStatus = ResultStatus.EmailCanBeNotEmpty;
+                return result;
+            }
+
+            if (!email.IsValidEmail())
+            {
+                result.ResultStatus = ResultStatus.EmailStyleIsError;
+                return result;
+            }
+
+            //判断邮箱是否已注册
+            var allUser = GetData();
+            if (allUser.Any(r => r.Value.Email == email))
+            {
+                result.ResultStatus = ResultStatus.EmailAlreadyExist;
+                return result;
+            }
+
+            //判断密码是否为空密码
+            if (userPwd == "d41d8cd98f00b204e9800998ecf8427e")
+            {
+                result.ResultStatus = ResultStatus.UserPasswordCanBeNotEmpty;
+                return result;
+            }
+
+            #endregion
+
+            #region 构造玩家数据
+
             var sexFlag = true;
             Boolean.TryParse(sex.ToString(), out sexFlag);
 
