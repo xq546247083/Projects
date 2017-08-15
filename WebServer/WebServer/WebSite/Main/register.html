@@ -77,9 +77,9 @@
         function Identify() {
             var email = $("#email").val();
             var data = new Array();
-            data[0] = email; 
+            data[0] = email;
 
-            WebMain.Post("SysUser", "Identify", data, function(returnData) {
+            WebMain.Post("SysUser", "Identify", data, function (returnData) {
                 if (returnData == {}) return;
 
                 if (returnData.Status == 0) {
@@ -87,9 +87,9 @@
 
                     //一分钟可点击一次发送邮件
                     $("#identifyBtn").attr('disabled', true);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $("#identifyBtn").attr('disabled', false);
-                    }, 6000);
+                    }, 60000);
                 } else {
                     toastr.error("提示", returnData.StatusValue);
                 }
