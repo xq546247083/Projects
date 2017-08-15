@@ -77,9 +77,9 @@ function ajax(className, methodName, data, type, callback) {
         },
         error: function (request, textStatus, errorThrown) {
             if (request.status == 500) {
-                window.location.href = '500.html';
+                window.location.href = '/Main/500.html';
             } else {
-                window.location.href = '404.html';
+                window.location.href = '/Main/404.html';
             }
         }
     });
@@ -103,7 +103,7 @@ function handle(returnData) {
 
     //如果登录超时，直接跳转
     if (data.Status == 7) {
-        window.location.href = 'lockscreen.html';
+        window.location.href = '/Main/lockscreen.html';
         data = {}
     } else {
         //做其他事情
