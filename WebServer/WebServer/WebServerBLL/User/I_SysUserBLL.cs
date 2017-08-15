@@ -110,7 +110,6 @@ namespace WebServer.BLL
         /// <param name="userPwd">userPwd</param>
         /// <param name="fullName">fullName</param>
         /// <param name="sex">sex</param>
-        /// <param name="phone">phone</param>
         /// <param name="email">email</param>
         /// <param name="identifyCode">验证码</param>
         [MethodDescribe(
@@ -120,7 +119,6 @@ namespace WebServer.BLL
     UserPwd:密码
     FullName:用户名称
     Sex：性别
-    Phone：电话
     Email：邮箱
     identifyCode:验证码
 }           ",
@@ -136,7 +134,7 @@ namespace WebServer.BLL
     Status：状态
     CreateTime:创建时间
 ]            ")]
-        public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String phone, String email, String identifyCode)
+        public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String email, String identifyCode)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
@@ -165,12 +163,6 @@ namespace WebServer.BLL
             if (userName.ToCharArray().Any(r => !char.IsLetterOrDigit(r)))
             {
                 result.ResultStatus = ResultStatus.UserNameMustBeLetterOrNum;
-                return result;
-            }
-
-            if (!phone.IsValidPhone())
-            {
-                result.ResultStatus = ResultStatus.PhoneStyleIsError;
                 return result;
             }
 
@@ -206,7 +198,7 @@ namespace WebServer.BLL
                 return result;
             }
 
-            if (mEmailData[email] != identifyCode.ToUpper())
+            if (mEmailData[email].Item1 != identifyCode.ToUpper())
             {
                 result.ResultStatus = ResultStatus.IdentifyCodeIsError;
                 return result;
@@ -233,7 +225,7 @@ namespace WebServer.BLL
                 Password = EncrpytTool.Encrypt(userPwd),
                 FullName = fullName,
                 Sex = sexFlag,
-                Phone = phone,
+                Phone = String.Empty,
                 Email = email,
                 Status = 1,
                 LoginCount = 0,
@@ -296,6 +288,12 @@ namespace WebServer.BLL
                 return result;
             }
 
+            if (mEmailData.ContainsKey(email) && mEmailData[email].Item2.AddMinutes(1) > DateTime.Now)
+            {
+                result.ResultStatus = ResultStatus.SendEmailIsFast;
+                return result;
+            }
+
             #endregion
 
             #region 处理请求
@@ -309,7 +307,7 @@ namespace WebServer.BLL
                 return result;
             }
 
-            mEmailData[email] = keyStr;
+            mEmailData[email] = new Tuple<String, DateTime>(keyStr, DateTime.Now);
 
             #endregion
 

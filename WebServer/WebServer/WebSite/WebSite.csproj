@@ -136,6 +136,7 @@
     <Content Include="Main\css\plugins\treeview\bootstrap-treeview.css" />
     <Content Include="Main\css\plugins\webuploader\webuploader.css" />
     <Content Include="Main\css\style.min.css" />
+    <Content Include="Main\css\WebMain.css" />
     <Content Include="Main\fonts\fontawesome-webfont.svg" />
     <Content Include="Main\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Main\img\1.png" />

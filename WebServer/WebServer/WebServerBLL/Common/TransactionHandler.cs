@@ -25,24 +25,26 @@ namespace WebServer.BLL
         /// <param name="acAction">一般方法</param>
         public static void Handle(Action tranAction, Action acAction)
         {
-            Boolean isError = false;
             //开启数据库事务
             using (TransactionScope sope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead }))
             {
                 try
                 {
-                    tranAction?.Invoke();
+                    if (tranAction != null)
+                    {
+                        tranAction();
+                    }
+
                     sope.Complete();
                 }
                 catch (Exception ex)
                 {
-                    isError = true;
                     throw ex;
                 }
             }
 
             //如果事务方法执行成功，则执行一般方法
-            if (!isError && acAction != null)
+            if (acAction != null)
             {
                 acAction();
             }

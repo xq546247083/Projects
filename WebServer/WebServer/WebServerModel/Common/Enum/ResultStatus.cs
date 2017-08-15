@@ -161,6 +161,12 @@ namespace WebServer.Model
         [Description("发送邮件失败，请检查邮箱")]
         SendEmailFail = 10015,
 
+        /// <summary>
+        /// 发送邮件过快，请稍后重试
+        /// </summary>
+        [Description("发送邮件过快，请稍后重试")]
+        SendEmailIsFast = 10016,
+
         #endregion
 
     }

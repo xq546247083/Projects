@@ -42,9 +42,9 @@ namespace WebServer.BLL
         /// <summary>
         /// 玩家数据集合
         /// key:邮箱地址
-        /// value:验证码
+        /// value:验证码,上次发送验证码时间
         /// </summary>
-        private static Dictionary<String, String> mEmailData = new Dictionary<String, String>();
+        private static Dictionary<String, Tuple<String, DateTime>> mEmailData = new Dictionary<String, Tuple<String, DateTime>>();
 
         #endregion
 
