@@ -336,6 +336,8 @@ namespace CodeGen
                 rdbMySQL.Checked = false;
                 rdbOracle.Checked = true;
             }
+
+            rdbMySQL.Checked = true;
 		}
 
 		private void button1_Click(object sender, System.EventArgs e)

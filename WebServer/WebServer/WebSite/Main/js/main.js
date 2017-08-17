@@ -77,6 +77,7 @@ function ajax(className, methodName, data, type, callback) {
         },
         error: function (request, textStatus, errorThrown) {
             if (request.status == 500) {
+                var userName = window.GetCookie("UserName");
                 window.location.href = '/Main/500.html';
             } else {
                 window.location.href = '/Main/404.html';

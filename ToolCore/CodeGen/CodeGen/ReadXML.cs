@@ -12,7 +12,7 @@ using System.Linq;
 public class ReadXML
 {
 
-    public static string XmlFileName = @"CharXml.xml";
+    public static string XmlFileName = @"Resource\CharXml.xml";
 
     public static HdcCache cache = new HdcCache();
 

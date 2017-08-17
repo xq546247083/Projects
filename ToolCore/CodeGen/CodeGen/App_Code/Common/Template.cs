@@ -168,7 +168,7 @@ public class Template
     public static void InitCodeObjects()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load("Code.xml");
+        doc.Load(@"Resource\Code.xml");
         XmlNode node = doc.SelectSingleNode("root");
 
         foreach (XmlNode child in node.ChildNodes)

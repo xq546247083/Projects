@@ -488,7 +488,7 @@ namespace WebServer.DAL
 		/// 获取数据
 		/// </summary>
 	#foreach($item in $data.BaseDetail.PKColumns)
-		/// <param name="$item.PropertyName">$item.CNName</param> 
+		/// <param name="$item.PropertyNameLower">$item.CNName</param> 
 	#end
 		/// <returns>/// 获取数据</returns>
 		public static DataTable GetList(#pklist())
@@ -506,7 +506,7 @@ namespace WebServer.DAL
 		/// 删除
 		/// </summary>
 	#foreach($item in $data.BaseDetail.PKColumns)
-		/// <param name="$item.PropertyName">$item.CNName</param>
+		/// <param name="$item.PropertyNameLower">$item.CNName</param>
 	#end
 		/// <returns>删除</returns>
 		public static Int32 Delete(#pklist())
@@ -524,7 +524,7 @@ namespace WebServer.DAL
 		/// 插入数据
 		/// </summary>
 	#foreach($item in $data.BaseDetail.Columns)
-		/// <param name="$item.PropertyName">$item.CNName</param>
+		/// <param name="$item.PropertyNameLower">$item.CNName</param>
 	#end
 		/// <returns>更新</returns>
 		public static Int32 Insert(#columnlist())
@@ -542,7 +542,7 @@ namespace WebServer.DAL
 		/// 更新
 		/// </summary>
 	#foreach($item in $data.BaseDetail.Columns)
-		/// <param name="$item.PropertyName">$item.CNName</param>
+		/// <param name="$item.PropertyNameLower">$item.CNName</param>
 	#end
 		/// <returns>更新</returns>
 		public static Int32 Update(#columnlist())
