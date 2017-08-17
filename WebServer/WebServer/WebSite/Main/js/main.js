@@ -45,11 +45,6 @@ function init() {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    //检测是否登录，超时等等
-    var userName = $.cookie("UserName");
-    if (userName == null || userName == "") {
-        window.location.href = '/Main/login.html';
-    }
 
     return result;
 }

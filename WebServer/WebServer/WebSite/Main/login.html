@@ -41,6 +41,7 @@
         </div>
     </div>
     <script src="/Main/js/jquery.min.js"></script>
+    <script src="/Main/js/jquery.cookie.js"></script>
     <script src="/Main/js/bootstrap.min.js"></script>
     <script src="/Main/js/content.min.js"></script>
     <script src="/Main/js/plugins/toastr/toastr.min.js"></script>
@@ -66,7 +67,7 @@
                 if (data == {}) return;
 
                 if (data.Status == 0) {
-                    $.cookie("UserName", userName, { expires: 30 });
+                    $.cookie("UserName", userName, { expires: 30, path: '/' });
                     window.location.href = '/Main/index.html';
                 } else {
                     toastr.error("提示", data.StatusValue);
