@@ -16,8 +16,8 @@ namespace WebServer.DAL
     {
         #region p_player
 
-        public static readonly String GetPlayerListByUserId = "SELECT ` UserID `,` UserName `,` FullName `,` Password `,` PwdExpiredTime `,` Sex `,` Phone `,` Email `,` Status `,` LoginCount `,` LastLoginTime `,` LastLoginIP `,` RoleIDs `,` CreateTime `  FROM` sys_user `  UserID=@UserID;";
         public static readonly String GetPlayerListByUserName = "SELECT ` UserID `,` UserName `,` FullName `,` Password `,` PwdExpiredTime `,` Sex `,` Phone `,` Email `,` Status `,` LoginCount `,` LastLoginTime `,` LastLoginIP `,` RoleIDs `,` CreateTime `  FROM` sys_user `  UserName=@UserName;";
+        public static readonly String GetPlayerListByUserEmail = "SELECT ` UserID `,` UserName `,` FullName `,` Password `,` PwdExpiredTime `,` Sex `,` Phone `,` Email `,` Status `,` LoginCount `,` LastLoginTime `,` LastLoginIP `,` RoleIDs `,` CreateTime `  FROM` sys_user `  Email=@Email;";
 
         #endregion
     }

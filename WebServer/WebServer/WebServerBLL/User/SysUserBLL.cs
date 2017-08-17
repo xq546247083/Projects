@@ -114,7 +114,10 @@ namespace WebServer.BLL
         {
             using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
             {
-                return GetData().Values.FirstOrDefault(r => r.UserName == userName);
+                var userInfo= GetData().Values.FirstOrDefault(r => r.UserName == userName);
+
+                //todo xiqoaing 这里要检测用户信息是否存在，如果不存在，用数据库获取用户信息，这里要好好思考下咋获取
+                return userInfo;
             }
         }
 

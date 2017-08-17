@@ -43,7 +43,7 @@ namespace WebServer.DAL
         /// 获取数据
         /// </summary>
         /// <param name="userID">主键</param> 
-        /// <returns>/// 获取数据</returns>
+        /// <returns>获取数据</returns>
         public static DataTable GetList(Guid userID)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
@@ -53,6 +53,37 @@ namespace WebServer.DAL
 
             return ExecuteDataTable(SqlFactory.mData[tableName][SqlType.GetList], mySqlParameter);
         }
+
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="userName">用户名</param> 
+        /// <returns>/// 获取数据</returns>
+        public static DataTable GetListByUserName(String userName)
+        {
+            MySqlParameter[] mySqlParameter = new MySqlParameter[]
+			{
+				new MySqlParameter(FiledConst.UserName,userName),
+			};
+
+            return ExecuteDataTable(SqlConst.GetPlayerListByUserName, mySqlParameter);
+        }
+
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="email">邮箱</param> 
+        /// <returns>/// 获取数据</returns>
+        public static DataTable GetListByUserEmail(Guid email)
+        {
+            MySqlParameter[] mySqlParameter = new MySqlParameter[]
+			{
+				new MySqlParameter(FiledConst.Email,email),
+			};
+
+            return ExecuteDataTable(SqlConst.GetPlayerListByUserEmail, mySqlParameter);
+        }
+
 
         /// <summary>
         /// 删除

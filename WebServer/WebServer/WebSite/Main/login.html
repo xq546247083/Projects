@@ -62,11 +62,11 @@
             data[0] = userName;
             data[1] = pwd;
 
-            WebMain.Post("SysUser", "Login", data, function (data) {
+            WebMain.Post("SysUser", "Login", data, function (data, userName) {
                 if (data == {}) return;
 
                 if (data.Status == 0) {
-                    window.SetCookie("UserName", userName);
+                    $.cookie("UserName", userName, { expires: 30 });
                     window.location.href = '/Main/index.html';
                 } else {
                     toastr.error("提示", data.StatusValue);

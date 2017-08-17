@@ -52,27 +52,20 @@ namespace WebServer.DAL
         /// </summary>
         static SqlFactory()
         {
-            //该处配置要自动生成的表的表名
-            List<String> tableNamelist = new List<String>
-            {
-                "sys_user",
-            };
-
-            InitType(tableNamelist);
+            InitType();
         }
 
         /// <summary>
         /// 初始化mTypeData数据
         /// </summary>
-        /// <param name="tableNamelist">要初始化的表</param>
-        private static void InitType(List<String> tableNamelist)
+        private static void InitType()
         {
             var types = ReflectionTool.GetTypeListOfAttribute(Assembly.GetAssembly(typeof(World)), typeof(DataBaseTableAttribute));
             //初始化要生成语句的类型数据
             foreach (var type in types)
             {
                 var dataBaseTableAttribute = type.GetCustomAttribute(typeof(DataBaseTableAttribute), false) as DataBaseTableAttribute;
-                if (dataBaseTableAttribute != null && tableNamelist.Contains(dataBaseTableAttribute.Name))
+                if (dataBaseTableAttribute != null)
                 {
                     mTypeData[dataBaseTableAttribute.Name] = type;
                 }

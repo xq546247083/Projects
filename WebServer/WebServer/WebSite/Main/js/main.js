@@ -46,6 +46,10 @@ function init() {
         "hideMethod": "fadeOut"
     }
     //检测是否登录，超时等等
+    var userName = $.cookie("UserName");
+    if (userName == null || userName == "") {
+        window.location.href = '/Main/login.html';
+    }
 
     return result;
 }
@@ -77,7 +81,6 @@ function ajax(className, methodName, data, type, callback) {
         },
         error: function (request, textStatus, errorThrown) {
             if (request.status == 500) {
-                var userName = window.GetCookie("UserName");
                 window.location.href = '/Main/500.html';
             } else {
                 window.location.href = '/Main/404.html';
@@ -104,7 +107,12 @@ function handle(returnData) {
 
     //如果登录超时，直接跳转
     if (data.Status == 7) {
-        window.location.href = '/Main/lockscreen.html';
+        var userName = $.cookie("UserName");
+        if (userName == null || userName == "") {
+            window.location.href = '/Main/login.html';
+        } else {
+            window.location.href = '/Main/lockscreen.html';
+        }
         data = {}
     } else {
         //做其他事情
