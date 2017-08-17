@@ -490,7 +490,7 @@ namespace WebServer.DAL
 	#foreach($item in $data.BaseDetail.PKColumns)
 		/// <param name="$item.PropertyNameLower">$item.CNName</param> 
 	#end
-		/// <returns>/// 获取数据</returns>
+		/// <returns>获取数据</returns>
 		public static DataTable GetList(#pklist())
 		{
 			MySqlParameter[] mySqlParameter = new MySqlParameter[]
