@@ -58,9 +58,9 @@ namespace WebServer.Model
         ClientParamTypeError =6,
 
         /// <summary>
-        /// 登录超时
+        /// 密码已过期
         /// </summary>
-        [Description("登录超时")]
+        [Description("密码已过期")]
         LoginIsOverTime = 7,
 
         #region SysUser

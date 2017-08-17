@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tool.Extension;
 
 namespace WebServer.BLL
 {
@@ -33,11 +34,6 @@ namespace WebServer.BLL
         /// value:玩家对象
         /// </summary>
         private static Dictionary<Guid, SysUser> mData = new Dictionary<Guid, SysUser>();
-
-        /// <summary>
-        /// 读写锁
-        /// </summary>
-        private static ReaderWriterLockTool readerWriterLockTool = new ReaderWriterLockTool();
 
         /// <summary>
         /// 玩家数据集合
@@ -89,12 +85,9 @@ namespace WebServer.BLL
         /// <returns>玩家</returns>
         public static SysUser GetItem(Guid sysUserId, Boolean ifCastException = false)
         {
-            using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
+            if (GetData().ContainsKey(sysUserId))
             {
-                if (GetData().ContainsKey(sysUserId))
-                {
-                    return mData[sysUserId];
-                }
+                return mData[sysUserId];
             }
 
             if (ifCastException)
@@ -112,13 +105,10 @@ namespace WebServer.BLL
         /// <returns>玩家</returns>
         public static SysUser GetItemByUserName(String userName)
         {
-            using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
-            {
-                var userInfo= GetData().Values.FirstOrDefault(r => r.UserName == userName);
+            var userInfo = GetData().Values.FirstOrDefault(r => r.UserName == userName);
 
-                //todo xiqoaing 这里要检测用户信息是否存在，如果不存在，用数据库获取用户信息，这里要好好思考下咋获取
-                return userInfo;
-            }
+            //todo xiqoaing 这里要检测用户信息是否存在，如果不存在，用数据库获取用户信息，这里要好好思考下咋获取
+            return userInfo;
         }
 
         /// <summary>
@@ -128,11 +118,55 @@ namespace WebServer.BLL
         /// <returns>玩家</returns>
         public static SysUser GetItemByEmail(String email)
         {
-            using (readerWriterLockTool.GetLock(mClassName, ReaderWriterLockTool.LockTypeEnum.Reader, 0))
+            return GetData().Values.FirstOrDefault(r => r.Email == email);
+        }
+
+        /// <summary>
+        /// 获取某一个玩家,通过邮箱
+        /// </summary>
+        /// <param name="userNameOrEmail">email</param>
+        /// <returns>玩家</returns>
+        public static void UpdatePwdExpiredTime(String userNameOrEmail)
+        {
+            SysUser sysUser = null;
+            if (userNameOrEmail.IsValidEmail())
             {
-                return GetData().Values.FirstOrDefault(r => r.Email == email);
+                sysUser = GetItemByEmail(userNameOrEmail);
+            }
+            else
+            {
+                sysUser = GetItemByUserName(userNameOrEmail);
+            }
+
+            if (sysUser != null)
+            {
+                sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
+
+                Update(sysUser);
             }
         }
+
+        /// <summary>
+        /// 检测玩家是否过期
+        /// </summary>
+        /// <param name="userNameOrEmail">email</param>
+        /// <returns>玩家</returns>
+        public static Boolean CheckPwdExpiredTime(String userNameOrEmail)
+        {
+            SysUser sysUser = null;
+            if (userNameOrEmail.IsValidEmail())
+            {
+                sysUser = GetItemByEmail(userNameOrEmail);
+            }
+            else
+            {
+                sysUser = GetItemByUserName(userNameOrEmail);
+            }
+
+            return sysUser.PwdExpiredTime < DateTime.Now;
+        }
+
+
 
         /// <summary>
         /// 更新玩家数据
@@ -165,22 +199,23 @@ namespace WebServer.BLL
         /// <summary>
         /// 组装客户端数据
         /// </summary>
-        /// <param name="SysUser">玩家对象</param>
+        /// <param name="sysUser">玩家对象</param>
         /// <returns>客户端数据</returns>
-        public static Dictionary<String, Object> AssembleToClient(SysUser SysUser)
+        public static Dictionary<String, Object> AssembleToClient(SysUser sysUser)
         {
             Dictionary<String, Object> clientInfo = new Dictionary<String, Object>();
 
-            clientInfo[PropertyConst.UserName] = SysUser.UserName;
-            clientInfo[PropertyConst.FullName] = SysUser.FullName;
-            clientInfo[PropertyConst.Sex] = SysUser.Sex;
-            clientInfo[PropertyConst.Phone] = SysUser.Phone;
-            clientInfo[PropertyConst.Email] = SysUser.Email;
-            clientInfo[PropertyConst.LastLoginTime] = SysUser.LastLoginTime;
-            clientInfo[PropertyConst.LastLoginIP] = SysUser.LastLoginIP;
-            clientInfo[PropertyConst.LoginCount] = SysUser.LoginCount;
-            clientInfo[PropertyConst.Status] = SysUser.Status;
-            clientInfo[PropertyConst.CreateTime] = SysUser.CreateTime;
+            clientInfo[PropertyConst.UserName] = sysUser.UserName;
+            clientInfo[PropertyConst.FullName] = sysUser.FullName;
+            clientInfo[PropertyConst.Sex] = sysUser.Sex;
+            clientInfo[PropertyConst.Phone] = sysUser.Phone;
+            clientInfo[PropertyConst.Email] = sysUser.Email;
+            clientInfo[PropertyConst.LastLoginTime] = sysUser.LastLoginTime;
+            clientInfo[PropertyConst.LastLoginIP] = sysUser.LastLoginIP;
+            clientInfo[PropertyConst.LoginCount] = sysUser.LoginCount;
+            clientInfo[PropertyConst.Status] = sysUser.Status;
+            clientInfo[PropertyConst.CreateTime] = sysUser.CreateTime;
+            clientInfo[PropertyConst.PwdExpiredTime] = sysUser.PwdExpiredTime;
 
             return clientInfo;
         }

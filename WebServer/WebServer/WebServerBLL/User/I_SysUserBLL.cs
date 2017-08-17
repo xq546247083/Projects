@@ -33,7 +33,7 @@ namespace WebServer.BLL
     UserPwd:用户密码
 }           ",
 @"[
-    UserName:是否成功登陆
+    UserName:用户账号
     FullName:用户名
     Sex:性别
     Phone：电话
@@ -43,6 +43,7 @@ namespace WebServer.BLL
     LoginCount:登录次数
     Status：状态
     CreateTime:创建时间
+    PwdExpiredTime：密码过期时间
 ]            ")]
         public static ResponseDataObject I_Login(String userName, String userPwd)
         {
@@ -86,6 +87,7 @@ namespace WebServer.BLL
             TransactionHandler.Handle(() =>
             {
                 sysUser.LastLoginTime = DateTime.Now;
+                sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
                 sysUser.LoginCount += 1;
 
                 Update(sysUser);
@@ -133,6 +135,7 @@ namespace WebServer.BLL
     LoginCount:登录次数
     Status：状态
     CreateTime:创建时间
+    PwdExpiredTime：密码过期时间
 ]            ")]
         public static ResponseDataObject I_Register(String userName, String userPwd, String fullName, Int32 sex, String email, String identifyCode)
         {
@@ -229,7 +232,8 @@ namespace WebServer.BLL
                 Email = email,
                 Status = 1,
                 LoginCount = 0,
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+                PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime)
             };
 
             #endregion

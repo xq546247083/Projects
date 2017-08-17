@@ -35,9 +35,9 @@ namespace WebServer.Model
         public Int32 ServerId { get; set; }
 
         /// <summary>
-        /// 玩家Id
+        /// 玩家名字
         /// </summary>
-        public String PlayerId { get; set; }
+        public String UserName { get; set; }
 
         /// <summary>
         /// 玩家Token

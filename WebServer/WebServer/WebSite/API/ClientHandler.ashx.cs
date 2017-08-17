@@ -7,6 +7,7 @@
 *************************************************************************/
 using System;
 using System.Web;
+using WebServer.BLL;
 
 namespace WebSite.API
 {
@@ -45,8 +46,21 @@ namespace WebSite.API
             {
                 //获取请求
                 RequestDataObject requestDataObject = GetRequestDataObject(context);
+
                 //处理请求
                 responseDataObject = ReflectionTool.CallStaticMethod(mAssemblyName, String.Format("{0}.{1}{2}", mAssemblyName, requestDataObject.ClassName, mClassFlag), String.Format("{0}{1}", mMethodFlag, requestDataObject.MethodName), requestDataObject.Data) as ResponseDataObject;
+                //如果有用户名，如果过期，则直接返回过期，如果没有，则更新过期时间
+                if (!String.IsNullOrEmpty(requestDataObject.UserName) && requestDataObject.UserName != "null")
+                {
+                    if (SysUserBLL.CheckPwdExpiredTime(requestDataObject.UserName) && responseDataObject != null)
+                    {
+                        responseDataObject.ResultStatus = ResultStatus.LoginIsOverTime;
+                    }
+                    else
+                    {
+                        SysUserBLL.UpdatePwdExpiredTime(requestDataObject.UserName);
+                    }
+                }
             }
             catch (Exception ex)
             {

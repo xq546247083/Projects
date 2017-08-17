@@ -1,8 +1,12 @@
 ﻿//如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
 var WebMain = {
     //初始化,检测数据
-    Init: function () {
-        return init.call();
+    //flag: 0：登录页面，1：检测数据,一般界面，2：重新登录页面或注册页面
+    Init: function (flag) {
+        return init.call(this, flag);
+    },
+    Cookie: function (userName, pwdExpiredTime) {
+        return cookie.call(this, userName, pwdExpiredTime);
     },
     //ajax请求
     Get: function (className, methodName, data, callback) {
@@ -26,8 +30,9 @@ var WebMain = {
 }
 
 //初始化,检测数据
-function init() {
+function init(flag) {
     var result = {}
+    checkdata(flag);
 
     //设置默认的提示框
     toastr.options = {
@@ -49,13 +54,45 @@ function init() {
     return result;
 }
 
+function cookie(userName, pwdExpiredTime) {
+    $.cookie("UserName", userName, { expires: 30, path: '/' });
+    $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+}
+
+//检测用户数据
+function checkdata(flag) {
+    var userName = $.cookie("UserName");
+    var pwdExpiredTime = $.cookie("PwdExpiredTime");
+    //如果检测数据，那么如果没用用户名，则登录
+    if (flag == 1) {
+        if (userName == null || userName == "") {
+            window.location.href = '/Main/login.html';
+        } else if (pwdExpiredTime < new Date()) {
+            //如果有用户名，但是过期了，则重登录
+            window.location.href = '/Main/lockscreen.html';
+        }
+    } else if (flag == 0) {
+        //如果为登录页面，且密码过期，则重登录
+        if (userName != null && userName != "") {
+            if (pwdExpiredTime < new Date()) {
+                window.location.href = '/Main/lockscreen.html';
+            } else {
+                window.location.href = '/Main/index.html';
+            }
+        }
+    }
+}
+
 function ajax(className, methodName, data, type, callback) {
     var result = {}
+
+    var userName = $.cookie("UserName");
 
     //调用参数
     var params = {
         ClassName: className,
         MethodName: methodName,
+        UserName: userName,
         Data: data
     };
 
@@ -74,7 +111,7 @@ function ajax(className, methodName, data, type, callback) {
                 callbackHandle(result, callback);
             }
         },
-        error: function (request, textStatus, errorThrown) {
+        error: function (request) {
             if (request.status == 500) {
                 window.location.href = '/Main/500.html';
             } else {
@@ -183,7 +220,7 @@ function alertFunc(title, content, type, btnaText, callbacka, btnbText, callback
 //递归函数用来显示时间提示框
 function swalFunc(title, content, type, btnaText, callbacka, i) {
     var currentContent = content.replace("%s", i / 1000 + "s");
-    
+
     swal({
         title: title,
         text: currentContent,

@@ -46,6 +46,11 @@ namespace Tool.Common
         public static Boolean LogErrorFlag { get; set; }
 
         /// <summary>
+        /// 密码过期时间
+        /// </summary>
+        public static Int32 PwdExpiredTime { get; set; }
+
+        /// <summary>
         /// 邮箱主机
         /// </summary>
         public static String EmailHost { get; set; }
@@ -74,6 +79,8 @@ namespace Tool.Common
             LogDebugFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogDebugFlag"]);
             LogWarnFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogWarnFlag"]);
             LogErrorFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogErrorFlag"]);
+            PwdExpiredTime = Int32.Parse(ConfigurationManager.AppSettings["PwdExpiredTime"]);
+
             EmailHost = ConfigurationManager.AppSettings["EmailHost"];
             EmailAddress = ConfigurationManager.AppSettings["EmailAddress"];
             EmailPass = ConfigurationManager.AppSettings["EmailPass"];
