@@ -66,14 +66,14 @@
             data[0] = userName;
             data[1] = pwd;
 
-            WebMain.Post("SysUser", "Login", data, function (data) {
-                if (data == {}) return;
+            WebMain.Post("SysUser", "Login", data, function (returnData) {
+                if (returnData == {}) return;
 
-                if (data.Status == 0) {
-                    WebMain.Cookie(data.Value.UserName, data.Value.PwdExpiredTime);
+                if (returnData.Status == 0) {
+                    WebMain.Cookie(returnData.Value.UserName, returnData.Value.PwdExpiredTime);
                     window.location.href = '/Main/index.html';
                 } else {
-                    toastr.error("提示", data.StatusValue);
+                    toastr.error("提示", returnData.StatusValue);
                 }
             });
         }
