@@ -104,6 +104,70 @@ namespace WebServer.BLL
 
             #endregion
         }
+        
+        /// <summary>
+        /// 退出
+        /// </summary>
+        /// <param name="userName">userName</param>
+        [MethodDescribe(
+            "退出", "肖强", "2017-7-13 10:59:13",
+@"{
+    UserName:用户名
+}           ",
+@"[
+    UserName:用户账号
+    FullName:用户名
+    Sex:性别
+    Phone：电话
+    Email：邮箱
+    LastLoginTime:最后登录名
+    LastLoginIP：最近登录ip
+    LoginCount:登录次数
+    Status：状态
+    CreateTime:创建时间
+    PwdExpiredTime：密码过期时间
+]            ")]
+        public static ResponseDataObject I_LoginOut(String userName)
+        {
+            ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
+
+            #region 检测请求
+
+            SysUser sysUser = null;
+            if (userName.IsValidEmail())
+            {
+                sysUser = GetItemByEmail(userName);
+            }
+            else
+            {
+                sysUser = GetItemByUserName(userName);
+            }
+
+            #endregion
+
+            #region 处理请求
+
+            if (sysUser != null)
+            {
+                TransactionHandler.Handle(() =>
+                {
+                    sysUser.PwdExpiredTime = DateTime.Now;
+
+                    Update(sysUser);
+                }, null);
+            }
+
+            #endregion
+
+            #region 处理返回
+
+            result.ResultStatus = ResultStatus.Success;
+            result.Value = AssembleToClient(sysUser);
+
+            return result;
+
+            #endregion
+        }
 
         /// <summary>
         /// 注册
@@ -268,7 +332,7 @@ namespace WebServer.BLL
         /// <param name="email">email</param>
         /// <param name="identifyCode">验证码</param>
         [MethodDescribe(
-            "注册", "肖强", "2017-8-13 15:35:14",
+            "找回密码", "肖强", "2017-8-13 15:35:14",
 @"{
     UserPwd:密码
     Email：邮箱

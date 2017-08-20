@@ -17,7 +17,6 @@ namespace CodeGen
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.TextBox serverName;
 		private System.Windows.Forms.TextBox dataBase;
 		private System.Windows.Forms.TextBox userID;
@@ -86,7 +85,6 @@ namespace CodeGen
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -253,35 +251,27 @@ namespace CodeGen
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(116, 239);
+            this.button1.Location = new System.Drawing.Point(197, 239);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 1;
-            this.button1.Text = "保存(&S)";
+            this.button1.Text = "连接&S)";
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(197, 239);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 25);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "取消(&C)";
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // ConnectServer
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
             this.ClientSize = new System.Drawing.Size(296, 277);
-            this.Controls.Add(this.button2);
+            this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConnectServer";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "服务器信息";
             this.Load += new System.EventHandler(this.ConnectServer_Load);

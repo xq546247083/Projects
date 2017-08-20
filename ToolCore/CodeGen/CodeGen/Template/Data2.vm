@@ -457,6 +457,8 @@ namespace WebServer.Model
 		/// <summary>
 		/// $item.CNName
 		/// </summary>
+		#if($item.IsPK)[PrimaryKeyAttribute]
+		#end
 		public $item.CSDataType $item.PropertyName {set; get;}
 		
 	#end

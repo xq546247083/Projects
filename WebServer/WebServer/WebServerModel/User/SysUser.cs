@@ -2,8 +2,8 @@
 * 标题: 系统用户表
 * 描述: 系统用户表
 * 数据表:sys_user
-* 作者：xiaoqiang
-* 日期：2017/8/12 17:17:15
+* 作者：徐敏荣
+* 日期：2017/8/20 11:43:55
 * 版本：V1.0
 *************************************************************************/
 
@@ -25,6 +25,7 @@ namespace WebServer.Model
         /// <summary>
         /// 主键
         /// </summary>
+        [PrimaryKeyAttribute]
         public Guid UserID { set; get; }
 
         /// <summary>

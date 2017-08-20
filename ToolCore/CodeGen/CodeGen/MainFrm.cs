@@ -72,6 +72,7 @@ namespace DockPanelSample
                 this.fmTableTree.OnSelect += fmTableTree_OnSelect;
 
                 DataMarket.ReConnect += Reconnect;
+                ConnectDB();
 
                 this.fmTableColumnInfo.Show(this.dcpMain, DockState.DockBottom);
                 this.fmTableTree.Show(this.dcpMain, DockState.DockLeft);
@@ -82,12 +83,11 @@ namespace DockPanelSample
                 this.recordsPanel.Show(this.dcpMain, DockState.Document);
                 this.fMainInput.Show(this.dcpMain, DockState.Document);
 
-                DataSet ds = DataMarket.TableDataSet;
+                //DataSet ds = DataMarket.TableDataSet;
             }
             catch(Exception ex)
             {
                 MessageBox.Show("数据库连接失败或者读取相关信息失败，请重新配置数据库连接！" + ex.ToString());
-                ConnectDB();
             }
         }
 

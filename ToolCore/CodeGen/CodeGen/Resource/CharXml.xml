@@ -10,22 +10,22 @@
   <define itemname="email" defname="27" value="Xumingxsh21@126.com">
   </define>
   <!--服务器名称-->
-  <define itemname="serverName" defname="28" value="192.168.100.65">
+  <define itemname="serverName" defname="28" value="localhost">
   </define>
   <!--数据库名称-->
-  <define itemname="dataBase" defname="29" value="mes_V1_0816">
+  <define itemname="dataBase" defname="29" value="webserver">
   </define>
   <!--数据库用户名称-->
-  <define itemname="userID" defname="30" value="sa">
+  <define itemname="userID" defname="30" value="root">
   </define>
   <!--数据库用户密码-->
-  <define itemname="passWord" defname="31" value="sa">
+  <define itemname="passWord" defname="31" value="123456">
   </define>
   <!--数据库用户密码-->
   <define itemname="port" defname="33" value="3306">
   </define>
   <!--数据库类型-->
-  <define itemname="DBType" defname="32" value="SQLSERVER2005">
+  <define itemname="DBType" defname="32" value="MYSQL">
   </define>
   <!--列信息SQL语句：Oracle11g-->
   <Column-Info-Oracle><![CDATA[
