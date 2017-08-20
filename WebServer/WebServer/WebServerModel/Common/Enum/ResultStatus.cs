@@ -167,6 +167,12 @@ namespace WebServer.Model
         [Description("发送邮件过快，请稍后重试")]
         SendEmailIsFast = 10016,
 
+        /// <summary>
+        /// 该邮箱未注册
+        /// </summary>
+        [Description("该邮箱未注册")]
+        EmailIsNotRegister = 10017,
+
         #endregion
 
     }

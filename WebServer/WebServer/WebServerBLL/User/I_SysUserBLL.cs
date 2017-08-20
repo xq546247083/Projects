@@ -243,6 +243,119 @@ namespace WebServer.BLL
             TransactionHandler.Handle(() =>
             {
                 Insert(sysUser);
+                if (mEmailData.ContainsKey(email))
+                {
+                    mEmailData.Remove(email);
+                }
+            }, null);
+
+            #endregion
+
+            #region 处理返回
+
+            result.ResultStatus = ResultStatus.Success;
+            result.Value = AssembleToClient(sysUser);
+
+            return result;
+
+            #endregion
+        }
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        /// <param name="userPwd">userPwd</param>
+        /// <param name="email">email</param>
+        /// <param name="identifyCode">验证码</param>
+        [MethodDescribe(
+            "注册", "肖强", "2017-8-13 15:35:14",
+@"{
+    UserPwd:密码
+    Email：邮箱
+    identifyCode:验证码
+}           ",
+@"[
+    UserName:是否成功登陆
+    FullName:用户名
+    Sex:性别
+    Phone：电话
+    Email：邮箱
+    LastLoginTime:最后登录名
+    LastLoginIP：最近登录ip
+    LoginCount:登录次数
+    Status：状态
+    CreateTime:创建时间
+    PwdExpiredTime：密码过期时间
+]            ")]
+        public static ResponseDataObject I_Retrieve(String userPwd, String email, String identifyCode)
+        {
+            ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
+
+            #region 检测请求
+
+            if (String.IsNullOrEmpty(email))
+            {
+                result.ResultStatus = ResultStatus.EmailCanBeNotEmpty;
+                return result;
+            }
+
+            if (!email.IsValidEmail())
+            {
+                result.ResultStatus = ResultStatus.EmailStyleIsError;
+                return result;
+            }
+
+            SysUser sysUser = GetItemByEmail(email);
+
+            if (sysUser == null)
+            {
+                result.ResultStatus = ResultStatus.UserIsNotExist;
+                return result;
+            }
+
+            if (String.IsNullOrEmpty(identifyCode))
+            {
+                result.ResultStatus = ResultStatus.PlsEnterIdentifyCode;
+                return result;
+            }
+
+            if (!mEmailData.ContainsKey(email))
+            {
+                result.ResultStatus = ResultStatus.IdentifyCodeNoThisEmail;
+                return result;
+            }
+
+            if (mEmailData[email].Item1 != identifyCode.ToUpper())
+            {
+                result.ResultStatus = ResultStatus.IdentifyCodeIsError;
+                return result;
+            }
+
+            //判断密码是否为空密码
+            if (userPwd == "d41d8cd98f00b204e9800998ecf8427e")
+            {
+                result.ResultStatus = ResultStatus.UserPasswordCanBeNotEmpty;
+                return result;
+            }
+
+            #endregion
+
+            #region 处理数据
+
+            sysUser.Password = EncrpytTool.Encrypt(userPwd);
+            sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
+
+            #endregion
+
+            #region 处理请求
+
+            TransactionHandler.Handle(() =>
+            {
+                Update(sysUser);
+                if (mEmailData.ContainsKey(email))
+                {
+                    mEmailData.Remove(email);
+                }
             }, null);
 
             #endregion
@@ -261,12 +374,14 @@ namespace WebServer.BLL
         /// 验证邮箱
         /// </summary>
         /// <param name="email">email</param>
+        /// <param name="style">style</param>
         [MethodDescribe(
             "验证邮箱", "肖强", "2017-8-13 15:35:14",
 @"{
     Email：邮箱
+    style:验证方式，0是登录页面，1是找回密码页面
 }           ", @"[]")]
-        public static ResponseDataObject I_Identify(String email)
+        public static ResponseDataObject I_Identify(String email, Int32 style)
         {
             ResponseDataObject result = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
 
@@ -286,9 +401,15 @@ namespace WebServer.BLL
 
             //判断邮箱是否已注册
             var allUser = GetData();
-            if (allUser.Any(r => r.Value.Email == email))
+            if (allUser.Any(r => r.Value.Email == email) && style == 0)
             {
                 result.ResultStatus = ResultStatus.EmailAlreadyExist;
+                return result;
+            }
+
+            if (allUser.Count(r => r.Value.Email == email) == 0 && style == 0)
+            {
+                result.ResultStatus = ResultStatus.EmailIsNotRegister;
                 return result;
             }
 

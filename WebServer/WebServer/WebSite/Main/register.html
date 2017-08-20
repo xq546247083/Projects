@@ -21,7 +21,7 @@
 <body class="gray-bg">
     <br /><br /><br />
     <div>
-        <h2 class="customlogo-name">小荷才露尖尖角</h2>
+        <h2 class="customlogo-name">荷</h2>
     </div>
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
@@ -79,6 +79,7 @@
             var email = $("#email").val();
             var data = new Array();
             data[0] = email;
+            data[1] = 0;
 
             WebMain.Post("SysUser", "Identify", data, function (returnData) {
                 if (returnData == {}) return;

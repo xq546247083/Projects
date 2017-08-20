@@ -348,6 +348,7 @@
     <Content Include="Main\plugins\fullavatareditor\scripts\jQuery.Cookie.js" />
     <Content Include="Main\plugins\fullavatareditor\scripts\swfobject.js" />
     <Content Include="Main\plugins\fullavatareditor\scripts\test.js" />
+    <Content Include="Main\retrieve.html" />
     <Content Include="Main\register.html" />
     <Content Include="Main\css\M663 1125q-11 -1 -15.5 -10.5t-8.5 -9.5q-5 -1 -5 5q0 12 19 15h10zM750 1111q-4 -1 -11.5 6.5t-17.5 4.5q03F7DC5A5A" />
     <Content Include="Main\css\plugins\footable\fonts\footable.eot" />

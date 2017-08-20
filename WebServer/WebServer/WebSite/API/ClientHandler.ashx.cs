@@ -54,7 +54,8 @@ namespace WebSite.API
                 {
                     if (requestDataObject.MethodName != "Login"
                         && requestDataObject.MethodName != "Register"
-                        && requestDataObject.MethodName != "Identify")
+                        && requestDataObject.MethodName != "Identify"
+                        && requestDataObject.MethodName != "Retrieve")
                     {
                         if (SysUserBLL.CheckPwdExpiredTime(requestDataObject.UserName) && responseDataObject != null)
                         {

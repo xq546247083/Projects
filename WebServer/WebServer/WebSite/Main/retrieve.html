@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>小荷 - 找回密码</title>
+    <meta name="keywords" content="小荷个人网站">
+    <meta name="description" content="小荷个人网站">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/Main/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Main/css/WebMain.css" rel="stylesheet">
+    <link href="/Main/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/Main/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/Main/css/animate.min.css" rel="stylesheet">
+    <link href="/Main/css/style.min.css" rel="stylesheet">
+    <link href="/Main/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/Main/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script>if (window.top !== window.self) { window.top.location = window.location; }</script>
+</head>
+<body class="gray-bg">
+    <br /><br /><br />
+    <div>
+        <h2 class="customlogo-name">荷</h2>
+    </div>
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <h3>找回密码</h3>
+            <form class="m-t" role="form">
+                <div class="form-group">
+                    <input id="email" type="email" class="form-control" placeholder="请输入邮箱" required="">
+                </div>
+                <div class="form-group">
+                    <input id="identifyCode" type="text" class="customform-control" placeholder="请输入邮箱验证码" required="">
+                    <button id="identifyBtn" type="button" onclick="Identify()" class="btn btn-primary  customfull-width">发送验证码</button>
+                </div>
+                <div class="form-group">
+                    <input id="userPassword1" type="password" class="form-control" placeholder="请输入密码" required="">
+                </div>
+                <div class="form-group">
+                    <input id="userPassword2" type="password" class="form-control" placeholder="请再次输入密码" required="">
+                </div>
+                <button type="button" onclick="Retrieve()" class="btn btn-primary block full-width m-b">找 回</button>
+                <p class="text-muted text-center">
+                    <small>已经有账户了？</small><a href="login.html">点此登录</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <script src="/Main/js/jquery.min.js"></script>
+    <script src="/Main/js/jquery.cookie.js"></script>
+    <script src="/Main/js/bootstrap.min.js"></script>
+    <script src="/Main/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/Main/js/plugins/toastr/toastr.min.js"></script>
+    <script src="/Main/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/Main/js/main.js"></script>
+    <script src="/Main/js/md5.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            WebMain.Init(3);
+        });
+
+        function Identify() {
+            var email = $("#email").val();
+            var data = new Array();
+            data[0] = email;
+            data[1] = 1;
+
+            WebMain.Post("SysUser", "Identify", data, function (returnData) {
+                if (returnData == {}) return;
+
+                if (returnData.Status == 0) {
+                    toastr.success("提示", "邮件已发送");
+
+                    //一分钟可点击一次发送邮件
+                    $("#identifyBtn").attr('disabled', true);
+                    setTimeout(function () {
+                        $("#identifyBtn").attr('disabled', false);
+                    }, 60000);
+                } else {
+                    toastr.error("提示", returnData.StatusValue);
+                }
+            });
+        }
+
+        //注册
+        function Retrieve() {
+            var userPassword1 = $("#userPassword1").val();
+            var userPassword2 = $("#userPassword2").val();
+            if (userPassword1 != userPassword2) {
+                toastr.error("提示", "密码不相同");
+                return;
+            }
+
+            var email = $("#email").val();
+            var identifyCode = $("#identifyCode").val();
+
+            var pwd = md5(userPassword1);
+
+            //方法参数
+            var data = new Array();
+            data[0] = pwd;
+            data[1] = email;
+            data[2] = identifyCode;
+
+            WebMain.Post("SysUser", "Retrieve", data, function (returnData) {
+                if (returnData == {}) return;
+
+                if (returnData.Status == 0) {
+                    WebMain.Alert("成功找回密码", "点击OK跳转登录页面，%s后自动跳转登录页面..", "timer", "OK", function () {
+                        window.location.href = '/Main/login.html';
+                    });
+                } else {
+                    toastr.error("提示", returnData.StatusValue);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
