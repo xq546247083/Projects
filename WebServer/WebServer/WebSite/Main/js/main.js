@@ -5,8 +5,8 @@ var WebMain = {
     Init: function (flag) {
         return init.call(this, flag);
     },
-    Cookie: function (userName, pwdExpiredTime) {
-        return cookie.call(this, userName, pwdExpiredTime);
+    Cookie: function (userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
+        return cookie.call(this, userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP);
     },
     //ajax请求
     Get: function (className, methodName, data, callback) {
@@ -54,17 +54,68 @@ function init(flag) {
     return result;
 }
 
-function cookie(userName, pwdExpiredTime) {
-    if (userName == null) {
-        $.cookie('UserName', '', { expires: -1, path: '/' });
-    } else {
-        $.cookie("UserName", userName, { expires: 30, path: '/' });
+function cookie(userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
+    if (typeof (userName) != "undefined") {
+        if (userName == null) {
+            $.cookie('UserName', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("UserName", userName, { expires: 30, path: '/' });
+        }
     }
 
-    if (pwdExpiredTime == null) {
-        $.cookie('PwdExpiredTime', '', { expires: -1, path: '/' });
-    } else {
-        $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+    if (typeof (pwdExpiredTime) != "undefined") {
+        if (pwdExpiredTime == null) {
+            $.cookie('PwdExpiredTime', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (fullName) != "undefined") {
+        if (fullName == null) {
+            $.cookie('FullName', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("FullName", fullName, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (email) != "undefined") {
+        if (email == null) {
+            $.cookie('Email', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("Email", email, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (sex) != "undefined") {
+        if (sex == null) {
+            $.cookie('Sex', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("Sex", sex, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (loginCount) != "undefined") {
+        if (loginCount == null) {
+            $.cookie('LoginCount', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LoginCount", loginCount, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (lastLoginTime) != "undefined") {
+        if (lastLoginTime == null) {
+            $.cookie('LastLoginTime', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LastLoginTime", lastLoginTime, { expires: 30, path: '/' });
+        }
+    }
+    if (typeof (lastLoginIP) != "undefined") {
+        if (pwdExpiredTime == null) {
+            $.cookie('LastLoginIP', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LastLoginIP", lastLoginIP, { expires: 30, path: '/' });
+        }
     }
 }
 
@@ -166,8 +217,7 @@ function handle(returnData) {
     }
 
     //如果返回了过期时间
-    if (data.PwdExpiredTime != null)
-    {
+    if (data.PwdExpiredTime != null) {
         $.cookie("PwdExpiredTime", data.PwdExpiredTime, { expires: 30, path: '/' });
     }
 

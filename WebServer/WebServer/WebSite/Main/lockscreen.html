@@ -73,7 +73,16 @@
                 if (returnData == {}) return;
 
                 if (returnData.Status == 0) {
-                    WebMain.Cookie(returnData.Value.UserName, returnData.Value.PwdExpiredTime);
+                    WebMain.Cookie(
+                        returnData.Value.UserName,
+                        returnData.Value.PwdExpiredTime,
+                        returnData.Value.FullName,
+                        returnData.Value.Email,
+                        returnData.Value.Sex,
+                        returnData.Value.LoginCount,
+                        returnData.Value.LastLoginTime,
+                        returnData.Value.LastLoginIP
+                    );
                     window.location.href = '/Main/index.html';
                 } else {
                     toastr.error("提示", returnData.StatusValue);

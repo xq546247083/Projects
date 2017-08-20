@@ -15,7 +15,7 @@
     <link href="/Main/css/bootstrap.min.css" rel="stylesheet">
     <link href="/Main/css/font-awesome.min.css" rel="stylesheet">
     <link href="/Main/css/animate.min.css" rel="stylesheet">
-    <link href="/Main/css/style.min.css" rel="stylesheet">    
+    <link href="/Main/css/style.min.css" rel="stylesheet">
     <link href="/Main/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/Main/css/WebMain.css" rel="stylesheet">
 </head>
@@ -33,7 +33,7 @@
                             <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                                    <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                                    <span id="userNameSpan" class="block m-t-xs"><strong class="font-bold"></strong></span>
                                     <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
                             </a>
@@ -51,6 +51,9 @@
                                     <a class="J_menuItem" href="mailbox.html">信箱</a>
                                 </li>
                                 <li class="divider"></li>
+                                <li>
+                                    <a onclick="LockScreen()">锁  屏</a>
+                                </li>
                                 <li>
                                     <a onclick="LoginOut()">安全退出</a>
                                 </li>
@@ -575,7 +578,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="LoginOut()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+                <a onclick="LockScreen()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 锁屏</a>
             </div>
             <div class="row J_mainContent" id="content-main">
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v1.html" frameborder="0" data-id="index_v1.html" seamless></iframe>
@@ -989,6 +992,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             WebMain.Init(1);
+            var fullName = $.cookie("FullName");
+            var email = $.cookie("Email");
+            var sex = $.cookie("Sex"); 
+            $("#userNameSpan").html(fullName); 
         });
 
         //获取接口文档
@@ -1003,9 +1010,17 @@
             data[0] = userName;
 
             WebMain.Post("SysUser", "LoginOut", data, function (returnData) {
-                WebMain.Cookie(null, null);
+                WebMain.Cookie(null, null, null, null, null, null, null, null
+                );
                 window.location.href = '/Main/login.html';
             });
+        }
+
+        //获取接口文档
+        function LockScreen() {
+            var userName = $.cookie("UserName");
+            WebMain.Cookie(userName, null);
+            window.location.href = '/Main/lockscreen.html';
         }
     </script>
 </body>
