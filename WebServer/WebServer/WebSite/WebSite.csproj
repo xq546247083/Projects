@@ -150,6 +150,7 @@
     <Content Include="Main\img\a8.jpg" />
     <Content Include="Main\img\a9.jpg" />
     <Content Include="Main\img\bg.png" />
+    <Content Include="Main\img\favicon.ico" />
     <Content Include="Main\img\iconfont-logo.png" />
     <Content Include="Main\img\icons.png" />
     <Content Include="Main\img\index.jpg" />
