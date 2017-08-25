@@ -52,11 +52,12 @@
     <Content Include="ReferenceFiles\Ionic.Zlib.dll" />
     <Content Include="ReferenceFiles\MySql.Data.dll" />
     <Content Include="ReferenceFiles\newtonsoft.json.dll" />
-    <Content Include="SQL\gameserver.sql" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <None Include="ReferenceFiles\Web-Bak.config" />
+    <Folder Include="SQL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReferenceFiles\Web.Release.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
