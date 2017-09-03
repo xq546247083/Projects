@@ -56,7 +56,7 @@ function init(flag) {
 
 function cookie(userName, pwdExpiredTime) {
     if (userName == null) {
-        $.cookie('UserName', '', { expires: -1, path: '/'  });
+        $.cookie('UserName', '', { expires: -1, path: '/' });
     } else {
         $.cookie("UserName", userName, { expires: 30, path: '/' });
     }
@@ -78,14 +78,14 @@ function checkdata(flag, curDate) {
     if (flag == 1) {
         if (userName == null || userName == "") {
             window.location.href = '/Main/login.html';
-        } else if (pwdExpiredTime < curDate) {
+        } else if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
             //如果有用户名，但是过期了，则重登录
             window.location.href = '/Main/lockscreen.html';
         }
     } else if (flag == 0) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
-            if (pwdExpiredTime < curDate) {
+            if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
                 window.location.href = '/Main/lockscreen.html';
             } else {
                 window.location.href = '/Main/index.html';
