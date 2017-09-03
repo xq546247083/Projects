@@ -58,6 +58,7 @@
         </div>
     </div>
     <script src="/Main/js/jquery.min.js"></script>
+    <script src="/Main/js/jquery.cookie.js"></script>
     <script src="/Main/js/bootstrap.min.js"></script>
     <script src="/Main/js/plugins/iCheck/icheck.min.js"></script>
     <script src="/Main/js/plugins/toastr/toastr.min.js"></script>
@@ -66,7 +67,7 @@
     <script src="/Main/js/md5.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            WebMain.Init(2);
+            WebMain.Init(3);
 
             $(".i-checks").iCheck({
                 checkboxClass: "icheckbox_square-green",
@@ -75,9 +76,6 @@
         });
 
         function Identify() {
-            //清空cookie
-            WebMain.Cookie(null, null);
-
             var email = $("#email").val();
             var data = new Array();
             data[0] = email;
@@ -97,15 +95,10 @@
                     toastr.error("提示", returnData.StatusValue);
                 }
             });
-
-
         }
 
         //注册
         function Register() {
-            //清空cookie
-            WebMain.Cookie(null, null);
-
             var userPassword1 = $("#userPassword1").val();
             var userPassword2 = $("#userPassword2").val();
             if (userPassword1 != userPassword2) {

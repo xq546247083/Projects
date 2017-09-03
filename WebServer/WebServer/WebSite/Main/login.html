@@ -70,7 +70,7 @@
                 if (data == {}) return;
 
                 if (data.Status == 0) {
-                    WebMain.Cookie(data.UserName, data.PwdExpiredTime);
+                    WebMain.Cookie(data.Value.UserName, data.Value.PwdExpiredTime);
                     window.location.href = '/Main/index.html';
                 } else {
                     toastr.error("提示", data.StatusValue);

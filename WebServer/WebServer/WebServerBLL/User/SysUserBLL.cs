@@ -215,7 +215,7 @@ namespace WebServer.BLL
             clientInfo[PropertyConst.LoginCount] = sysUser.LoginCount;
             clientInfo[PropertyConst.Status] = sysUser.Status;
             clientInfo[PropertyConst.CreateTime] = sysUser.CreateTime;
-            clientInfo[PropertyConst.PwdExpiredTime] = sysUser.PwdExpiredTime;
+            clientInfo[PropertyConst.PwdExpiredTime] = DateTimeTool.GetUnixTime(sysUser.PwdExpiredTime);
 
             return clientInfo;
         }

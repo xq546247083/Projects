@@ -1,7 +1,7 @@
 ﻿//如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
 var WebMain = {
     //初始化,检测数据
-    //flag: 0：登录页面，1：检测数据,一般界面，2：重新登录页面或注册页面
+    //flag: 0：登录页面，1：检测数据,一般界面，2：重新登录,3:注册页面
     Init: function (flag) {
         return init.call(this, flag);
     },
@@ -55,30 +55,45 @@ function init(flag) {
 }
 
 function cookie(userName, pwdExpiredTime) {
-    $.cookie("UserName", userName, { expires: 30, path: '/' });
-    $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+    if (userName == null) {
+        $.cookie('UserName', '', { expires: -1, path: '/'  });
+    } else {
+        $.cookie("UserName", userName, { expires: 30, path: '/' });
+    }
+
+    if (pwdExpiredTime == null) {
+        $.cookie('PwdExpiredTime', '', { expires: -1, path: '/' });
+    } else {
+        $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+    }
 }
 
 //检测用户数据
-function checkdata(flag) {
+function checkdata(flag, curDate) {
     var userName = $.cookie("UserName");
     var pwdExpiredTime = $.cookie("PwdExpiredTime");
-    //如果检测数据，那么如果没用用户名，则登录
+    var curDate = Date.parse(new Date());
+
+    //如果检测数据，那么如果没有用户名，则登录
     if (flag == 1) {
         if (userName == null || userName == "") {
             window.location.href = '/Main/login.html';
-        } else if (pwdExpiredTime < new Date()) {
+        } else if (pwdExpiredTime < curDate) {
             //如果有用户名，但是过期了，则重登录
             window.location.href = '/Main/lockscreen.html';
         }
     } else if (flag == 0) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
-            if (pwdExpiredTime < new Date()) {
+            if (pwdExpiredTime < curDate) {
                 window.location.href = '/Main/lockscreen.html';
             } else {
                 window.location.href = '/Main/index.html';
             }
+        }
+    } else if (flag == 2) {
+        if (userName == null || userName == "") {
+            window.location.href = '/Main/login.html';
         }
     }
 }

@@ -27,11 +27,11 @@
             <div class="m-b-md">
                 <img alt="image" class="img-circle circle-border" src="img/a1.jpg">
             </div>
-            <h3>Beaut-zihan</h3>
+            <h3 id="UserName"></h3>
             <p>您需要再次输入密码</p>
             <form class="m-t" role="form">
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="******" required="">
+                    <input id="userPassword" type="password" class="form-control" placeholder="******" required="">
                 </div>
                 <button type="button" onclick="Login()" class="btn btn-primary block full-width">登录</button>
             </form>
@@ -46,6 +46,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             WebMain.Init(2);
+
+            var userName = $.cookie("UserName");
+            $("#UserName").html(userName);
+
+            //进入这个页面，直接判定为过期
+            WebMain.Cookie(userName, null);
         });
 
         //获取接口文档
@@ -58,9 +64,6 @@
             var userPassword = $("#userPassword").val();
             var pwd = md5(userPassword);
 
-            //清空cookie
-            WebMain.Cookie(null, null);
-
             //方法参数
             var data = new Array();
             data[0] = userName;
@@ -70,7 +73,7 @@
                 if (data == {}) return;
 
                 if (data.Status == 0) {
-                    WebMain.Cookie(data.UserName, data.PwdExpiredTime);
+                    WebMain.Cookie(data.Value.UserName, data.Value.PwdExpiredTime);
                     window.location.href = '/Main/index.html';
                 } else {
                     toastr.error("提示", data.StatusValue);

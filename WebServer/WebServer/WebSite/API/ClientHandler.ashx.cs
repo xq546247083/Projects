@@ -52,13 +52,18 @@ namespace WebSite.API
                 //如果有用户名，如果过期，则直接返回过期，如果没有，则更新过期时间
                 if (!String.IsNullOrEmpty(requestDataObject.UserName) && requestDataObject.UserName != "null")
                 {
-                    if (SysUserBLL.CheckPwdExpiredTime(requestDataObject.UserName) && responseDataObject != null)
+                    if (requestDataObject.MethodName != "Login" 
+                        && requestDataObject.MethodName != "Register" 
+                        && requestDataObject.MethodName != "Identify")
                     {
-                        responseDataObject.ResultStatus = ResultStatus.LoginIsOverTime;
-                    }
-                    else
-                    {
-                        SysUserBLL.UpdatePwdExpiredTime(requestDataObject.UserName);
+                        if (SysUserBLL.CheckPwdExpiredTime(requestDataObject.UserName) && responseDataObject != null)
+                        {
+                            responseDataObject.ResultStatus = ResultStatus.LoginIsOverTime;
+                        }
+                        else
+                        {
+                            SysUserBLL.UpdatePwdExpiredTime(requestDataObject.UserName);
+                        }
                     }
                 }
             }
