@@ -165,6 +165,12 @@ function handle(returnData) {
         //做其他事情
     }
 
+    //如果返回了过期时间
+    if (data.PwdExpiredTime != null)
+    {
+        $.cookie("PwdExpiredTime", data.PwdExpiredTime, { expires: 30, path: '/' });
+    }
+
     return data;
 }
 

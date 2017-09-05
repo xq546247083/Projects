@@ -52,8 +52,8 @@ namespace WebSite.API
                 //如果有用户名，如果过期，则直接返回过期，如果没有，则更新过期时间
                 if (!String.IsNullOrEmpty(requestDataObject.UserName) && requestDataObject.UserName != "null")
                 {
-                    if (requestDataObject.MethodName != "Login" 
-                        && requestDataObject.MethodName != "Register" 
+                    if (requestDataObject.MethodName != "Login"
+                        && requestDataObject.MethodName != "Register"
                         && requestDataObject.MethodName != "Identify")
                     {
                         if (SysUserBLL.CheckPwdExpiredTime(requestDataObject.UserName) && responseDataObject != null)
@@ -63,6 +63,12 @@ namespace WebSite.API
                         else
                         {
                             SysUserBLL.UpdatePwdExpiredTime(requestDataObject.UserName);
+                            //返回过期时间
+                            var sysUser = SysUserBLL.GetItemByUserNameOrEmail(requestDataObject.UserName);
+                            if (sysUser != null)
+                            {
+                                responseDataObject.PwdExpiredTime = DateTimeTool.GetUnixTime(sysUser.PwdExpiredTime);
+                            }
                         }
                     }
                 }

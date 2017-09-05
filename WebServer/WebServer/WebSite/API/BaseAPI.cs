@@ -57,6 +57,7 @@ namespace WebSite.API
             Dictionary<String, Object> responseObj = new Dictionary<String, Object>();
             responseObj["Status"] = responseDataObject.Status;
             responseObj["StatusValue"] = responseDataObject.StatusValue;
+            responseObj["PwdExpiredTime"] = responseDataObject.PwdExpiredTime;
             responseObj["Value"] = responseDataObject.Value;
 
             //将结果序列化并返回

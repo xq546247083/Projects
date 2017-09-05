@@ -122,6 +122,26 @@ namespace WebServer.BLL
         }
 
         /// <summary>
+        /// 获取某一个玩家,通过邮箱或者用户名
+        /// </summary>
+        /// <param name="userNameOrEmail">email</param>
+        /// <returns>玩家</returns>
+        public static SysUser GetItemByUserNameOrEmail(String userNameOrEmail)
+        {
+            SysUser sysUser = null;
+            if (userNameOrEmail.IsValidEmail())
+            {
+                sysUser = GetItemByEmail(userNameOrEmail);
+            }
+            else
+            {
+                sysUser = GetItemByUserName(userNameOrEmail);
+            }
+
+            return sysUser;
+        }
+
+        /// <summary>
         /// 获取某一个玩家,通过邮箱
         /// </summary>
         /// <param name="userNameOrEmail">email</param>

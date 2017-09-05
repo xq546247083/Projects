@@ -52,6 +52,15 @@ namespace WebServer.Model
         }
 
         /// <summary>
+        /// 密码过期时间
+        /// </summary>
+        public long PwdExpiredTime
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 返回值数据
         /// </summary>
         public Object Value { get; set; }
