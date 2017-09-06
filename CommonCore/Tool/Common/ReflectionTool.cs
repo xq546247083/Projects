@@ -96,6 +96,11 @@ namespace Tool.Common
         /// <returns>调用方法所返回的值</returns>
         public static object CallStaticMethod(string assemblyName, string className, string methodName, params object[] param)
         {
+            if (className == null|| methodName == null)
+            {
+                throw new AmbiguousMatchException("方法名或者类名不能为空");
+            }
+
             MethodInfo method = null;
             try
             {
