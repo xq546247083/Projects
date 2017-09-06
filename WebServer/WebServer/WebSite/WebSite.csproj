@@ -350,7 +350,11 @@
     <Content Include="Main\js\welcome.min.js" />
     <Content Include="Main\lockscreen.html" />
     <Content Include="Main\login.html" />
-    <Content Include="Main\Menu\menu.html" />
+    <Content Include="Main\WebPage\Blog\BlogMain.html" />
+    <Content Include="Main\WebPage\Blog\BlogSelfMain.html" />
+    <Content Include="Main\WebPage\Blog\BlogEdit.html" />
+    <Content Include="Main\WebPage\Blog\BlogView.html" />
+    <Content Include="Main\WebPage\Menu\menu.html" />
     <Content Include="Main\plugins\fullavatareditor\expressInstall.swf" />
     <Content Include="Main\plugins\fullavatareditor\fullAvatarEditor.swf" />
     <Content Include="Main\plugins\fullavatareditor\scripts\demo.js" />
