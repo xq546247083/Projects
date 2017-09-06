@@ -153,6 +153,7 @@ function ajax(className, methodName, data, type, callback) {
     var result = {}
 
     var userName = $.cookie("UserName");
+    var asyncFlag = !callback ? false : true;
 
     //调用参数
     var params = {
@@ -166,7 +167,7 @@ function ajax(className, methodName, data, type, callback) {
     $.ajax({
         dataType: "text",
         type: type,
-        async: !callback ? false : true,
+        async: asyncFlag,
         url: "../API/ClientHandler.ashx",
         data: paramStr,
         success: function (returnData) {

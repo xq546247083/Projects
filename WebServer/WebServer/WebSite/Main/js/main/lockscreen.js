@@ -1,24 +1,21 @@
 ﻿$(document).ready(function () {
     WebMain.Init(2);
 
+    //进入这个页面，直接判定为过期
     var userName = $.cookie("UserName");
     $("#UserName").html(userName);
-
-    //进入这个页面，直接判定为过期
     WebMain.Cookie(userName, null);
-});
 
-//回车提交
-$(function () {
+    //回车提交
     $(document).keydown(function (e) {
-        if (e.keyCode == "13") {
-            Login()
+        if (e.keyCode == '13') {
+            ReLogin();
         }
     })
-})
+});
 
 //获取接口文档
-function Login() {
+function ReLogin() {
     var userName = $.cookie("UserName");
     if (userName == null || userName == "") {
         window.location.href = '/Main/login.html';
