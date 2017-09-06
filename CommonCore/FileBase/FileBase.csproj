@@ -51,7 +51,9 @@
     <Content Include="ReferenceFiles\Ionic.Zip.dll" />
     <Content Include="ReferenceFiles\Ionic.Zlib.dll" />
     <Content Include="ReferenceFiles\MySql.Data.dll" />
-    <Content Include="ReferenceFiles\newtonsoft.json.dll" />
+    <Content Include="ReferenceFiles\newtonsoft.json.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQL\" />
