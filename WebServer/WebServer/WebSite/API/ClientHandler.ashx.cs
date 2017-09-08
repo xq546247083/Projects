@@ -79,9 +79,9 @@ namespace WebSite.API
                 if (responseDataObject != null)
                 {
                     //自定义错误处理
-                    if (ex.InnerException is SelfDefinedException)
+                    if (ex is SelfDefinedException)
                     {
-                        SelfDefinedException innerEx = ex.InnerException as SelfDefinedException;
+                        SelfDefinedException innerEx = ex as SelfDefinedException;
                         responseDataObject.ResultStatus = innerEx.ResultStatus;
                         if (innerEx.IfNeedLog)
                         {

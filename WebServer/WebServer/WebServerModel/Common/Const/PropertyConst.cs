@@ -28,5 +28,6 @@ namespace WebServer.DAL
         public const String LastLoginIP = "LastLoginIP";
         public const String RoleIDs = "RoleIDs";
         public const String CreateTime = "CreateTime";
+        public const String MenuScript = "MenuScript";
     }
 }

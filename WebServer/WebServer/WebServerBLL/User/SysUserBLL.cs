@@ -8,13 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tool.Extension;
 
 namespace WebServer.BLL
 {
+    using Tool.Common;
+    using Tool.Extension;
     using WebServer.DAL;
     using WebServer.Model;
-    using Tool.Common;
 
     /// <summary>
     /// 玩家类
@@ -51,17 +51,12 @@ namespace WebServer.BLL
         /// </summary>
         public void Init()
         {
-            //赋值
-            var dataTemp = new Dictionary<Guid, SysUser>();
-
             //查询数据
             var dataList = BaseModelDal.ExecuteQuery<SysUser>();
             foreach (var dr in dataList)
             {
-                dataTemp[dr.UserID] = dr;
+                mData[dr.UserID] = dr;
             }
-
-            mData = dataTemp;
         }
 
         #endregion
@@ -186,8 +181,6 @@ namespace WebServer.BLL
             return sysUser.PwdExpiredTime < DateTime.Now;
         }
 
-
-
         /// <summary>
         /// 更新玩家数据
         /// </summary>
@@ -206,10 +199,6 @@ namespace WebServer.BLL
         public static void Insert(SysUser sysUser)
         {
             SysUserDAL.Insert(sysUser.UserID, sysUser.UserName, sysUser.FullName, sysUser.Password, sysUser.PwdExpiredTime, sysUser.Sex, sysUser.Phone, sysUser.Email, sysUser.Status, sysUser.LoginCount, sysUser.LastLoginTime, sysUser.LastLoginIP, sysUser.RoleIDs, sysUser.CreateTime);
-
-            //更新内存
-            var data = GetData();
-            data[sysUser.UserID] = sysUser;
         }
 
         #endregion

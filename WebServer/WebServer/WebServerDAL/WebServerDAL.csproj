@@ -48,6 +48,8 @@
     <Compile Include="CommonDAL\SqlFactory.cs" />
     <Compile Include="CommonDAL\SqlConst.cs" />
     <Compile Include="CommonDAL\SqlType.cs" />
+    <Compile Include="Menu\SysMenuDAL.cs" />
+    <Compile Include="Menu\SysRoleDAL.cs" />
     <Compile Include="SysUser\SysUserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

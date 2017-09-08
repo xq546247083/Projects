@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,7 +137,7 @@
     <Content Include="Main\css\plugins\treeview\bootstrap-treeview.css" />
     <Content Include="Main\css\plugins\webuploader\webuploader.css" />
     <Content Include="Main\css\style.min.css" />
-    <Content Include="Main\css\WebMain.css" />
+    <Content Include="Main\css\webMain.css" />
     <Content Include="Main\fonts\fontawesome-webfont.svg" />
     <Content Include="Main\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Main\img\1.png" />
@@ -174,8 +175,9 @@
     <Content Include="Main\img\user.png" />
     <Content Include="Main\img\wenku_logo.png" />
     <Content Include="Main\index.html" />
+    <Content Include="Main\indexMain.html" />
     <Content Include="Main\js\jquery.cookie.js" />
-    <Content Include="Main\js\main.js" />
+    <Content Include="Main\js\webMain.js" />
     <Content Include="Main\js\bootstrap.min.js" />
     <Content Include="Main\js\contabs.min.js" />
     <Content Include="Main\js\content.min.js" />
@@ -195,6 +197,12 @@
     <Content Include="Main\js\jquery-ui-1.10.4.min.js" />
     <Content Include="Main\js\jquery-ui.custom.min.js" />
     <Content Include="Main\js\jquery.min.js" />
+    <Content Include="Main\js\main\index.js" />
+    <Content Include="Main\js\main\lockscreen.js" />
+    <Content Include="Main\js\main\login.js" />
+    <Content Include="Main\js\main\Menu\menu.js" />
+    <Content Include="Main\js\main\register.js" />
+    <Content Include="Main\js\main\retrieve.js" />
     <Content Include="Main\js\md5.js" />
     <Content Include="Main\js\plugins\beautifyhtml\beautifyhtml.js" />
     <Content Include="Main\js\plugins\blueimp\jquery.blueimp-gallery.min.js" />
@@ -342,6 +350,7 @@
     <Content Include="Main\js\welcome.min.js" />
     <Content Include="Main\lockscreen.html" />
     <Content Include="Main\login.html" />
+    <Content Include="Main\Menu\menu.html" />
     <Content Include="Main\plugins\fullavatareditor\expressInstall.swf" />
     <Content Include="Main\plugins\fullavatareditor\fullAvatarEditor.swf" />
     <Content Include="Main\plugins\fullavatareditor\scripts\demo.js" />
@@ -406,6 +415,7 @@
     <Content Include="Templet\plugins\fullavatareditor\scripts\fullAvatarEditor.js.b" />
     <Content Include="Templet\plugins\fullavatareditor\scripts\swfobject.js.b" />
     <Content Include="Templet\README.md" />
+    <Content Include="Main\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -153,6 +153,15 @@ namespace WebServer.BLL
         /// <returns>转换后的参数</returns>
         private static Object[] ParseParameterValue(Object[] objs, Type[] types)
         {
+            if (objs == null && types.Length == 0)
+            {
+                return null;
+            }
+            else if (objs == null && types.Length > 0)
+            {
+                throw new SelfDefinedException(ResultStatus.ClientParamCountNoEnough, "方法传递的参数数量不足。");
+            }
+
             if (objs.Length < types.Length)
             {
                 throw new SelfDefinedException(ResultStatus.ClientParamCountNoEnough, "方法传递的参数数量不足。");

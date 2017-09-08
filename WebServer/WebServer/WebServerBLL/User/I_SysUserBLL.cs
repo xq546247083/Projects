@@ -51,16 +51,7 @@ namespace WebServer.BLL
 
             #region 检测请求
 
-            SysUser sysUser = null;
-            if (userName.IsValidEmail())
-            {
-                sysUser = GetItemByEmail(userName);
-            }
-            else
-            {
-                sysUser = GetItemByUserName(userName);
-            }
-
+            SysUser sysUser = GetItemByUserNameOrEmail(userName);
             if (sysUser == null)
             {
                 result.ResultStatus = ResultStatus.UserIsNotExist;
@@ -133,14 +124,11 @@ namespace WebServer.BLL
 
             #region 检测请求
 
-            SysUser sysUser = null;
-            if (userName.IsValidEmail())
+            SysUser sysUser = GetItemByUserNameOrEmail(userName);
+            if (sysUser == null)
             {
-                sysUser = GetItemByEmail(userName);
-            }
-            else
-            {
-                sysUser = GetItemByUserName(userName);
+                result.ResultStatus = ResultStatus.UserIsNotExist;
+                return result;
             }
 
             #endregion
@@ -208,7 +196,6 @@ namespace WebServer.BLL
             #region 检测请求
 
             SysUser sysUser = GetItemByUserName(userName);
-
             if (sysUser != null)
             {
                 result.ResultStatus = ResultStatus.UserNameIsExist;
@@ -304,14 +291,18 @@ namespace WebServer.BLL
 
             #region 处理请求
 
+            //先插入数据到数据库，如果插入成功，则更新内存
             TransactionHandler.Handle(() =>
             {
                 Insert(sysUser);
+            }, ()=>{
+                //更新内存
+                allUser[sysUser.UserID] = sysUser;
                 if (mEmailData.ContainsKey(email))
                 {
                     mEmailData.Remove(email);
                 }
-            }, null);
+            });
 
             #endregion
 
@@ -370,7 +361,6 @@ namespace WebServer.BLL
             }
 
             SysUser sysUser = GetItemByEmail(email);
-
             if (sysUser == null)
             {
                 result.ResultStatus = ResultStatus.UserIsNotExist;

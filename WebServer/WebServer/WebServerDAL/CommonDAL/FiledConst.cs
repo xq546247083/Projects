@@ -28,5 +28,22 @@ namespace WebServer.DAL
         public const String LastLoginIP = "@LastLoginIP";
         public const String RoleIDs = "@RoleIDs";
         public const String CreateTime = "@CreateTime";
+        public const String RoleID = "@RoleID";
+        public const String RoleName = "@RoleName";
+        public const String MenuID = "@MenuID";
+        public const String IsDefault = "@IsDefault";
+        public const String IsSupper = "@IsSupper";
+        public const String Notes = "@Notes";
+        public const String ParentMenuID = "@ParentMenuID";
+        public const String MenuName = "@MenuName";
+        public const String MenuUrl = "@MenuUrl";
+        public const String MenuLevel = "@MenuLevel";
+        public const String SortOrder = "@SortOrder";
+        public const String MenuIcon = "@MenuIcon";
+        public const String BigMenuIcon = "@BigMenuIcon";
+        public const String ShortCut = "@ShortCut";
+        public const String IsShow = "@IsShow";
+        public const String ActionIDs = "@ActionIDs";
+        public const String MenuIDS = "@MenuIDS";
     }
 }

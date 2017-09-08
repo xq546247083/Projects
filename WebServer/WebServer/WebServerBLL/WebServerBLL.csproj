@@ -52,6 +52,9 @@
     <Compile Include="Interface\IGlobal.cs" />
     <Compile Include="Interface\IInit.cs" />
     <Compile Include="Interface\IConfig.cs" />
+    <Compile Include="Menu\I_SysMenuBLL.cs" />
+    <Compile Include="Menu\SysMenuBLL.cs" />
+    <Compile Include="Menu\SysRoleBLL.cs" />
     <Compile Include="User\I_SysUserBLL.cs" />
     <Compile Include="User\SysUserBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
