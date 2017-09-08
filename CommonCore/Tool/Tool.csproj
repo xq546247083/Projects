@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\StringTool.cs" />
     <Compile Include="Common\RandomTool.cs" />
     <Compile Include="Common\DateTimeTool.cs" />
     <Compile Include="Common\EmailTool.cs" />

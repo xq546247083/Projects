@@ -7,10 +7,12 @@
 *************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 namespace WebServer.BLL
 {
-    using System.Text;
+    using Tool.Common;
     using WebServer.DAL;
     using WebServer.Model;
 
@@ -20,6 +22,27 @@ namespace WebServer.BLL
     public partial class SysMenuBLL : IInit
     {
         #region 属性
+
+
+        /// <summary>
+        /// 图标
+        /// </summary>
+        private const String strIcon = "<i class=\"{0}\"></i>";
+
+        /// <summary>
+        /// strUl
+        /// </summary>
+        private const String strUl = "<ul class=\"nav nav-second-level in collapse\">{0}</ul>";
+
+        /// <summary>
+        /// 无子元素
+        /// </summary>
+        private const String strNode = "<li><a class=\"J_menuItem\" href=\"{0}\">{1}<span class=\"nav-label\">{2}</span></a></li>";
+
+        /// <summary>
+        /// 有子元素
+        /// </summary>
+        private const String strFNode = "<li><a href=\"#\">{0}<span class=\"nav-label\">{1}</span><span class=\"fa arrow\"></span></a>{2}</li>";
 
         /// <summary>
         /// 类名
@@ -85,13 +108,54 @@ namespace WebServer.BLL
         }
 
         /// <summary>
+        /// 获取玩家菜单列表
+        /// </summary>
+        /// <param name="sysUser">用户对象</param>
+        /// <returns>菜单列表</returns>
+        public static List<SysMenu> GetMenuByUser(SysUser sysUser)
+        {
+            var menuInfoList = new List<SysMenu>();
+
+            //用户角色id列表
+            var roleIdList = StringTool.SplitToIntList(sysUser.RoleIDs);
+            foreach (var roleId in roleIdList)
+            {
+                //获取玩家角色
+                var roleInfo = SysRoleBLL.GetItem(roleId);
+                if (roleInfo == null)
+                {
+                    continue;
+                }
+
+                //获取玩家的所有菜单列表
+                var menuIdList = StringTool.SplitToIntList(roleInfo.MenuIDS);
+                foreach (var menuID in menuIdList)
+                {
+                    //给角色菜单添加菜单信息
+                    var menuInfo = GetItem(menuID);
+                    if (menuInfo == null)
+                    {
+                        continue;
+                    }
+
+                    if (!menuInfoList.Contains(menuInfo))
+                    {
+                        menuInfoList.Add(menuInfo);
+                    }
+                }
+            }
+
+            return menuInfoList;
+        }
+
+        /// <summary>
         /// 更新菜单数据
         /// </summary>
         /// <param name="sysMenu">用户</param>
         /// <returns>用户</returns>
         public static void Update(SysMenu sysMenu)
         {
-            SysMenuDAL.Update(sysMenu.MenuID, sysMenu.ParentMenuID, sysMenu.MenuName, sysMenu.MenuUrl, sysMenu.MenuLevel, sysMenu.SortOrder, sysMenu.MenuIcon, sysMenu.BigMenuIcon, sysMenu.ShortCut, sysMenu.IsShow);
+            SysMenuDAL.Update(sysMenu.MenuID, sysMenu.ParentMenuID, sysMenu.MenuName, sysMenu.MenuUrl, sysMenu.SortOrder, sysMenu.MenuIcon, sysMenu.BigMenuIcon, sysMenu.ShortCut, sysMenu.IsShow);
         }
 
         /// <summary>
@@ -101,7 +165,7 @@ namespace WebServer.BLL
         /// <returns>用户</returns>
         public static void Insert(SysMenu sysMenu)
         {
-            SysMenuDAL.Insert(sysMenu.MenuID, sysMenu.ParentMenuID, sysMenu.MenuName, sysMenu.MenuUrl, sysMenu.MenuLevel, sysMenu.SortOrder, sysMenu.MenuIcon, sysMenu.BigMenuIcon, sysMenu.ShortCut, sysMenu.IsShow);
+            SysMenuDAL.Insert(sysMenu.MenuID, sysMenu.ParentMenuID, sysMenu.MenuName, sysMenu.MenuUrl, sysMenu.SortOrder, sysMenu.MenuIcon, sysMenu.BigMenuIcon, sysMenu.ShortCut, sysMenu.IsShow);
         }
 
         #endregion
@@ -113,19 +177,65 @@ namespace WebServer.BLL
         /// </summary>
         /// <param name="sysUser">用户</param>
         /// <returns>菜单信息</returns>
-        private static string GetMenuScript(SysUser sysUser)
+        private static String GetMenuScript(SysUser sysUser)
         {
-            //第一层级字符串,无子元素
-            var strOneA = "<li><a class=\"J_menuItem\" href=\"{0}\"><i class=\"{1}\"></i><span class=\"nav-label\">{2}</span></a></li>";
-            //第一层级字符串,有子元素
-            var strOneB = "<li><a class=\"J_menuItem\" href=\"{0}\"><i class=\"{1}\"></i><span class=\"nav-label\">{2}</span><span class=\"fa arrow\"></span></a></li>";
+            //循环玩家菜单信息，给玩家添加页面
+            var menuInfoList = GetMenuByUser(sysUser);
+            if (menuInfoList == null)
+            {
+                return null;
+            }
 
+            var mainMenuInfoList = menuInfoList.Where(r => r.ParentMenuID == 0).OrderBy(r=>r.SortOrder).ToList();
 
-            StringBuilder sb = new StringBuilder();
-            //添加主页
-            sb.Append(String.Format(strOneA, "/Main/Menu/menu.html", "fa fa-home","菜单"));
+            return AppendMenuScript(mainMenuInfoList, menuInfoList);
+        }
 
-            return sb.ToString();
+        /// <summary>
+        /// 追加菜单元素
+        /// </summary>
+        /// <param name="menuList">当前的菜单列表</param>
+        /// <param name="allMenuList">所有的菜单列表</param>
+        /// <returns>菜单字符串</returns>
+        private static String AppendMenuScript(List<SysMenu> menuList, List<SysMenu> allMenuList)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (var menuInfo in menuList)
+            {
+                //如果没有地址，则认为有子页面，如果有，则认为没有子页面
+                if (String.IsNullOrEmpty(menuInfo.MenuUrl))
+                {
+                    //追加子页面
+                    var mainMenuInfoList = allMenuList.Where(r => r.ParentMenuID == menuInfo.MenuID).OrderBy(r => r.SortOrder).ToList();
+                    var sonStr = AppendMenuScript(mainMenuInfoList, allMenuList);
+
+                    var iconStr = "";
+                    if (!String.IsNullOrEmpty(menuInfo.MenuIcon))
+                    {
+                        iconStr = String.Format(strIcon, menuInfo.MenuIcon);
+                    }
+
+                    var ulStr = "";
+                    if (!string.IsNullOrEmpty(sonStr))
+                    {
+                        ulStr = String.Format(strUl, sonStr);
+                    }
+                    result.Append(String.Format(strFNode, iconStr, menuInfo.MenuName, ulStr));
+                }
+                else
+                {
+                    var iconStr = "";
+                    if (!String.IsNullOrEmpty(menuInfo.MenuIcon))
+                    {
+                        iconStr = String.Format(strIcon, menuInfo.MenuIcon);
+                    }
+
+                    result.Append(String.Format(strNode, menuInfo.MenuUrl, iconStr, menuInfo.MenuName));
+                }
+            }
+
+            return result.ToString();
         }
 
         #endregion

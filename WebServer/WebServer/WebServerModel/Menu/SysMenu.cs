@@ -3,7 +3,7 @@
 * 描述: sys_menu
 * 数据表:sys_menu
 * 作者：xiaoqiang
-* 日期：2017/9/8 19:11:56
+* 日期：2017/9/8 20:41:09
 * 版本：V1.0
 *************************************************************************/
 
@@ -42,11 +42,6 @@ namespace WebServer.Model
         /// 菜单地址
         /// </summary>
         public String MenuUrl { set; get; }
-
-        /// <summary>
-        /// 菜单层级
-        /// </summary>
-        public Int32 MenuLevel { set; get; }
 
         /// <summary>
         /// 排序号

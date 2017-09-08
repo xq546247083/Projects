@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.7.12-log : Database - webserver_player
+MySQL - 5.7.12-log : Database - webserver
 *********************************************************************
 */
 
@@ -19,20 +19,21 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`webserver` /*!40100 DEFAULT CHARACTER S
 DROP TABLE IF EXISTS `sys_menu`;
 
 CREATE TABLE `sys_menu` (
-  `MenuID` INT(10) NOT NULL COMMENT '菜单标识',
-  `ParentMenuID` INT(10) DEFAULT NULL COMMENT '上级ID',
-  `MenuName` VARCHAR(36) NOT NULL COMMENT '菜单名称',
-  `MenuUrl` VARCHAR(256) NOT NULL COMMENT '菜单地址',
-  `MenuLevel` INT(10) DEFAULT NULL COMMENT '菜单层级',
-  `SortOrder` INT(10) NOT NULL COMMENT '排序号',
-  `MenuIcon` VARCHAR(36) DEFAULT NULL COMMENT '菜单图标路径（未用到）',
-  `BigMenuIcon` VARCHAR(36) DEFAULT NULL COMMENT '常用菜单图标（未用到）',
-  `ShortCut` VARCHAR(36) DEFAULT NULL COMMENT '快捷键（未用到）',
+  `MenuID` int(10) NOT NULL COMMENT '菜单标识',
+  `ParentMenuID` int(10) DEFAULT NULL COMMENT '上级ID',
+  `MenuName` varchar(36) NOT NULL COMMENT '菜单名称',
+  `MenuUrl` varchar(256) NOT NULL COMMENT '菜单地址',
+  `SortOrder` int(10) NOT NULL COMMENT '排序号',
+  `MenuIcon` varchar(36) DEFAULT NULL COMMENT '菜单图标路径（未用到）',
+  `BigMenuIcon` varchar(36) DEFAULT NULL COMMENT '常用菜单图标（未用到）',
+  `ShortCut` varchar(36) DEFAULT NULL COMMENT '快捷键（未用到）',
   `IsShow` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否显示',
   PRIMARY KEY (`MenuID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_menu` */
+
+insert  into `sys_menu`(`MenuID`,`ParentMenuID`,`MenuName`,`MenuUrl`,`SortOrder`,`MenuIcon`,`BigMenuIcon`,`ShortCut`,`IsShow`) values (1100,0,'菜单管理','/Main/Menu/menu.html',1,'fa fa-home',NULL,NULL,''),(1200,0,'Test','',2,'fa fa-home',NULL,NULL,''),(1201,1200,'Test1','/Main/Menu/menu.html',1,'fa fa-home',NULL,NULL,''),(1202,1200,'Test2','/Main/Menu/men1u.html',2,'',NULL,NULL,''),(1203,1200,'Test3','/Main/Menu/men1u.html',3,'',NULL,NULL,'');
 
 /*Table structure for table `sys_role` */
 
@@ -49,6 +50,8 @@ CREATE TABLE `sys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_role` */
+
+insert  into `sys_role`(`RoleID`,`RoleName`,`MenuIDS`,`IsDefault`,`IsSupper`,`Notes`) values (1,'超级管理员','1100,1200,1201,1202,1203,1204','\0','','超级管理员');
 
 /*Table structure for table `sys_user` */
 
@@ -74,7 +77,7 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('26d3ee41-332d-4bef-8ef1-5ec154d15acb','aaa','aaa','nN+VhKyLxdn/rKO3V5qbSrvznFlGC1FWvz9prZRKlY7hIvgPkKmvYTwUg4k5Qu1MyiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','15828353445@163.com',1,0,'0001-01-01 00:00:00',NULL,NULL,'2017-08-16 17:53:26'),('32059fdf-639b-4b81-a362-7254ac99ad61','aaaa','aaaa','W33J3sTLU/ieWQgXnhe1B60DAXC0zCdwxrozCVWodQuj/V9Zp7MU2EXCi+aiXUA7yiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','2545625776@qq.com',1,0,'0001-01-01 00:00:00',NULL,NULL,'2017-08-16 17:47:54'),('555ec8ca-a5e6-4163-b862-d889fbbbccfb','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-08 01:59:23','\0','','546247083@qq.com',1,18,'2017-09-08 00:53:09',NULL,NULL,'2017-08-15 13:10:53');
+insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('26d3ee41-332d-4bef-8ef1-5ec154d15acb','aaa','aaa','nN+VhKyLxdn/rKO3V5qbSrvznFlGC1FWvz9prZRKlY7hIvgPkKmvYTwUg4k5Qu1MyiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','15828353445@163.com',1,0,'0001-01-01 00:00:00',NULL,'1','2017-08-16 17:53:26'),('32059fdf-639b-4b81-a362-7254ac99ad61','aaaa','aaaa','W33J3sTLU/ieWQgXnhe1B60DAXC0zCdwxrozCVWodQuj/V9Zp7MU2EXCi+aiXUA7yiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','2545625776@qq.com',1,0,'0001-01-01 00:00:00',NULL,'1','2017-08-16 17:47:54'),('555ec8ca-a5e6-4163-b862-d889fbbbccfb','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-08 23:37:35','\0','','546247083@qq.com',1,22,'2017-09-08 22:26:53',NULL,'1','2017-08-15 13:10:53');
 
 /*Table structure for table `sys_userinfo` */
 

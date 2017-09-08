@@ -3,7 +3,7 @@
 * 描述: sys_menu的DAL
 * 数据表:sys_menu
 * 作者：xiaoqiang
-* 日期：2017/9/8 19:12:17
+* 日期：2017/9/8 20:41:24
 * 版本：V1.0
 *************************************************************************/
 
@@ -76,14 +76,13 @@ namespace WebServer.DAL
         /// <param name="parentMenuID">上级ID</param>
         /// <param name="menuName">菜单名称</param>
         /// <param name="menuUrl">菜单地址</param>
-        /// <param name="menuLevel">菜单层级</param>
         /// <param name="sortOrder">排序号</param>
         /// <param name="menuIcon">菜单图标路径（未用到）</param>
         /// <param name="bigMenuIcon">常用菜单图标（未用到）</param>
         /// <param name="shortCut">快捷键（未用到）</param>
         /// <param name="isShow">是否显示</param>
         /// <returns>更新</returns>
-        public static Int32 Insert(Int32 menuID, Int32 parentMenuID, String menuName, String menuUrl, Int32 menuLevel, Int32 sortOrder, String menuIcon, String bigMenuIcon, String shortCut, Boolean isShow)
+        public static Int32 Insert(Int32 menuID, Int32 parentMenuID, String menuName, String menuUrl, Int32 sortOrder, String menuIcon, String bigMenuIcon, String shortCut, Boolean isShow)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -91,7 +90,6 @@ namespace WebServer.DAL
                 new MySqlParameter(FiledConst.ParentMenuID,parentMenuID),
                 new MySqlParameter(FiledConst.MenuName,menuName),
                 new MySqlParameter(FiledConst.MenuUrl,menuUrl),
-                new MySqlParameter(FiledConst.MenuLevel,menuLevel),
                 new MySqlParameter(FiledConst.SortOrder,sortOrder),
                 new MySqlParameter(FiledConst.MenuIcon,menuIcon),
                 new MySqlParameter(FiledConst.BigMenuIcon,bigMenuIcon),
@@ -109,14 +107,13 @@ namespace WebServer.DAL
         /// <param name="parentMenuID">上级ID</param>
         /// <param name="menuName">菜单名称</param>
         /// <param name="menuUrl">菜单地址</param>
-        /// <param name="menuLevel">菜单层级</param>
         /// <param name="sortOrder">排序号</param>
         /// <param name="menuIcon">菜单图标路径（未用到）</param>
         /// <param name="bigMenuIcon">常用菜单图标（未用到）</param>
         /// <param name="shortCut">快捷键（未用到）</param>
         /// <param name="isShow">是否显示</param>
         /// <returns>更新</returns>
-        public static Int32 Update(Int32 menuID, Int32 parentMenuID, String menuName, String menuUrl, Int32 menuLevel, Int32 sortOrder, String menuIcon, String bigMenuIcon, String shortCut, Boolean isShow)
+        public static Int32 Update(Int32 menuID, Int32 parentMenuID, String menuName, String menuUrl, Int32 sortOrder, String menuIcon, String bigMenuIcon, String shortCut, Boolean isShow)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -124,7 +121,6 @@ namespace WebServer.DAL
                 new MySqlParameter(FiledConst.ParentMenuID,parentMenuID),
                 new MySqlParameter(FiledConst.MenuName,menuName),
                 new MySqlParameter(FiledConst.MenuUrl,menuUrl),
-                new MySqlParameter(FiledConst.MenuLevel,menuLevel),
                 new MySqlParameter(FiledConst.SortOrder,sortOrder),
                 new MySqlParameter(FiledConst.MenuIcon,menuIcon),
                 new MySqlParameter(FiledConst.BigMenuIcon,bigMenuIcon),
