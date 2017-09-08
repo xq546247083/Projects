@@ -71,13 +71,15 @@ namespace WebServer.BLL
                         {
                             methodName = method.Name.Substring(2, method.Name.Length - 2);
                             String key = GetConfigKey(className, methodName);
-                            cParamsInfos[key] = GetParamTypes(method);
-
+                            
                             // 读取方法备注
-                            InvokeClassAttribute cratt = method.GetCustomAttribute<InvokeClassAttribute>();
+                            InvokeClassAttribute cratt = t.GetCustomAttribute<InvokeClassAttribute>();
                             MethodDescribeAttribute mra = method.GetCustomAttribute<MethodDescribeAttribute>();
                             if (cratt != null && mra != null)
+                            {
+                                cParamsInfos[key] = GetParamTypes(method);
                                 cMethodDesc[key] = String.Format("{0}|{1}", cratt.Describe, mra.Describe);
+                            }
                         }
                     }
                 }
