@@ -32,7 +32,7 @@ namespace WebServer.BLL
         /// <summary>
         /// strUl
         /// </summary>
-        private const String strUl = "<ul class=\"nav nav-second-level in collapse\">{0}</ul>";
+        private const String strUl = "<ul class=\"nav nav-second-level collapse\">{0}</ul>";
 
         /// <summary>
         /// 无子元素

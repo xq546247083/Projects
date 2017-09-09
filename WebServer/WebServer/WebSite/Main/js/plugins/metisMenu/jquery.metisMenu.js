@@ -42,7 +42,7 @@
                 $this.find("li.active").has("ul").children("a").addClass("doubleTapToGo");
             }
 
-            $this.find("li").has("ul").children("a").on("click" + "." + pluginName, function(e) {
+            $(document).on("click" + "." + pluginName, ":has(ul)li>a", function (e) {
                 e.preventDefault();
 
                 //Do we need to enable the double tap
@@ -61,8 +61,29 @@
                 if ($toggle) {
                     $(this).parent("li").siblings().removeClass("active").children("ul.in").collapse("hide");
                 }
-
             });
+
+            //$this.find("li").has("ul").children("a").on("click" + "." + pluginName, function(e) {
+            //    e.preventDefault();
+
+            //    //Do we need to enable the double tap
+            //    if (obj.settings.doubleTapToGo) {
+
+            //        //if we hit a second time on the link and the href is valid, navigate to that url
+            //        if (obj.doubleTapToGo($(this)) && $(this).attr("href") !== "#" && $(this).attr("href") !== "") {
+            //            e.stopPropagation();
+            //            document.location = $(this).attr("href");
+            //            return;
+            //        }
+            //    }
+
+            //    $(this).parent("li").toggleClass("active").children("ul").collapse("toggle");
+
+            //    if ($toggle) {
+            //        $(this).parent("li").siblings().removeClass("active").children("ul.in").collapse("hide");
+            //    }
+
+            //});
         },
 
         isIE: function() { //https://gist.github.com/padolsey/527683

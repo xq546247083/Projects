@@ -137,7 +137,7 @@ function checkdata(flag, curDate) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
             if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
-                window.location.href = '/Main/lockscreen.html';
+                //window.location.href = '/Main/lockscreen.html';
             } else {
                 window.location.href = '/Main/index.html';
             }

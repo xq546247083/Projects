@@ -95,7 +95,7 @@ namespace WebServer.BLL
 
             #endregion
         }
-        
+
         /// <summary>
         /// 退出
         /// </summary>
@@ -269,6 +269,20 @@ namespace WebServer.BLL
 
             #region 构造玩家数据
 
+            //获取注册用户默认角色
+            string roleIds = "";
+            var roleList = SysRoleBLL.GetData().Where(r => r.Value.IsDefault).ToList();
+            foreach (var item in roleList)
+            {
+                roleIds += item.Value.RoleID + ",";
+            }
+
+            if (roleIds.Length > 0)
+            {
+                roleIds = roleIds.Substring(0, roleIds.Length - 1);
+            }
+            
+
             var sexFlag = true;
             Boolean.TryParse(sex.ToString(), out sexFlag);
 
@@ -283,6 +297,7 @@ namespace WebServer.BLL
                 Email = email,
                 Status = 1,
                 LoginCount = 0,
+                RoleIDs = roleIds,
                 CreateTime = DateTime.Now,
                 PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime)
             };
@@ -295,7 +310,8 @@ namespace WebServer.BLL
             TransactionHandler.Handle(() =>
             {
                 Insert(sysUser);
-            }, ()=>{
+            }, () =>
+            {
                 //更新内存
                 allUser[sysUser.UserID] = sysUser;
                 if (mEmailData.ContainsKey(email))
@@ -453,7 +469,7 @@ namespace WebServer.BLL
                 return result;
             }
 
-            //判断邮箱是否已注册
+            //注册时，判断邮箱是否未注册
             var allUser = GetData();
             if (allUser.Any(r => r.Value.Email == email) && style == 0)
             {
@@ -461,7 +477,8 @@ namespace WebServer.BLL
                 return result;
             }
 
-            if (allUser.Count(r => r.Value.Email == email) == 0 && style == 0)
+            //找回时，判断邮箱是否已注册
+            if (allUser.Count(r => r.Value.Email == email) == 0 && style == 1)
             {
                 result.ResultStatus = ResultStatus.EmailIsNotRegister;
                 return result;
