@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\UBlogDAL.cs" />
+    <Compile Include="Blog\UBlogTypeDAL.cs" />
     <Compile Include="CommonDAL\BaseDal.cs" />
     <Compile Include="CommonDAL\FiledConst.cs" />
     <Compile Include="CommonDAL\SqlFactory.cs" />

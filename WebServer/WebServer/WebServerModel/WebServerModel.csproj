@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\UBlog.cs" />
+    <Compile Include="Blog\UBlogType.cs" />
     <Compile Include="Common\CommonModel\IModel.cs" />
     <Compile Include="Common\CommonModel\ModelHandler.cs" />
     <Compile Include="Common\CommonModel\BaseModelDal.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Common\Const\PropertyConst.cs" />
     <Compile Include="Common\DataObject\RequestDataObject.cs" />
     <Compile Include="Common\DataObject\ResponseDataObject.cs" />
+    <Compile Include="Common\Enum\BlogStatusEnum.cs" />
     <Compile Include="Common\Enum\ResultStatus.cs" />
     <Compile Include="Common\Exception\SelfDefinedException.cs" />
     <Compile Include="Menu\SysMenu.cs" />

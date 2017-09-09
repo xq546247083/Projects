@@ -7,6 +7,50 @@
     });
 });
 
+//验证
+$.validator.setDefaults({
+    highlight: function (e) {
+        $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+    },
+    success: function (e) {
+        e.closest(".form-group").removeClass("has-error").addClass("has-success")
+    },
+    errorElement: "span", errorPlacement: function (e, r) {
+        e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+    },
+    errorClass: "help-block m-b-none", validClass: "help-block m-b-none"
+}), $().ready(function () {
+    var e = "<i class='fa fa-times-circle'></i> ";
+    $("#registerForm").validate({
+        rules: {
+            userName: {
+                required: !0, minlength: 4
+            },
+            userPassword1: {
+                required: !0, minlength: 8
+            },
+            userPassword2: {
+                required: !0, minlength: 8, equalTo: "#userPassword1"
+            },
+            email: {
+                required: !0, email: true
+            },
+            identifyCode: {
+                rangelength: [6,6]
+            },
+        },
+        messages:
+        {
+            userName: { required: e + "请输入您的用户名", minlength: e + "用户名必须四个字符以上" },
+            userPassword1: { required: e + "请输入您的密码", minlength: e + "密码必须八个字符以上" },
+            userPassword2: { required: e + "请再次输入密码", minlength: e + "密码必须八个字符以上", equalTo: e + "两次输入的密码不一致" },
+            email: { required: e + "请输入您的E-mail", email: e +"请输入正确的邮箱" },
+            identifyCode: { rangelength: e + "验证码长度为六位" }
+        }
+    })
+});
+
+
 //回车提交
 $(function () {
     $(document).keydown(function (e) {

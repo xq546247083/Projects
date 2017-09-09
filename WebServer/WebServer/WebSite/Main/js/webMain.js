@@ -168,7 +168,7 @@ function ajax(className, methodName, data, type, callback) {
         dataType: "text",
         type: type,
         async: asyncFlag,
-        url: "../API/ClientHandler.ashx",
+        url: "/API/ClientHandler.ashx",
         data: paramStr,
         success: function (returnData) {
             result = returnData;

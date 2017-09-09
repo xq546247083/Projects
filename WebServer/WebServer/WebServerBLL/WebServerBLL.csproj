@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\I_UBlogBLL.cs" />
+    <Compile Include="Blog\UBlogTypeBLL.cs" />
+    <Compile Include="Blog\UBlogBLL.cs" />
     <Compile Include="Common\ExtensionBLL.cs" />
     <Compile Include="Common\MethodInfoBLL.cs" />
     <Compile Include="Common\TransactionHandler.cs" />

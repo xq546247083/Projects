@@ -29,5 +29,14 @@ namespace WebServer.DAL
         public const String RoleIDs = "RoleIDs";
         public const String CreateTime = "CreateTime";
         public const String MenuScript = "MenuScript";
+        public const String ID = "ID";
+        public const String UserId = "UserId";
+        public const String Title = "Title";
+        public const String Content = "Content";
+        public const String Tag = "Tag";
+        public const String ATUsers = "ATUsers";
+        public const String BlogType = "BlogType";
+        public const String CrDate = "CrDate";
+        public const String ReDate = "ReDate";
     }
 }
