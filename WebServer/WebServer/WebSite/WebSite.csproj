@@ -403,7 +403,6 @@
     <Content Include="Templet\plugins\fullavatareditor\scripts\fullAvatarEditor.js.b" />
     <Content Include="Templet\plugins\fullavatareditor\scripts\swfobject.js.b" />
     <Content Include="Templet\README.md" />
-    <Content Include="Main\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

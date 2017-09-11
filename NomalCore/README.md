@@ -10,3 +10,5 @@ $("#ele").on("click", function() {
 $(document).on("click", "#ele", function() {
     //...
 });
+
+2、shift+f5：重新加载js和css
