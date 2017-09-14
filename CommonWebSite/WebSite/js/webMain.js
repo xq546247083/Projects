@@ -3,26 +3,23 @@ var WebMain = {
     //----------------------------------------------一些配置----------------------------------------------
     //服务器配置
     WebServerConfig:"http://10.255.0.3:8189/",
-    
-    //目录路径,绝对路径，换位置就需要配置
-    MainPath:"E:/Work/Code/Projects/CommonWebSite/WebSite/Main/",
 
-
-    //----------------------------------------------一些公用方法----------------------------------------------
+    //----------------------------------------------一些通用方法----------------------------------------------
     //初始化,检测数据
     //flag: 0：登录页面，1：检测数据,一般界面，2：重新登录,3:注册页面
-    Init: function (flag) {
-        return init.call(this, flag);
+    //floorCount:涉及到跳转，需要知道路径层数
+    Init: function (flag,floorCount) {
+        return init.call(this, flag,floorCount);
     },
     Cookie: function (userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
         return cookie.call(this, userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP);
     },
     //ajax请求
-    Get: function (className, methodName, data, callback) {
-        return ajax.call(this, className, methodName, data, 'Get', callback);
+    Get: function (className, methodName, data, callback,floorCount) {
+        return ajax.call(this, className, methodName, data, 'Get', callback,floorCount);
     },
-    Post: function (className, methodName, data, callback) {
-        return ajax.call(this, className, methodName, data, 'Post', callback);
+    Post: function (className, methodName, data, callback,floorCount) {
+        return ajax.call(this, className, methodName, data, 'Post', callback,floorCount);
     },
     //封装sweetalert,
     //title：标题
@@ -36,12 +33,16 @@ var WebMain = {
     Alert: function (title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc) {
         return alertFunc.call(this, title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc);
     },
+    //获取层级对应的路径
+    GetPath: function(floorCount){
+        GetRootPath(floorCount);
+    },
 }
 
 //初始化,检测数据
-function init(flag) {
+function init(flag,floorCount) {
     var result = {}
-    checkdata(flag);
+    checkdata(flag,floorCount);
 
     //设置默认的提示框
     toastr.options = {
@@ -63,106 +64,43 @@ function init(flag) {
     return result;
 }
 
-function cookie(userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
-    if (typeof (userName) != "undefined") {
-        if (userName == null) {
-            $.cookie('UserName', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("UserName", userName, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (pwdExpiredTime) != "undefined") {
-        if (pwdExpiredTime == null) {
-            $.cookie('PwdExpiredTime', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (fullName) != "undefined") {
-        if (fullName == null) {
-            $.cookie('FullName', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("FullName", fullName, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (email) != "undefined") {
-        if (email == null) {
-            $.cookie('Email', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("Email", email, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (sex) != "undefined") {
-        if (sex == null) {
-            $.cookie('Sex', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("Sex", sex, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (loginCount) != "undefined") {
-        if (loginCount == null) {
-            $.cookie('LoginCount', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("LoginCount", loginCount, { expires: 30, path: '/' });
-        }
-    }
-
-    if (typeof (lastLoginTime) != "undefined") {
-        if (lastLoginTime == null) {
-            $.cookie('LastLoginTime', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("LastLoginTime", lastLoginTime, { expires: 30, path: '/' });
-        }
-    }
-    if (typeof (lastLoginIP) != "undefined") {
-        if (pwdExpiredTime == null) {
-            $.cookie('LastLoginIP', '', { expires: -1, path: '/' });
-        } else {
-            $.cookie("LastLoginIP", lastLoginIP, { expires: 30, path: '/' });
-        }
-    }
-}
-
 //检测用户数据
-function checkdata(flag, curDate) {
+function checkdata(flag, floorCount) {
     var userName = $.cookie("UserName");
     var pwdExpiredTime = $.cookie("PwdExpiredTime");
     var curDate = Date.parse(new Date());
+    var rootPath = GetRootPath(floorCount)
 
     //如果检测数据，那么如果没有用户名，则登录
     if (flag == 1) {
         if (userName == null || userName == "") {
-            window.location.href = WebMain.MainPath+'login.html';
+            window.location.href =rootPath+'login.html';
         } else if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
             //如果有用户名，但是过期了，则重登录
-            window.location.href = WebMain.MainPath+'lockscreen.html';
+            window.location.href =rootPath+'lockscreen.html';
         }
     } else if (flag == 0) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
             if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
-                //window.location.href = WebMain.MainPath+'lockscreen.html';
+                //window.location.href = rootPath+'lockscreen.html';
             } else {
-                window.location.href = WebMain.MainPath+'index.html';
+                window.location.href = rootPath+'index.html';
             }
         }
     } else if (flag == 2) {
         if (userName == null || userName == "") {
-            window.location.href = WebMain.MainPath+'login.html';
+            window.location.href = rootPath+'login.html';
         }
     }
 }
 
-function ajax(className, methodName, data, type, callback) {
+function ajax(className, methodName, data, type, callback,floorCount) {
     var result = {}
 
     var userName = $.cookie("UserName");
     var asyncFlag = !callback ? false : true;
+    var rootPath = GetRootPath(floorCount)
 
     //调用参数
     var params = {
@@ -184,42 +122,44 @@ function ajax(className, methodName, data, type, callback) {
 
             //如果有回调函数，则调用回调函数来处理数据
             if (callback) {
-                callbackHandle(result, callback);
+                callbackHandle(result, callback,floorCount);
             }
         },
         error: function (request) {
             if (request.status == 500) {
-                window.location.href = WebMain.MainPath+'500.html';
+                window.location.href = rootPath+'500.html';
             } else {
-                window.location.href = WebMain.MainPath+'404.html';
+                window.location.href = rootPath+'404.html';
             }
         }
     });
 
     //如果没有回调函数，则处理数据
     if (!callback)
-        return handle(result);
+        return handle(result,floorCount);
 }
 
 //处理回调函数的数据
-function callbackHandle(returnData, callback) {
-    var data = handle(returnData);
+function callbackHandle(returnData, callback,floorCount) {
+    var data = handle(returnData,floorCount);
 
     if (callback)
         callback(data);
 }
 
 //处理返回值
-function handle(returnData) {
+function handle(returnData,floorCount) {
     var data = JSON.parse(returnData);
-
+    
     //如果登录超时，直接跳转
     if (data.Status == 7) {
+        var rootPath = GetRootPath(floorCount)
+
         var userName = $.cookie("UserName");
         if (userName == null || userName == "") {
-            window.location.href = WebMain.MainPath+'login.html';
+            window.location.href = rootPath+'login.html';
         } else {
-            window.location.href = WebMain.MainPath+'lockscreen.html';
+            window.location.href = rootPath+'lockscreen.html';
         }
         data = {}
     } else {
@@ -324,4 +264,86 @@ function swalFunc(title, content, type, btnaText, callbacka, i) {
                 callbacka();
         }
     });
+}
+
+function cookie(userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
+    if (typeof (userName) != "undefined") {
+        if (userName == null) {
+            $.cookie('UserName', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("UserName", userName, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (pwdExpiredTime) != "undefined") {
+        if (pwdExpiredTime == null) {
+            $.cookie('PwdExpiredTime', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("PwdExpiredTime", pwdExpiredTime, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (fullName) != "undefined") {
+        if (fullName == null) {
+            $.cookie('FullName', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("FullName", fullName, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (email) != "undefined") {
+        if (email == null) {
+            $.cookie('Email', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("Email", email, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (sex) != "undefined") {
+        if (sex == null) {
+            $.cookie('Sex', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("Sex", sex, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (loginCount) != "undefined") {
+        if (loginCount == null) {
+            $.cookie('LoginCount', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LoginCount", loginCount, { expires: 30, path: '/' });
+        }
+    }
+
+    if (typeof (lastLoginTime) != "undefined") {
+        if (lastLoginTime == null) {
+            $.cookie('LastLoginTime', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LastLoginTime", lastLoginTime, { expires: 30, path: '/' });
+        }
+    }
+    if (typeof (lastLoginIP) != "undefined") {
+        if (pwdExpiredTime == null) {
+            $.cookie('LastLoginIP', '', { expires: -1, path: '/' });
+        } else {
+            $.cookie("LastLoginIP", lastLoginIP, { expires: 30, path: '/' });
+        }
+    }
+}
+
+//获得根路径
+function GetRootPath(floorCount){
+    var rootPath="";
+
+    if(floorCount==null||floorCount=="undefined"||floorCount==0){
+        return rootPath;
+    }else {
+        var tempPath="../";
+        for (var i=0;i<floorCount;i++)
+        {
+            rootPath+=tempPath;
+        }
+    }
+
+    return rootPath;
 }

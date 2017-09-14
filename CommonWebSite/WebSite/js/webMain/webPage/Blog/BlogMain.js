@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    WebMain.Init(1);
+    WebMain.Init(1,2);
     GetBlogList(2, 1)
 });
 
@@ -38,7 +38,7 @@ function GetBlogList(blogType, status) {
         } else {
             toastr.error("提示", returnData.StatusValue);
         }
-    });
+    },2);
 }
 
 
