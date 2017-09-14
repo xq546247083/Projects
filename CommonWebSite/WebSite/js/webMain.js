@@ -1,5 +1,4 @@
-﻿//如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
-var WebMain = {
+﻿var WebMain = {
     //----------------------------------------------一些配置----------------------------------------------
     //业务服务器配置
     WebServerConfig:"http://10.255.0.3:8189/",
@@ -14,7 +13,7 @@ var WebMain = {
     Init: function (flag,floorCount) {
         return init.call(this, flag,floorCount);
     },
-    //ajax请求
+    //ajax请求，如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
     Get: function (className, methodName, data, callback,floorCount) {
         return ajax.call(this, className, methodName, data, 'Get', callback,floorCount);
     },
