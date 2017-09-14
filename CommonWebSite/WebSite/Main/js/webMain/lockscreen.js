@@ -18,7 +18,7 @@
 function ReLogin() {
     var userName = $.cookie("UserName");
     if (userName == null || userName == "") {
-        window.location.href = '/Main/login.html';
+        window.location.href = 'login.html';
     }
 
     var userPassword = $("#userPassword").val();
@@ -43,7 +43,7 @@ function ReLogin() {
                 returnData.Value.LastLoginTime,
                 returnData.Value.LastLoginIP
             );
-            window.location.href = '/Main/index.html';
+            window.location.href = 'index.html';
         } else {
             toastr.error("提示", returnData.StatusValue);
         }

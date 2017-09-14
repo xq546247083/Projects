@@ -35,7 +35,7 @@ function GetMenu(){
 function LoginOut() {
     var userName = $.cookie("UserName");
     if (userName == null || userName == "") {
-        window.location.href = '/Main/login.html';
+        window.location.href = 'login.html';
     }
 
     //方法参数
@@ -45,7 +45,7 @@ function LoginOut() {
     WebMain.Post("SysUser", "LoginOut", data, function (returnData) {
         WebMain.Cookie(null, null, null, null, null, null, null, null
         );
-        window.location.href = '/Main/login.html';
+        window.location.href = 'login.html';
     });
 }
 
@@ -53,5 +53,5 @@ function LoginOut() {
 function LockScreen() {
     var userName = $.cookie("UserName");
     WebMain.Cookie(userName, null);
-    window.location.href = '/Main/lockscreen.html';
+    window.location.href = 'lockscreen.html';
 }

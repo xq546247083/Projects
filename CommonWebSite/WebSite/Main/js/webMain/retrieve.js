@@ -60,7 +60,7 @@ function Retrieve() {
 
         if (returnData.Status == 0) {
             WebMain.Alert("成功找回密码", "点击OK跳转登录页面，%s后自动跳转登录页面..", "timer", "OK", function () {
-                window.location.href = '/Main/login.html';
+                window.location.href = 'login.html';
             });
         } else {
             toastr.error("提示", returnData.StatusValue);

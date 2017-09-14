@@ -26,7 +26,14 @@ var WebMain = {
     //callbackc：按钮c的回调函数
     Alert: function (title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc) {
         return alertFunc.call(this, title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc);
-    }
+    },
+
+    //----------------------------------------------一些配置----------------------------------------------
+    //服务器配置
+    WebServerConfig:"http://10.255.0.3:8189/",
+
+    //目录路径
+    MainPath:"../../",
 }
 
 //初始化,检测数据
@@ -128,23 +135,23 @@ function checkdata(flag, curDate) {
     //如果检测数据，那么如果没有用户名，则登录
     if (flag == 1) {
         if (userName == null || userName == "") {
-            window.location.href = '/Main/login.html';
+            window.location.href = 'login.html';
         } else if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
             //如果有用户名，但是过期了，则重登录
-            window.location.href = '/Main/lockscreen.html';
+            window.location.href = 'lockscreen.html';
         }
     } else if (flag == 0) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
             if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
-                //window.location.href = '/Main/lockscreen.html';
+                //window.location.href = 'lockscreen.html';
             } else {
-                window.location.href = '/Main/index.html';
+                window.location.href = 'index.html';
             }
         }
     } else if (flag == 2) {
         if (userName == null || userName == "") {
-            window.location.href = '/Main/login.html';
+            window.location.href = 'login.html';
         }
     }
 }
@@ -168,7 +175,7 @@ function ajax(className, methodName, data, type, callback) {
         dataType: "text",
         type: type,
         async: asyncFlag,
-        url: "/API/ClientHandler.ashx",
+        url: WebMain.WebServerConfig+"API/ClientHandler.ashx",
         data: paramStr,
         success: function (returnData) {
             result = returnData;
@@ -180,9 +187,9 @@ function ajax(className, methodName, data, type, callback) {
         },
         error: function (request) {
             if (request.status == 500) {
-                window.location.href = '/Main/500.html';
+                window.location.href = '500.html';
             } else {
-                window.location.href = '/Main/404.html';
+                window.location.href = '404.html';
             }
         }
     });
@@ -208,9 +215,9 @@ function handle(returnData) {
     if (data.Status == 7) {
         var userName = $.cookie("UserName");
         if (userName == null || userName == "") {
-            window.location.href = '/Main/login.html';
+            window.location.href = 'login.html';
         } else {
-            window.location.href = '/Main/lockscreen.html';
+            window.location.href = 'lockscreen.html';
         }
         data = {}
     } else {

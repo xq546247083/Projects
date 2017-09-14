@@ -36,8 +36,10 @@ namespace WebSite.API
             String value = Encoding.UTF8.GetString(byteArray);
 
             //将客户端请求的数据反序列化
-            var result= JsonConvert.DeserializeObject<RequestDataObject>(value);
+            var result = JsonConvert.DeserializeObject<RequestDataObject>(value);
             result.Data = MethodInfoBLL.ConvertParameters(result.Data, result.ClassName, result.MethodName);
+
+            Log.Write("服务器收到请求:" + value, LogType.Debug);
 
             return result;
         }
@@ -61,7 +63,10 @@ namespace WebSite.API
             responseObj["Value"] = responseDataObject.Value;
 
             //将结果序列化并返回
-            return JsonConvert.SerializeObject(responseObj);
+            var returnValueStr = JsonConvert.SerializeObject(responseObj);
+
+            Log.Write("服务器返回数据:" + returnValueStr, LogType.Debug);
+            return returnValueStr;
         }
     }
 }

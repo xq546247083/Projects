@@ -7,6 +7,7 @@
 *************************************************************************/
 using System;
 using System.Web;
+using Newtonsoft.Json.Serialization;
 using WebServer.BLL;
 
 namespace WebSite.API
@@ -61,7 +62,7 @@ namespace WebSite.API
                         {
                             responseDataObject.ResultStatus = ResultStatus.LoginIsOverTime;
                         }
-                        else
+                        else if (responseDataObject != null)
                         {
                             SysUserBLL.UpdatePwdExpiredTime(requestDataObject.UserName);
                             //返回过期时间
@@ -96,10 +97,16 @@ namespace WebSite.API
 
                     responseDataObject.Value = ex.ToMessage();
                 }
+                else
+                {
+                    responseDataObject = new ResponseDataObject() { ResultStatus = ResultStatus.Fail };
+                    responseDataObject.ResultStatus = ResultStatus.Exception;
+                }
             }
             finally
             {
                 //返回请求
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");//添加跨服返回的值
                 context.Response.Write(GetResponseData(responseDataObject));
             }
         }
