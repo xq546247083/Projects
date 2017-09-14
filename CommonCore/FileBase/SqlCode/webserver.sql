@@ -31,7 +31,7 @@ CREATE TABLE `sys_menu` (
 
 /*Data for the table `sys_menu` */
 
-insert  into `sys_menu`(`MenuID`,`ParentMenuID`,`MenuName`,`MenuUrl`,`SortOrder`,`MenuIcon`,`BigMenuIcon`,`ShortCut`,`IsShow`) values (1100,0,'菜单管理','',1,'',NULL,NULL,''),(1200,0,'博客','',3,'fa fa-bolt',NULL,NULL,''),(1201,1200,'博客主页','/Main/WebPage/Blog/BlogMain.html',1,NULL,NULL,NULL,''),(1202,1200,'浏览','/Main/WebPage/Blog/BlogBrowse.html',2,NULL,NULL,NULL,'');
+insert  into `sys_menu`(`MenuID`,`ParentMenuID`,`MenuName`,`MenuUrl`,`SortOrder`,`MenuIcon`,`BigMenuIcon`,`ShortCut`,`IsShow`) values (1100,0,'菜单管理','/WebPage/Menu/menu.html',2,'',NULL,NULL,''),(1200,0,'博客','',1,'fa fa-bolt',NULL,NULL,''),(1201,1200,'博客主页','/WebPage/Blog/BlogMain.html',1,NULL,NULL,NULL,''),(1202,1200,'浏览','/WebPage/Blog/BlogBrowse.html',2,NULL,NULL,NULL,'');
 
 /*Table structure for table `sys_role` */
 
@@ -75,7 +75,21 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('26d3ee41-332d-4bef-8ef1-5ec154d15acb','aaa','aaa','nN+VhKyLxdn/rKO3V5qbSrvznFlGC1FWvz9prZRKlY7hIvgPkKmvYTwUg4k5Qu1MyiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','15828353445@163.com',1,0,'0001-01-01 00:00:00',NULL,'1','2017-08-16 17:53:26'),('32059fdf-639b-4b81-a362-7254ac99ad61','aaaa','aaaa','W33J3sTLU/ieWQgXnhe1B60DAXC0zCdwxrozCVWodQuj/V9Zp7MU2EXCi+aiXUA7yiCPJ3ASQBahvTM+ACMLQg##=2','0001-01-01 00:00:00','\0','','2545625776@qq.com',1,0,'0001-01-01 00:00:00',NULL,'1','2017-08-16 17:47:54'),('555ec8ca-a5e6-4163-b862-d889fbbbccfb','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-12 00:26:06','\0','','546247083@qq.com',1,190,'2017-09-09 21:32:23',NULL,'1','2017-08-15 13:10:53');
+insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('448cfeb6-37a2-40c4-84e9-72599fd3722f','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 14:11:34','\0','','546247083@qq.com',1,49,'2017-09-14 13:07:54',NULL,'1','2017-09-09 00:08:37'),('f0f5b41b-7d00-48d7-96ae-67fcbefc4e87','xiao','xiao','i6ymhZhRCbqMFp7ojyw9k4qujvIu9I56tP443TNp5ZlbBkCqTrkbNKGOsZLNVj4zyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 13:16:29','\0','','295787943@qq.com',1,1,'2017-09-14 12:10:39',NULL,'1','2017-09-14 12:10:08');
+
+/*Table structure for table `sys_userinfo` */
+
+DROP TABLE IF EXISTS `sys_userinfo`;
+
+CREATE TABLE `sys_userinfo` (
+  `UserInfoID` char(36) NOT NULL COMMENT '用户ID',
+  `CompanyID` varchar(50) DEFAULT NULL COMMENT '公司ID（未用到）',
+  `Memo` varchar(150) DEFAULT NULL COMMENT '用户备注',
+  `AreaID` char(36) DEFAULT NULL COMMENT '区域ID（未用到）',
+  PRIMARY KEY (`UserInfoID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `sys_userinfo` */
 
 /*Table structure for table `u_blog` */
 
@@ -97,7 +111,7 @@ CREATE TABLE `u_blog` (
 
 /*Data for the table `u_blog` */
 
-insert  into `u_blog`(`ID`,`UserId`,`Title`,`Content`,`Tag`,`ATUsers`,`BlogType`,`Status`,`CrDate`,`ReDate`) values ('e0441084-a620-4328-9fea-a2a2ea050d6b','555ec8ca-a5e6-4163-b862-d889fbbbccfb','你好','测试内容',NULL,NULL,2,0,'2017-09-09 23:57:20','2017-09-09 00:00:00');
+insert  into `u_blog`(`ID`,`UserId`,`Title`,`Content`,`Tag`,`ATUsers`,`BlogType`,`Status`,`CrDate`,`ReDate`) values ('e0441084-a620-4328-9fea-a2a2ea050d6b','448cfeb6-37a2-40c4-84e9-72599fd3722f','你好','测试内容',NULL,NULL,2,1,'2017-09-09 23:57:20','2017-09-09 00:00:00');
 
 /*Table structure for table `u_blog_type` */
 
