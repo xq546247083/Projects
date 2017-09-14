@@ -31,7 +31,7 @@ CREATE TABLE `sys_menu` (
 
 /*Data for the table `sys_menu` */
 
-insert  into `sys_menu`(`MenuID`,`ParentMenuID`,`MenuName`,`MenuUrl`,`SortOrder`,`MenuIcon`,`BigMenuIcon`,`ShortCut`,`IsShow`) values (1100,0,'菜单管理','/WebPage/Menu/menu.html',2,'',NULL,NULL,''),(1200,0,'博客','',1,'fa fa-bolt',NULL,NULL,''),(1201,1200,'博客主页','/WebPage/Blog/BlogMain.html',1,NULL,NULL,NULL,''),(1202,1200,'浏览','/WebPage/Blog/BlogBrowse.html',2,NULL,NULL,NULL,'');
+insert  into `sys_menu`(`MenuID`,`ParentMenuID`,`MenuName`,`MenuUrl`,`SortOrder`,`MenuIcon`,`BigMenuIcon`,`ShortCut`,`IsShow`) values (1100,0,'菜单管理','/WebPage/Menu/menu.html',2,'',NULL,NULL,''),(1200,0,'博客','',1,'fa fa-bolt',NULL,NULL,''),(1201,1200,'博客主页','/WebPage/Blog/BlogMain.html',1,NULL,NULL,NULL,''),(1202,1200,'浏览','/WebPage/Blog/BlogBrowse.html',2,NULL,NULL,NULL,''),(1203,0,'测试页面','/WebPage/Test/test.html',3,NULL,NULL,NULL,'');
 
 /*Table structure for table `sys_role` */
 
@@ -49,7 +49,7 @@ CREATE TABLE `sys_role` (
 
 /*Data for the table `sys_role` */
 
-insert  into `sys_role`(`RoleID`,`RoleName`,`MenuIDS`,`IsDefault`,`IsSupper`,`Notes`) values (1,'超级管理员','1100,1200,1201,1202','','','超级管理员');
+insert  into `sys_role`(`RoleID`,`RoleName`,`MenuIDS`,`IsDefault`,`IsSupper`,`Notes`) values (1,'超级管理员','1100,1200,1201,1202,1203','','','超级管理员');
 
 /*Table structure for table `sys_user` */
 
@@ -75,7 +75,7 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('448cfeb6-37a2-40c4-84e9-72599fd3722f','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 14:11:34','\0','','546247083@qq.com',1,49,'2017-09-14 13:07:54',NULL,'1','2017-09-09 00:08:37'),('f0f5b41b-7d00-48d7-96ae-67fcbefc4e87','xiao','xiao','i6ymhZhRCbqMFp7ojyw9k4qujvIu9I56tP443TNp5ZlbBkCqTrkbNKGOsZLNVj4zyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 13:16:29','\0','','295787943@qq.com',1,1,'2017-09-14 12:10:39',NULL,'1','2017-09-14 12:10:08');
+insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('448cfeb6-37a2-40c4-84e9-72599fd3722f','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 14:35:39','\0','','546247083@qq.com',1,54,'2017-09-14 13:35:39',NULL,'1','2017-09-09 00:08:37'),('f0f5b41b-7d00-48d7-96ae-67fcbefc4e87','xiao','xiao','i6ymhZhRCbqMFp7ojyw9k4qujvIu9I56tP443TNp5ZlbBkCqTrkbNKGOsZLNVj4zyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 13:16:29','\0','','295787943@qq.com',1,1,'2017-09-14 12:10:39',NULL,'1','2017-09-14 12:10:08');
 
 /*Table structure for table `sys_userinfo` */
 
