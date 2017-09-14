@@ -1,14 +1,24 @@
 ﻿待办事项
-一、
-雪鹰领主
-跨服公会战  战报修复
-神器
+一、雪鹰领主
+
+神器-----等待联调
+
+
+
+提醒曹阳-------------下周二：团购活动
 
 后台：
-每日礼包  TimedGiftPack.aspx
-秒杀王配置 TimesMiaosha.aspx
+每日礼包  TimedGiftPack.aspx添加复制 ---已完成
 
 
+二： 还珠
+聚宝盆------等待联调
+
+
+后台：
+ 公告管理页面错误  ---修复
+
+聚宝盆配置页面-------添加--------------------------------优先
 
 三：ro
 
@@ -58,11 +68,29 @@ SVN地址：https://10.1.0.0/svn/xueyinglingzhu/trunk/Design
 3、ro开发地址：10.1.0.31
 4、雪鹰黑桃线上中心：gmoht-xylz.moqikaka.com
 
+后台地址：
+雪鹰：http://operation.fx_xylz.moqikaka.com/Login.aspx 
+雪鹰BT:http://operation.fx_btxylz.moqikaka.com/Login.aspx 
+还珠：http://operation.fx_hzgg.moqikaka.com/login.aspx 
+还珠台湾：http://operation.fx_twhzgg.moqikaka.com/login.aspx
+密码：Aa123456
 
 
 
-
-游戏开发的博客：http://blog.csdn.net/y13156556538/article/details/64160656
+---------------------------------------------------Go注意事项-----------------------------------------------------------------
+1、for循环里面如果用到了匿名fun，且是新协程。则需要把循环体的内容通过参数传递到fun里面，且不要取循环变量的地址哈。否则会出问题
+2、给具体的对象mutex，可以实现不同对象同时操作。
+// type ActivityTimedGroupBuy struct{
+// data map[int32]*TimedGroupBuy
+// mutex sync.Mutex
+// }
+3、数组，字典等要用make，并预估cap
+4、
+mutex.Lock()
+defer mutex.Unlock()
+需要放在一起，所以一个方法需要的时候，可以做内部方法，然后调用。
+5、是否存在用：exists
+6、初始化的时候，用键值一对一赋值，避免顺序错误导致赋值错误。
 
 
 b_system_c：系统配置表，不要复制
@@ -81,6 +109,7 @@ b_system_c：系统配置表，不要复制
 12、先删除数据库，再删除内存
 13、YesOrNoEnum枚举已经被抛弃
 14、线程内部，在外面的try不会catch到错误，在内部要try catch记录错误日志
+15、拷贝时，尽量考究字段名
 
 
 代码优化：
@@ -108,6 +137,9 @@ b_system_c：系统配置表，不要复制
 1.如果PlayerId 与其他Id形成联合主键，则PlayerId需要在其他Id之前，排在表中的第一位（如：p_slot）
 2.如果表中Id可以独立作为主键，则需要对PlayerId单独建立1个索引，（如：p_hero）
 
+---------------------------------------------------网址记录-----------------------------------------------------------------
+游戏开发的博客：http://blog.csdn.net/y13156556538/article/details/64160656
+
 
 ---------------------------------------------------发布版本--数据方面-----------------------------------------------------------------
 数据库更新:
@@ -122,6 +154,7 @@ b_system_c：系统配置表，不要复制
 
 ---------------------------------------------------GIT方面-----------------------------------------------------------------
 GIT命令：
+合并某一个提交的数据：git cherry-pick +提交的id
 增加：git add .
 提交：git commit -m ""
 查看以前的提交日志：git log --pretty=oneline

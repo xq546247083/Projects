@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="小荷个人网站">
+    <meta name="description" content="小荷个人网站">
+    <title>锁屏</title>
+
+    <link rel="shortcut icon" href="/Main/img/favicon.ico">
+    <link href="/Main/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Main/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/Main/css/animate.min.css" rel="stylesheet">
+    <link href="/Main/css/style.min.css" rel="stylesheet">
+    <link href="/Main/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+    <div class="lock-word animated fadeInDown">
+    </div>
+    <div class="middle-box text-center lockscreen animated fadeInDown">
+        <div>
+            <div class="m-b-md">
+                <img alt="image" class="img-circle circle-border" src="img/a1.jpg">
+            </div>
+            <h3 id="UserName"></h3>
+            <p>请输入密码</p>
+            <div class="m-t">
+                <div class="form-group">
+                    <input id="userPassword" type="password" class="form-control" placeholder="******" required="">
+                </div>
+                <button id="ReLoginBtn" type="button" onclick="ReLogin()" class="btn btn-primary block full-width">登录</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Main/js/jquery.min.js"></script>
+    <script src="/Main/js/jquery.cookie.js"></script>
+    <script src="/Main/js/bootstrap.min.js"></script>
+    <script src="/Main/js/plugins/toastr/toastr.min.js"></script>
+    <script src="/Main/js/md5.js"></script>
+    <script src="/Main/js/webMain.js"></script>
+    <script src="/Main/js/webMain/lockscreen.js"></script>
+    <script>if (window.top !== window.self) { window.top.location = window.location; }</script>
+</body>
+</html>
