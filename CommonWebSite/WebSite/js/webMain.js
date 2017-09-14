@@ -11,15 +11,15 @@ var WebMain = {
     Init: function (flag,floorCount) {
         return init.call(this, flag,floorCount);
     },
-    Cookie: function (userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
-        return cookie.call(this, userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP);
-    },
     //ajax请求
     Get: function (className, methodName, data, callback,floorCount) {
         return ajax.call(this, className, methodName, data, 'Get', callback,floorCount);
     },
     Post: function (className, methodName, data, callback,floorCount) {
         return ajax.call(this, className, methodName, data, 'Post', callback,floorCount);
+    },
+    Cookie: function (userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
+        return cookie.call(this, userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP);
     },
     //封装sweetalert,
     //title：标题
@@ -95,6 +95,7 @@ function checkdata(flag, floorCount) {
     }
 }
 
+//ajax请求
 function ajax(className, methodName, data, type, callback,floorCount) {
     var result = {}
 
@@ -150,7 +151,7 @@ function callbackHandle(returnData, callback,floorCount) {
 //处理返回值
 function handle(returnData,floorCount) {
     var data = JSON.parse(returnData);
-    
+
     //如果登录超时，直接跳转
     if (data.Status == 7) {
         var rootPath = GetRootPath(floorCount)
@@ -266,6 +267,7 @@ function swalFunc(title, content, type, btnaText, callbacka, i) {
     });
 }
 
+//设置cookie
 function cookie(userName, pwdExpiredTime, fullName, email, sex, loginCount, lastLoginTime, lastLoginIP) {
     if (typeof (userName) != "undefined") {
         if (userName == null) {
