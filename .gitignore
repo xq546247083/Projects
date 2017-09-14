@@ -103,3 +103,4 @@ $RECYCLE.BIN/
 .DS_Store
 /ToolCore/CodeGen/.vs/CodeGen/v15/sqlite3/storage.ide
 /WebServer/.vs/WebServer/v15/sqlite3/storage.ide
+/CommonWebSite/.vs/CommonWebSite/v15/sqlite3/storage.ide
