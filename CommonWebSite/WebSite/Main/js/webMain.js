@@ -1,5 +1,14 @@
 ﻿//如果有回调函数，则采用异步的方式，如果没有，则采用非异步的方式返回
 var WebMain = {
+    //----------------------------------------------一些配置----------------------------------------------
+    //服务器配置
+    WebServerConfig:"http://10.255.0.3:8189/",
+    
+    //目录路径,绝对路径，换位置就需要配置
+    MainPath:"E:/Work/Code/Projects/CommonWebSite/WebSite/Main/",
+
+
+    //----------------------------------------------一些公用方法----------------------------------------------
     //初始化,检测数据
     //flag: 0：登录页面，1：检测数据,一般界面，2：重新登录,3:注册页面
     Init: function (flag) {
@@ -27,13 +36,6 @@ var WebMain = {
     Alert: function (title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc) {
         return alertFunc.call(this, title, content, type, btnaText, callbacka, btnbText, callbackb, btncText, callbackc);
     },
-
-    //----------------------------------------------一些配置----------------------------------------------
-    //服务器配置
-    WebServerConfig:"http://10.255.0.3:8189/",
-
-    //目录路径
-    MainPath:"../../",
 }
 
 //初始化,检测数据
@@ -135,23 +137,23 @@ function checkdata(flag, curDate) {
     //如果检测数据，那么如果没有用户名，则登录
     if (flag == 1) {
         if (userName == null || userName == "") {
-            window.location.href = 'login.html';
+            window.location.href = WebMain.MainPath+'login.html';
         } else if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
             //如果有用户名，但是过期了，则重登录
-            window.location.href = 'lockscreen.html';
+            window.location.href = WebMain.MainPath+'lockscreen.html';
         }
     } else if (flag == 0) {
         //如果为登录页面，且密码过期，则重登录
         if (userName != null && userName != "") {
             if (pwdExpiredTime < curDate || pwdExpiredTime == null) {
-                //window.location.href = 'lockscreen.html';
+                //window.location.href = WebMain.MainPath+'lockscreen.html';
             } else {
-                window.location.href = 'index.html';
+                window.location.href = WebMain.MainPath+'index.html';
             }
         }
     } else if (flag == 2) {
         if (userName == null || userName == "") {
-            window.location.href = 'login.html';
+            window.location.href = WebMain.MainPath+'login.html';
         }
     }
 }
@@ -187,9 +189,9 @@ function ajax(className, methodName, data, type, callback) {
         },
         error: function (request) {
             if (request.status == 500) {
-                window.location.href = '500.html';
+                window.location.href = WebMain.MainPath+'500.html';
             } else {
-                window.location.href = '404.html';
+                window.location.href = WebMain.MainPath+'404.html';
             }
         }
     });
@@ -215,9 +217,9 @@ function handle(returnData) {
     if (data.Status == 7) {
         var userName = $.cookie("UserName");
         if (userName == null || userName == "") {
-            window.location.href = 'login.html';
+            window.location.href = WebMain.MainPath+'login.html';
         } else {
-            window.location.href = 'lockscreen.html';
+            window.location.href = WebMain.MainPath+'lockscreen.html';
         }
         data = {}
     } else {

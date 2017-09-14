@@ -19,7 +19,7 @@ namespace WebSite.API
     /// <summary>
     /// Handler 的摘要说明
     /// </summary>
-    public class ClientHandler : BaseAPI, IHttpHandler
+    public class ClientHandler : BaseApi, IHttpHandler
     {
         /// <summary>
         /// 程序集名称

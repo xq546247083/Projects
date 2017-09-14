@@ -22,7 +22,7 @@ namespace WebSite.API
     /// <summary>
     /// 基础API
     /// </summary>
-    public class BaseAPI
+    public class BaseApi
     {
         /// <summary>
         /// 获取请求数据

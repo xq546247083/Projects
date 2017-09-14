@@ -39,7 +39,7 @@ function Login() {
                 returnData.Value.LastLoginTime,
                 returnData.Value.LastLoginIP
             );
-            window.location.href = '../../index.html';
+            window.location.href ='index.html';
         } else {
             toastr.error("提示", returnData.StatusValue);
         }
