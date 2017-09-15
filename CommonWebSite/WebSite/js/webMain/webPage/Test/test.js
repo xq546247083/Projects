@@ -2,8 +2,6 @@
     WebMain.Init(1,2);
 });
 
-var BASE_URL = '../../js/plugins/webuploader';
-
 jQuery(
     function() {
          function e(e) {
@@ -26,6 +24,8 @@ jQuery(
              var a; if (e !== k) { switch (c.removeClass("state-" + k), c.addClass("state-" + e), k = e) { case "pedding": u.removeClass("element-invisible"), l.parent().removeClass("filled"), l.hide(), d.addClass("element-invisible"), n.refresh(); break; case "ready": u.addClass("element-invisible"), o("#filePicker2").removeClass("element-invisible"), l.parent().addClass("filled"), l.show(), d.removeClass("element-invisible"), n.refresh(); break; case "uploading": o("#filePicker2").addClass("element-invisible"), f.show(), c.text("暂停上传"); break; case "paused": f.show(), c.text("继续上传"); break; case "confirm": if (f.hide(), c.text("开始上传").addClass("disabled"), a = n.getStats(), a.successNum && !a.uploadFailNum) return void t("finish"); break; case "finish": a = n.getStats(), a.successNum ? alert("上传成功") : (k = "done", location.reload()) }i() }
         }
 
+        var uploadTime="";
+        var userName = $.cookie("UserName");
         var n, o = jQuery, r = o("#uploader"), l = o('<ul class="filelist"></ul>').appendTo(r.find(".queueList")), d = r.find(".statusBar"), p = d.find(".info"),
             c = r.find(".uploadBtn"), u = r.find(".placeholder"), f = d.find(".progress").hide(), m = 0, h = 0, g = window.devicePixelRatio || 1, v = 110 * g, b = 110 * g, k = "pedding", w = {},
             x = function () { var e = document.createElement("p").style, a = "transition" in e || "WebkitTransition" in e || "MozTransition" in e || "msTransition" in e || "OTransition" in e; return e = null, a }();
@@ -39,19 +39,30 @@ jQuery(
             paste: document.body,
             accept: {
                 title: "Images",
-                extensions: "gif,jpg,jpeg,bmp,png", mimeTypes: "image/jpg,image/jpeg,image/png"
+                extensions: "gif,jpg,jpeg,bmp,png", 
+                mimeTypes: "image/jpg,image/jpeg,image/png"
             },
-            swf: BASE_URL + "/Uploader.swf",
+            compress:false,
             disableGlobalDnd: !0,
-            chunked: !0, 
-            //-------------------------设置上传的服务器地址
-            server: WebMain.FileServerConfig+"File",
-            fileNumLimit: 300,
+            fileNumLimit: 10,
             fileSizeLimit: 5242880,
-            fileSingleSizeLimit: 1048576
+            fileSingleSizeLimit: 5242880,
+            chunked: true,//开启分片上传  
+            chunkSize:1024*100,// 如果要分片，分多大一片？默认大小为5M  
+            chunkRetry: 3,//如果某个分片由于网络问题出错，允许自动重传多少次  
+            threads: 1,//上传并发数。允许同时最大上传进程数[默认值：3]  
+            duplicate : false,//是否重复上传（同时选择多个一样的文件），true可以重复上传  
+            prepareNextFile: true,//上传当前分片时预处理下一分片  
+            //-------------------------设置上传的服务器地址
+            server: WebMain.FileServerConfig+"API/UploadFile",
+            formData:{
+                userName:userName,
+                uploadTime:uploadTime
+            },
         }),
             n.addButton({
-                 id: "#filePicker2", label: "继续添加"
+                 id: "#filePicker2", 
+                 label: "继续添加"
             }),
             n.onUploadProgress = function(e, a) {
                  var i = o("#" + e.id), t = i.find(".progress span"); t.css("width", 100 * a + "%"), w[e.id][1] = a, s()
@@ -62,15 +73,27 @@ jQuery(
             n.onFileDequeued = function(e) {
                  m-- , h -= e.size, m || t("pedding"), a(e), s()
             },
+            n.on('uploadBeforeSend', function (obj, data, headers) {
+                data.uploadTime = uploadTime;
+            }),
             n.on("all", function (e) { switch (e) {
-             case "uploadFinished": t("confirm"); break; case "startUpload": t("uploading"); break; case "stopUpload": t("paused")
+             case "uploadFinished":
+              t("confirm");
+               break; 
+             case "startUpload":
+              t("uploading");
+               break; 
+             case "stopUpload": 
+               t("paused")
             }
             }),
             n.onError = function(e) {
                  alert("Eroor: " + e)
             },
+            //上传按钮
             c.on("click", function() {
-                 return o(this).hasClass("disabled") ? !1 : void ("ready" === k ? n.upload() : "paused" === k ? n.upload() : "uploading" === k && n.stop())
+                uploadTime=new Date().getTime();
+                return o(this).hasClass("disabled") ? !1 : void ("ready" === k ? n.upload() : "paused" === k ? n.upload() : "uploading" === k && n.stop())
             }),
             p.on("click", ".retry", function() {
                  n.retry()
@@ -80,3 +103,28 @@ jQuery(
             }), c.addClass("state-" + k), s()
     }
 );
+
+//--------------------------------压缩代码-----------------
+// compress:{
+//     width: 1600,
+//     height: 1600,
+
+//     // 图片质量，只有type为`image/jpeg`的时候才有效。
+//     quality: 90,
+
+//     // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+//     allowMagnify: false,
+
+//     // 是否允许裁剪。
+//     crop: false,
+
+//     // 是否保留头部meta信息。
+//     preserveHeaders: true,
+
+//     // 如果发现压缩后文件大小比原来还大，则使用原来图片
+//     // 此属性可能会影响图片自动纠正功能
+//     noCompressIfLarger: false,
+
+//     // 单位字节，如果图片大小小于此值，不会采用压缩。
+//     compressSize: 0
+// },
