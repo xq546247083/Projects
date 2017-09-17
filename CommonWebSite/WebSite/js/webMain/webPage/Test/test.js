@@ -21,11 +21,12 @@ jQuery(
         }
 
         function t(e) {
-             var a; if (e !== k) { switch (c.removeClass("state-" + k), c.addClass("state-" + e), k = e) { case "pedding": u.removeClass("element-invisible"), l.parent().removeClass("filled"), l.hide(), d.addClass("element-invisible"), n.refresh(); break; case "ready": u.addClass("element-invisible"), o("#filePicker2").removeClass("element-invisible"), l.parent().addClass("filled"), l.show(), d.removeClass("element-invisible"), n.refresh(); break; case "uploading": o("#filePicker2").addClass("element-invisible"), f.show(), c.text("暂停上传"); break; case "paused": f.show(), c.text("继续上传"); break; case "confirm": if (f.hide(), c.text("开始上传").addClass("disabled"), a = n.getStats(), a.successNum && !a.uploadFailNum) return void t("finish"); break; case "finish": a = n.getStats(), a.successNum ? alert("上传成功") : (k = "done", location.reload()) }i() }
+             var a; if (e !== k) { switch (c.removeClass("state-" + k), c.addClass("state-" + e), k = e) { case "pedding": u.removeClass("element-invisible"), l.parent().removeClass("filled"), l.hide(), d.addClass("element-invisible"), n.refresh(); break; case "ready": u.addClass("element-invisible"), o("#filePicker2").removeClass("element-invisible"), l.parent().addClass("filled"), l.show(), d.removeClass("element-invisible"), n.refresh(); break; case "uploading": o("#filePicker2").addClass("element-invisible"), f.show(), c.text("暂停上传"); break; case "paused": f.show(), c.text("继续上传"); break; case "confirm": if (f.hide(), c.text("开始上传").addClass("disabled"), a = n.getStats(), a.successNum && !a.uploadFailNum) return void t("finish"); break; case "finish": a = n.getStats(), a.successNum ? toastr.success("提示", "成功上传"): (k = "done", location.reload()) }i() }
         }
 
         var uploadTime="";
-        var userName = $.cookie("UserName");
+        var picName="";
+        var userName = "";
         var n, o = jQuery, r = o("#uploader"), l = o('<ul class="filelist"></ul>').appendTo(r.find(".queueList")), d = r.find(".statusBar"), p = d.find(".info"),
             c = r.find(".uploadBtn"), u = r.find(".placeholder"), f = d.find(".progress").hide(), m = 0, h = 0, g = window.devicePixelRatio || 1, v = 110 * g, b = 110 * g, k = "pedding", w = {},
             x = function () { var e = document.createElement("p").style, a = "transition" in e || "WebkitTransition" in e || "MozTransition" in e || "msTransition" in e || "OTransition" in e; return e = null, a }();
@@ -53,11 +54,12 @@ jQuery(
             threads: 1,//上传并发数。允许同时最大上传进程数[默认值：3]  
             duplicate : false,//是否重复上传（同时选择多个一样的文件），true可以重复上传  
             prepareNextFile: true,//上传当前分片时预处理下一分片  
-            //-------------------------设置上传的服务器地址
+            //-------------------------设置上传的服务器地址----------------------
             server: WebMain.FileServerConfig+"API/UploadFile",
             formData:{
-                userName:userName,
-                uploadTime:uploadTime
+                userName:"",
+                uploadTime:"",
+                picName:"",
             },
         }),
             n.addButton({
@@ -74,7 +76,10 @@ jQuery(
                  m-- , h -= e.size, m || t("pedding"), a(e), s()
             },
             n.on('uploadBeforeSend', function (obj, data, headers) {
+                //赋值
                 data.uploadTime = uploadTime;
+                data.picName = picName;
+                data.userName = userName;
             }),
             n.on("all", function (e) { switch (e) {
              case "uploadFinished":
@@ -88,11 +93,14 @@ jQuery(
             }
             }),
             n.onError = function(e) {
-                 alert("Eroor: " + e)
+                toastr.error("提示", e);
             },
             //上传按钮
             c.on("click", function() {
+                //修改上传时间
                 uploadTime=new Date().getTime();
+                picName="Test";
+                userName=$.cookie("UserName")
                 return o(this).hasClass("disabled") ? !1 : void ("ready" === k ? n.upload() : "paused" === k ? n.upload() : "uploading" === k && n.stop())
             }),
             p.on("click", ".retry", function() {
