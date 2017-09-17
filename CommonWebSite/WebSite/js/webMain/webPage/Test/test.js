@@ -44,8 +44,8 @@ jQuery(
                 mimeTypes: "image/jpg,image/jpeg,image/png"
             },
             compress:{
-                width: 1600,
-                height: 1600,
+                width: 600,
+                height: 400,
             
                 // 图片质量，只有type为`image/jpeg`的时候才有效。
                 quality: 90,
