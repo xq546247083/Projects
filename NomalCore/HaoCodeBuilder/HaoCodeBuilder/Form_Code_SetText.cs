@@ -54,7 +54,7 @@ namespace HaoCodeBuilder
             Model.ConfigNameSpace cnsDefault = new Common.Config_NameSpace().GetDefault();
             if (cnsDefault != null)
             {
-               
+
             }
         }
 
@@ -101,30 +101,32 @@ namespace HaoCodeBuilder
             param.ServerID = server.ID;
             param.TableName = ((Model.TreeNodeTag)node.Tag).Tag.ToString();
             param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Default : Model.BuilderType.Factory;
+            //param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Default : Model.BuilderType.Custom;
+            //param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Custom : (this.radioButton2.Checked ? Model.BuilderType.Custom : Model.BuilderType.Factory);
             param.MethodList = methods;
             param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
 
             Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("实体类({0})", param.TableName));
             fca_model.Show(MainForm.Instance.dockPanel1);
-            
-           
+
+
             Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("数据类({0})", param.TableName));
             fca_data.Show(MainForm.Instance.dockPanel1);
-            
+
 
             Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("业务类({0})", param.TableName));
             fca_business.Show(MainForm.Instance.dockPanel1);
-            
+
 
             if (param.BuilderType == Model.BuilderType.Factory)
             {
                 Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), string.Format("接口类({0})", param.TableName));
                 fca_interface.Show(MainForm.Instance.dockPanel1);
-                
+
 
                 Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), string.Format("工厂类({0})", param.TableName));
                 fca_factory.Show(MainForm.Instance.dockPanel1);
-                
+
             }
             this.Close();
         }

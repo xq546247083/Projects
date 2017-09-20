@@ -17,10 +17,8 @@ namespace HaoCodeBuilder.Model
         SqlServer2000,
         SqlServer2005,
         SqlServer2008,
-        Access,
         MySql,
         Sqlite,
-        Oracle
     }
     /// <summary>
     /// 树节点类型
@@ -47,7 +45,11 @@ namespace HaoCodeBuilder.Model
         /// <summary>
         /// 工厂模式
         /// </summary>
-        Factory
+        Factory,
+        /// <summary>
+        /// 自定义模式
+        /// </summary>
+        Custom
     }
     /// <summary>
     /// 生成方法

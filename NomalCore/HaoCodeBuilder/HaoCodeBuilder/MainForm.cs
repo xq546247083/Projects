@@ -206,12 +206,6 @@ namespace HaoCodeBuilder
         {
             ShowServerList();
         }
-
-        private void dockPanel1_ActiveContentChanged(object sender, EventArgs e)
-        {
-
-        }
-
         
     }
 }

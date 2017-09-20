@@ -489,7 +489,6 @@
             dockPanelSkin2.DockPaneStripSkin = dockPaneStripSkin2;
             this.dockPanel1.Skin = dockPanelSkin2;
             this.dockPanel1.TabIndex = 4;
-            this.dockPanel1.ActiveContentChanged += new System.EventHandler(this.dockPanel1_ActiveContentChanged);
             // 
             // MainForm
             // 
