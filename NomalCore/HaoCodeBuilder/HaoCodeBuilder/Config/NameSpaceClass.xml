@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <namespaceclass>
+    <model>SSZC.Data.Model</model>
+    <data>SSZC.Data.MSSQL</data>
+    <business>SSZC.Business.Applications</business>
+    <interface>SSZC.Data.Interface</interface>
+    <factory>SSZC.Data.Factory</factory>
+  </namespaceclass>
+</root>

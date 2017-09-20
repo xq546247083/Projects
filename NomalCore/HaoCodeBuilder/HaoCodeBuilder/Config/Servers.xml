@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <server>
+    <name>localhost(SqlServer2008)</name>
+    <type>SqlServer2008</type>
+    <servername>localhost</servername>
+    <database></database>
+    <uid>sa</uid>
+    <pwd>hibzDd9vfJ5zDHCy8zPP5Q==</pwd>
+    <port></port>
+    <file></file>
+  </server>
+</root>
