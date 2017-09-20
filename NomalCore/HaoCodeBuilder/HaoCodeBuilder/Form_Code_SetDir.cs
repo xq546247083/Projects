@@ -86,12 +86,12 @@ namespace HaoCodeBuilder
 
         private void CreateToDir()
         {
-            List<TreeNode> NodeList = Form1.form_Database.GetTreeView1Selected();
+            List<TreeNode> NodeList = MainForm.form_Database.GetTreeView1Selected();
             if (NodeList.Count == 0)
             {
                 return;
             }
-            TreeNode serverNode = Form1.form_Database.GetRoot(NodeList.First());
+            TreeNode serverNode = MainForm.form_Database.GetRoot(NodeList.First());
             TreeNode dbNode = NodeList.First().Parent.Parent;
 
             List<Model.BuilderMethods> methods = new List<Model.BuilderMethods>();

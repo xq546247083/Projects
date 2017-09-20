@@ -107,7 +107,7 @@ namespace HaoCodeBuilder
             }
             else
             {
-                Form1.form_Database.AddServer(string.Format("{0}({1})", dbType.ToString(), this.textBox_file.Text.Replace("/", "\\")));
+                MainForm.form_Database.AddServer(string.Format("{0}({1})", dbType.ToString(), this.textBox_file.Text.Replace("/", "\\")));
                 this.Close();
                 AddServer();
             }

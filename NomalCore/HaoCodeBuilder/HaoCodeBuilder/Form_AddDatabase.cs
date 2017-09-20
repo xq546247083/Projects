@@ -57,17 +57,9 @@ namespace HaoCodeBuilder
             {
                 this.DatabaseType = DatabaseType.SqlServer2008;
             }
-            else if (this.radioButton_access.Checked)
-            {
-                this.DatabaseType = DatabaseType.Access;
-            }
             else if (this.radioButton_mysql.Checked)
             {
                 this.DatabaseType = DatabaseType.MySql;
-            }
-            else if (this.radioButton_oracle.Checked)
-            {
-                this.DatabaseType = DatabaseType.Oracle;
             }
             else if (this.radioButton_sqlite.Checked)
             {

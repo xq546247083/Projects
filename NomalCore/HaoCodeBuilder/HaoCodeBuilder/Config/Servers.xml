@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <server>
-    <name>localhost(SqlServer2008)</name>
-    <type>SqlServer2008</type>
-    <servername>localhost</servername>
+    <name>test</name>
+    <type>MySql</type>
+    <servername>10.1.0.10</servername>
     <database></database>
-    <uid>sa</uid>
-    <pwd>hibzDd9vfJ5zDHCy8zPP5Q==</pwd>
-    <port></port>
+    <uid>root</uid>
+    <pwd>e5KhTz9t47PYj0UABTUeTQ==</pwd>
+    <port>3311</port>
     <file></file>
   </server>
 </root>

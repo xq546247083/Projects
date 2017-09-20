@@ -111,7 +111,7 @@ namespace HaoCodeBuilder
                 dbNode.Nodes.Add(viewNode);
             }
             RootNode.Expand();
-            Form1.Instance.ShowServerList();
+            MainForm.Instance.ShowServerList();
         }
 
         
@@ -281,14 +281,14 @@ namespace HaoCodeBuilder
 
         public void ShowCodeText()
         {
-            var Nodes = Form1.form_Database.GetTreeView1Selected();
+            var Nodes = MainForm.form_Database.GetTreeView1Selected();
             if (Nodes.Count == 0)
             {
-                var selNode = Form1.form_Database.treeView1.SelectedNode;
+                var selNode = MainForm.form_Database.treeView1.SelectedNode;
                 if (selNode == null || (((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.Table && ((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.View))
                 {
                     MessageBox.Show("请选择要生成代码的表或视图!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Form1.Instance.ShowServerList();
+                    MainForm.Instance.ShowServerList();
                     return;
                 }
             }
@@ -309,14 +309,14 @@ namespace HaoCodeBuilder
 
         public void ShowCodeDir()
         {
-            List<TreeNode> Nodes = Form1.form_Database.GetTreeView1Selected();
+            List<TreeNode> Nodes = MainForm.form_Database.GetTreeView1Selected();
             if (Nodes.Count == 0)
             {
-                var selNode = Form1.form_Database.treeView1.SelectedNode;
+                var selNode = MainForm.form_Database.treeView1.SelectedNode;
                 if (selNode == null || (((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.Table && ((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.View))
                 {
                     MessageBox.Show("请选择要生成代码的表或视图!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Form1.Instance.ShowServerList();
+                    MainForm.Instance.ShowServerList();
                     return;
                 }
                 else

@@ -24,10 +24,10 @@ namespace HaoCodeBuilder
 
         private void Form_Code_SetText_Load(object sender, EventArgs e)
         {
-            var selNode = Form1.form_Database.treeView1.SelectedNode;
+            var selNode = MainForm.form_Database.treeView1.SelectedNode;
             if (selNode == null || (((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.Table && ((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.View))
             {
-                var nodes = Form1.form_Database.GetTreeView1Selected();
+                var nodes = MainForm.form_Database.GetTreeView1Selected();
                 if (nodes.Count > 0)
                 {
                     node = nodes.First();
@@ -77,7 +77,7 @@ namespace HaoCodeBuilder
         private void CreateCode()
         {
             TreeNode dbNode = node.Parent.Parent;
-            TreeNode serverNode = Form1.form_Database.GetRoot(node);
+            TreeNode serverNode = MainForm.form_Database.GetRoot(node);
             if (dbNode == null || serverNode == null)
             {
                 return;
@@ -105,25 +105,25 @@ namespace HaoCodeBuilder
             param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
 
             Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("实体类({0})", param.TableName));
-            fca_model.Show(Form1.Instance.dockPanel1);
+            fca_model.Show(MainForm.Instance.dockPanel1);
             
            
             Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("数据类({0})", param.TableName));
-            fca_data.Show(Form1.Instance.dockPanel1);
+            fca_data.Show(MainForm.Instance.dockPanel1);
             
 
             Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("业务类({0})", param.TableName));
-            fca_business.Show(Form1.Instance.dockPanel1);
+            fca_business.Show(MainForm.Instance.dockPanel1);
             
 
             if (param.BuilderType == Model.BuilderType.Factory)
             {
                 Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), string.Format("接口类({0})", param.TableName));
-                fca_interface.Show(Form1.Instance.dockPanel1);
+                fca_interface.Show(MainForm.Instance.dockPanel1);
                 
 
                 Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), string.Format("工厂类({0})", param.TableName));
-                fca_factory.Show(Form1.Instance.dockPanel1);
+                fca_factory.Show(MainForm.Instance.dockPanel1);
                 
             }
             this.Close();

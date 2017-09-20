@@ -10,13 +10,13 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace HaoCodeBuilder
 {
-    public partial class Form1 : DockContent
+    public partial class MainForm : DockContent
     {
-        public static Form1 Instance = null;
+        public static MainForm Instance = null;
         public static Form_Database form_Database = null;
         public static Form_Home form_Home = null;
         public static Form_TemplateTree form_TemplateTree = null;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             Instance = this;

@@ -112,7 +112,7 @@ namespace HaoCodeBuilder
             }
             else
             {
-                Form1.form_Database.AddServer(string.Format("{0}({1})", this.sqlserver_server.Text.Trim(), dbType.ToString()));
+                MainForm.form_Database.AddServer(string.Format("{0}({1})", this.sqlserver_server.Text.Trim(), dbType.ToString()));
                 this.Close();
                 AddServer();
             }
