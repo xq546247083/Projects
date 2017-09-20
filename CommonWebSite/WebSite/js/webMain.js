@@ -114,6 +114,7 @@ function ajax(className, methodName, data, type, callback,floorCount) {
     };
 
     var paramStr = JSON.stringify(params);
+    var layerIndex=layer.load();
     $.ajax({
         dataType: "text",
         type: type,
@@ -121,14 +122,17 @@ function ajax(className, methodName, data, type, callback,floorCount) {
         url: WebMain.WebServerConfig+"API/ClientHandler.ashx",
         data: paramStr,
         success: function (returnData) {
-            result = returnData;
-
+            layer.close(layerIndex);
+            
             //如果有回调函数，则调用回调函数来处理数据
+            result = returnData;
             if (callback) {
                 callbackHandle(result, callback,floorCount);
             }
         },
         error: function (request) {
+            layer.close(layerIndex);
+
             if (request.status == 500) {
                 window.location.href = rootPath+'500.html';
             } else {
@@ -231,7 +235,7 @@ function alertFunc(title, content, type, btnaText, callbacka, btnbText, callback
             });
             break;
         case "timer":
-            swalFunc(title, content, type, btnaText, callbacka, 3000);
+            swalTimerFunc(title, content, btnaText, callbacka, 3000);
             break;
         default:
             swal({
@@ -242,13 +246,14 @@ function alertFunc(title, content, type, btnaText, callbacka, btnbText, callback
 }
 
 //递归函数用来显示时间提示框
-function swalFunc(title, content, type, btnaText, callbacka, i) {
+function swalTimerFunc(title, content,  btnaText, callbacka, i) {
     var currentContent = content.replace("%s", i / 1000 + "s");
 
     swal({
         title: title,
         text: currentContent,
         timer: 1000,
+        type: "success",
         showConfirmButton: true,
         confirmButtonText: btnaText
     }, function (isConfirm) {
@@ -261,7 +266,7 @@ function swalFunc(title, content, type, btnaText, callbacka, i) {
         //继续循环
         i = i - 1000;
         if (i >= 1000) {
-            swalFunc(title, content, type, btnaText, callbacka, i);
+            swalTimerFunc(title, content,  btnaText, callbacka, i);
         } else {
             if (callbacka)
                 callbacka();
