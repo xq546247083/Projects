@@ -71,19 +71,19 @@ namespace Tool.Common
         static WebConfig()
         {
             //连接（此处两种连接方式都用的一个数据库）
-            CommonConnString = ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString;
-            ConfigConneString = ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString;
+            CommonConnString = ConfigurationManager.ConnectionStrings["CommonConnection"] != null ? ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString : "";
+            ConfigConneString = ConfigurationManager.ConnectionStrings["CommonConnection"] != null ? ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString : "";
 
             //日志写入
-            LogInfoFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogInfoFlag"]);
-            LogDebugFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogDebugFlag"]);
-            LogWarnFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogWarnFlag"]);
-            LogErrorFlag = Boolean.Parse(ConfigurationManager.AppSettings["LogErrorFlag"]);
-            PwdExpiredTime = Int32.Parse(ConfigurationManager.AppSettings["PwdExpiredTime"]);
+            LogInfoFlag = ConfigurationManager.AppSettings["LogInfoFlag"] != null ? Boolean.Parse(ConfigurationManager.AppSettings["LogInfoFlag"]) : true;
+            LogDebugFlag = ConfigurationManager.AppSettings["LogDebugFlag"] != null ? Boolean.Parse(ConfigurationManager.AppSettings["LogDebugFlag"]) : true;
+            LogWarnFlag = ConfigurationManager.AppSettings["LogWarnFlag"] != null ? Boolean.Parse(ConfigurationManager.AppSettings["LogWarnFlag"]) : true;
+            LogErrorFlag = ConfigurationManager.AppSettings["LogErrorFlag"] != null ? Boolean.Parse(ConfigurationManager.AppSettings["LogErrorFlag"]) : true;
+            PwdExpiredTime = ConfigurationManager.AppSettings["PwdExpiredTime"] != null ? Int32.Parse(ConfigurationManager.AppSettings["PwdExpiredTime"]) : 0;
 
-            EmailHost = ConfigurationManager.AppSettings["EmailHost"];
-            EmailAddress = ConfigurationManager.AppSettings["EmailAddress"];
-            EmailPass = ConfigurationManager.AppSettings["EmailPass"];
+            EmailHost = ConfigurationManager.AppSettings["EmailHost"] != null ? ConfigurationManager.AppSettings["EmailHost"] : String.Empty;
+            EmailAddress = ConfigurationManager.AppSettings["EmailAddress"] != null ? ConfigurationManager.AppSettings["EmailAddress"] : String.Empty;
+            EmailPass = ConfigurationManager.AppSettings["EmailPass"] != null ? ConfigurationManager.AppSettings["EmailPass"] : String.Empty;
         }
     }
 }
