@@ -104,17 +104,20 @@ namespace HaoCodeBuilder
             param.MethodList = methods;
             param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
 
-            Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("实体类({0})", param.TableName));
-            fca_model.Show(MainForm.Instance.dockPanel1);
+            if (param.BuilderType == Model.BuilderType.Factory || param.BuilderType == Model.BuilderType.Default)
+            {
+
+                Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("实体类({0})", param.TableName));
+                fca_model.Show(MainForm.Instance.dockPanel1);
 
 
-            Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("数据类({0})", param.TableName));
-            fca_data.Show(MainForm.Instance.dockPanel1);
+                Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("数据类({0})", param.TableName));
+                fca_data.Show(MainForm.Instance.dockPanel1);
 
 
-            Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("业务类({0})", param.TableName));
-            fca_business.Show(MainForm.Instance.dockPanel1);
-
+                Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("业务类({0})", param.TableName));
+                fca_business.Show(MainForm.Instance.dockPanel1);
+            }
 
             if (param.BuilderType == Model.BuilderType.Factory)
             {
