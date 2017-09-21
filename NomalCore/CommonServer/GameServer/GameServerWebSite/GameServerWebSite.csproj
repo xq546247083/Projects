@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,8 +124,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonCore\Tool\Tool.csproj">
-      <Project>{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}</Project>
+    <ProjectReference Include="..\..\..\..\CommonCore\Tool\Tool.csproj">
+      <Project>{d2f0df98-0f21-4e13-947e-c5e4b5543a92}</Project>
       <Name>Tool</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameServerBLL\GameServerBLL.csproj">

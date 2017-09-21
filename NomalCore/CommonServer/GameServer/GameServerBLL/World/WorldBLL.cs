@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameServer.BLL
 {
-    using Tool.Log;
+    using Tool.Common;
 
     /// <summary>
     /// 初始化整个服务器的数据

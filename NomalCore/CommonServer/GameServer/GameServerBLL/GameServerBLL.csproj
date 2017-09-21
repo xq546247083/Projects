@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\..\CommonCore\FileBase\ReferenceFiles\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
@@ -59,7 +62,7 @@
     <Compile Include="World\WorldBLL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonCore\Tool\Tool.csproj">
+    <ProjectReference Include="..\..\..\..\CommonCore\Tool\Tool.csproj">
       <Project>{d2f0df98-0f21-4e13-947e-c5e4b5543a92}</Project>
       <Name>Tool</Name>
     </ProjectReference>

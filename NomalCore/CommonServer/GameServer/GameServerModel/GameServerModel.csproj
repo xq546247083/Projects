@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\CommonCore\FileBase\ReferenceFiles\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\..\CommonCore\FileBase\ReferenceFiles\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="newtonsoft.json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,7 +62,7 @@
     <Compile Include="World\World.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CommonCore\Tool\Tool.csproj">
+    <ProjectReference Include="..\..\..\..\CommonCore\Tool\Tool.csproj">
       <Project>{d2f0df98-0f21-4e13-947e-c5e4b5543a92}</Project>
       <Name>Tool</Name>
     </ProjectReference>

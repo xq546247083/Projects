@@ -45,15 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HaoCodeBuilder.Common\HaoCodeBuilder.Common.csproj">
-      <Project>{3DC5E18A-2AAF-4ED3-B783-CF9B42A47A44}</Project>
+      <Project>{3dc5e18a-2aaf-4ed3-b783-cf9b42a47a44}</Project>
       <Name>HaoCodeBuilder.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\HaoCodeBuilder.IData\HaoCodeBuilder.IData.csproj">
-      <Project>{D58C0A56-71C6-495A-84B8-E18FD586D859}</Project>
+      <Project>{d58c0a56-71c6-495a-84b8-e18fd586d859}</Project>
       <Name>HaoCodeBuilder.IData</Name>
     </ProjectReference>
     <ProjectReference Include="..\HaoCodeBuilder.Model\HaoCodeBuilder.Model.csproj">
-      <Project>{12CC18E0-547B-4AF4-B965-9F9F95AAB5EC}</Project>
+      <Project>{12cc18e0-547b-4af4-b965-9f9f95aab5ec}</Project>
       <Name>HaoCodeBuilder.Model</Name>
     </ProjectReference>
   </ItemGroup>

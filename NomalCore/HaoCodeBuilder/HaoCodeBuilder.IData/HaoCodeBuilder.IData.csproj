@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HaoCodeBuilder.Model\HaoCodeBuilder.Model.csproj">
-      <Project>{12CC18E0-547B-4AF4-B965-9F9F95AAB5EC}</Project>
+      <Project>{12cc18e0-547b-4af4-b965-9f9f95aab5ec}</Project>
       <Name>HaoCodeBuilder.Model</Name>
     </ProjectReference>
   </ItemGroup>

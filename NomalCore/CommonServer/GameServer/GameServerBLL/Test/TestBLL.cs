@@ -10,7 +10,7 @@ using System;
 
 namespace GameServer.BLL
 {
-    using Tool.Log;
+    using Tool.Common;
 
     /// <summary>
     /// 测试所用类

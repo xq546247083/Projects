@@ -65,7 +65,7 @@
       <HintPath>ReferenceFiles\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>F:\360Downloads\MySQL Connector Net 6.4.4\Assemblies\v4.0\MySql.Data.dll</HintPath>
+      <HintPath>ReferenceFiles\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -267,40 +267,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HaoCodeBuilder.Business\HaoCodeBuilder.Business.csproj">
-      <Project>{AA7F2C2D-0689-4994-8ED0-A322DE928C07}</Project>
-      <Name>HaoCodeBuilder.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Common\HaoCodeBuilder.Common.csproj">
-      <Project>{3DC5E18A-2AAF-4ED3-B783-CF9B42A47A44}</Project>
-      <Name>HaoCodeBuilder.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Data.MySql\HaoCodeBuilder.Data.MySql.csproj">
-      <Project>{6560CDB1-C655-4DE4-B059-07312816F2A2}</Project>
-      <Name>HaoCodeBuilder.Data.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Data.Sqlite\HaoCodeBuilder.Data.Sqlite.csproj">
-      <Project>{97858E96-E14D-4FB8-B5A1-646B2F581206}</Project>
-      <Name>HaoCodeBuilder.Data.Sqlite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Data.SqlServer\HaoCodeBuilder.Data.SqlServer.csproj">
-      <Project>{9F6A8754-7BA9-4D30-9EE7-DA2327730081}</Project>
-      <Name>HaoCodeBuilder.Data.SqlServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Factory\HaoCodeBuilder.Factory.csproj">
-      <Project>{A61C28E7-C0B7-4F79-9F78-079494DD564D}</Project>
-      <Name>HaoCodeBuilder.Factory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.IData\HaoCodeBuilder.IData.csproj">
-      <Project>{D58C0A56-71C6-495A-84B8-E18FD586D859}</Project>
-      <Name>HaoCodeBuilder.IData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HaoCodeBuilder.Model\HaoCodeBuilder.Model.csproj">
-      <Project>{12CC18E0-547B-4AF4-B965-9F9F95AAB5EC}</Project>
-      <Name>HaoCodeBuilder.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Config\Directory.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -336,6 +302,40 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HaoCodeBuilder.Business\HaoCodeBuilder.Business.csproj">
+      <Project>{aa7f2c2d-0689-4994-8ed0-a322de928c07}</Project>
+      <Name>HaoCodeBuilder.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Common\HaoCodeBuilder.Common.csproj">
+      <Project>{3dc5e18a-2aaf-4ed3-b783-cf9b42a47a44}</Project>
+      <Name>HaoCodeBuilder.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Data.MySql\HaoCodeBuilder.Data.MySql.csproj">
+      <Project>{6560cdb1-c655-4de4-b059-07312816f2a2}</Project>
+      <Name>HaoCodeBuilder.Data.MySql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Data.Sqlite\HaoCodeBuilder.Data.Sqlite.csproj">
+      <Project>{97858e96-e14d-4fb8-b5a1-646b2f581206}</Project>
+      <Name>HaoCodeBuilder.Data.Sqlite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Data.SqlServer\HaoCodeBuilder.Data.SqlServer.csproj">
+      <Project>{9f6a8754-7ba9-4d30-9ee7-da2327730081}</Project>
+      <Name>HaoCodeBuilder.Data.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Factory\HaoCodeBuilder.Factory.csproj">
+      <Project>{a61c28e7-c0b7-4f79-9f78-079494dd564d}</Project>
+      <Name>HaoCodeBuilder.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.IData\HaoCodeBuilder.IData.csproj">
+      <Project>{d58c0a56-71c6-495a-84b8-e18fd586d859}</Project>
+      <Name>HaoCodeBuilder.IData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HaoCodeBuilder.Model\HaoCodeBuilder.Model.csproj">
+      <Project>{12cc18e0-547b-4af4-b965-9f9f95aab5ec}</Project>
+      <Name>HaoCodeBuilder.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

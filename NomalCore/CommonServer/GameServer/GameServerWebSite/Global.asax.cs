@@ -1,12 +1,21 @@
-﻿using GameServer.BLL;
+﻿/************************************************************************
+* 标题: 网站启动页面
+* 描述: 网站启动页面
+* 作者：肖强
+* 日期：2017-5-3 10:43:36
+* 版本：V1
+*************************************************************************/
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Tool.Log;
+
 
 namespace GameServerWebSite
 {
+    using Tool.Common;
+    using GameServer.BLL;
+
     /// <summary>
     /// 网站启动页面
     /// </summary>

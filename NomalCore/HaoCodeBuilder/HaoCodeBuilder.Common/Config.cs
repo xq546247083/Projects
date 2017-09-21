@@ -82,10 +82,8 @@ namespace HaoCodeBuilder.Common
             get 
             {
                 Dictionary<DatabaseType, string> dict = new Dictionary<DatabaseType, string>();
-                dict.Add(DatabaseType.Access, "");
                 dict.Add(DatabaseType.Empty, "");
                 dict.Add(DatabaseType.MySql, "mysql");
-                dict.Add(DatabaseType.Oracle, "");
                 dict.Add(DatabaseType.Sqlite, "");
                 dict.Add(DatabaseType.SqlServer2000, "master");
                 dict.Add(DatabaseType.SqlServer2005, "master");

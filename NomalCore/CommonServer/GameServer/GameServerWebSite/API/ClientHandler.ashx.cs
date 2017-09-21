@@ -6,7 +6,6 @@ namespace GameServerWebSite.API
     using GameServer.Model;
     using Tool.Common;
     using Tool.Extension;
-    using Tool.Log;
 
     /// <summary>
     /// Handler 的摘要说明

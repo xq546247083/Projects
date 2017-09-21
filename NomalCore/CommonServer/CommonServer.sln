@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameServer", "GameServer", "{7BAF25DD-99A9-4E6A-A68D-355D9C6D5DB4}"
 EndProject
@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerWebSite", "GameSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonCore", "CommonCore", "{304E2282-3C5F-42F5-8F4F-F87D5CDACEB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBase", "..\CommonCore\FileBase\FileBase.csproj", "{59EDCBF7-E3E9-4F09-A9E5-2CF88BFAC861}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBase", "..\..\CommonCore\FileBase\FileBase.csproj", "{59EDCBF7-E3E9-4F09-A9E5-2CF88BFAC861}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "..\CommonCore\Tool\Tool.csproj", "{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "..\..\CommonCore\Tool\Tool.csproj", "{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,5 +60,8 @@ Global
 		{2218ECC0-A894-4A50-A5F5-4129CB951017} = {7BAF25DD-99A9-4E6A-A68D-355D9C6D5DB4}
 		{59EDCBF7-E3E9-4F09-A9E5-2CF88BFAC861} = {304E2282-3C5F-42F5-8F4F-F87D5CDACEB5}
 		{D2F0DF98-0F21-4E13-947E-C5E4B5543A92} = {304E2282-3C5F-42F5-8F4F-F87D5CDACEB5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B8AC1B7-5F5A-4EB6-8516-1D1C718E8903}
 	EndGlobalSection
 EndGlobal
