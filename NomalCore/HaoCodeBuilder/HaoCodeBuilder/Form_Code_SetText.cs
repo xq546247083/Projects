@@ -100,9 +100,7 @@ namespace HaoCodeBuilder
             param.NameSpace1 = "";
             param.ServerID = server.ID;
             param.TableName = ((Model.TreeNodeTag)node.Tag).Tag.ToString();
-            param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Default : Model.BuilderType.Factory;
-            //param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Default : Model.BuilderType.Custom;
-            //param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Custom : (this.radioButton2.Checked ? Model.BuilderType.Custom : Model.BuilderType.Factory);
+            param.BuilderType = this.radioButton1.Checked ? Model.BuilderType.Custom : (this.radioButton2.Checked ? Model.BuilderType.Custom : Model.BuilderType.Factory);
             param.MethodList = methods;
             param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
 
