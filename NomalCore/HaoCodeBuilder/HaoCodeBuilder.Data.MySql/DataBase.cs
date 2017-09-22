@@ -100,7 +100,7 @@ namespace HaoCodeBuilder.Data.MySql
                     MySqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        viewList.Add(new Model.Views() { Name = dr.GetString(0)});
+                        viewList.Add(new Model.Views() { Name = dr.GetString(0) });
                     }
                     dr.Close();
                     dr.Dispose();
@@ -180,9 +180,9 @@ namespace HaoCodeBuilder.Data.MySql
         /// <param name="tName"></param>
         /// <param name="isNull"></param>
         /// <returns></returns>
-        private string GetFieldType(string typeName, bool isNull,Int32 length)
+        private string GetFieldType(string typeName, bool isNull, Int32 length)
         {
-            
+
             string r = string.Empty;
             switch (typeName.Trim().ToLower())
             {
@@ -200,35 +200,35 @@ namespace HaoCodeBuilder.Data.MySql
                         r = "String";
                     break;
                 case "bit":
-                    r = isNull ? "Boolean?" : "Boolean";
+                    r = isNull ? "Boolean" : "Boolean";
                     break;
                 case "bigint":
                 case "mediumint":
-                    r = isNull ? "long?" : "long";
+                    r = isNull ? "long" : "long";
                     break;
                 case "year":
                 case "int":
                 case "integer":
-                    r = isNull ? "Int32?" : "Int32";
+                    r = isNull ? "Int32" : "Int32";
                     break;
                 case "tinyint":
-                    r = isNull ? "Byte?" : "Byte";
+                    r = isNull ? "Byte" : "Byte";
                     break;
                 case "smallint":
-                    r = isNull ? "short?" : "short";
+                    r = isNull ? "short" : "short";
                     break;
                 case "decimal":
-                    r = isNull ? "Decimal?" : "Decimal";
+                    r = isNull ? "Decimal" : "Decimal";
                     break;
                 case "float":
                 case "double":
-                    r = isNull ? "Double?" : "Double";
+                    r = isNull ? "Double" : "Double";
                     break;
                 case "date":
                 case "datetime":
                 case "timestamp":
                 case "time":
-                    r = isNull ? "DateTime?" : "DateTime";
+                    r = isNull ? "DateTime" : "DateTime";
                     break;
             }
             return r;
