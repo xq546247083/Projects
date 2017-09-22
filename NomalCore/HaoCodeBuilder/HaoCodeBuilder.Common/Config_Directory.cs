@@ -115,6 +115,28 @@ namespace HaoCodeBuilder.Common
                 return false;
             }
         }
+
+        /// <summary>
+        /// 删除一个命名空间
+        /// </summary>
+        /// <param name="namespace1"></param>
+        /// <returns></returns>
+        public bool DeleteAll()
+        {
+            try
+            {
+                XElement xelem = XElement.Load(XmlFile);
+                var queryXML = from xele in xelem.Elements("directory")
+                        select xele;
+                queryXML.Remove();
+                xelem.Save(XmlFile);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// 查询一个命名空间
         /// </summary>

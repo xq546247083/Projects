@@ -104,6 +104,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form_SetCodeBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_SetCodeBuilder.Designer.cs">
+      <DependentUpon>Form_SetCodeBuilder.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,18 +158,6 @@
     <Compile Include="Form_Code_Area.Designer.cs">
       <DependentUpon>Form_Code_Area.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_Code_SetDir.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Code_SetDir.Designer.cs">
-      <DependentUpon>Form_Code_SetDir.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Code_SetText.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Code_SetText.Designer.cs">
-      <DependentUpon>Form_Code_SetText.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form_Database.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +202,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_SetCodeBuilder.resx">
+      <DependentUpon>Form_SetCodeBuilder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -232,12 +229,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Code_Area.resx">
       <DependentUpon>Form_Code_Area.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Code_SetDir.resx">
-      <DependentUpon>Form_Code_SetDir.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Code_SetText.resx">
-      <DependentUpon>Form_Code_SetText.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Database.resx">
       <DependentUpon>Form_Database.cs</DependentUpon>
@@ -285,6 +276,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Config\CodeBuilder.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="ReferenceFiles\ICSharpCode.TextEditor.dll" />
+    <Content Include="ReferenceFiles\MySql.Data.dll" />
+    <Content Include="ReferenceFiles\System.Data.SQLite.DLL" />
+    <Content Include="ReferenceFiles\WeifenLuo.WinFormsUI.Docking.dll" />
     <EmbeddedResource Include="Config\Directory.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

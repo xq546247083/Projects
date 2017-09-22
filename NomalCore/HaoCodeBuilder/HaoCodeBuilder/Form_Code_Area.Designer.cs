@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Code_Area));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.全选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.粘贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全部保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全部关闭CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textEditorControl1 = new ICSharpCode.TextEditor.TextEditorControl();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -42,44 +40,36 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.全选ToolStripMenuItem,
-            this.复制ToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.粘贴ToolStripMenuItem});
+            this.保存ToolStripMenuItem,
+            this.全部保存ToolStripMenuItem,
+            this.全部关闭CToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 70);
             // 
-            // 全选ToolStripMenuItem
+            // 保存ToolStripMenuItem
             // 
-            this.全选ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("全选ToolStripMenuItem.Image")));
-            this.全选ToolStripMenuItem.Name = "全选ToolStripMenuItem";
-            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.全选ToolStripMenuItem.Text = "全选";
-            this.全选ToolStripMenuItem.Click += new System.EventHandler(this.全选ToolStripMenuItem_Click);
+            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
+            this.保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.保存ToolStripMenuItem.Text = "保存(&S)";
+            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
-            // 复制ToolStripMenuItem
+            // 全部保存ToolStripMenuItem
             // 
-            this.复制ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("复制ToolStripMenuItem.Image")));
-            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.复制ToolStripMenuItem.Text = "复制";
-            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
+            this.全部保存ToolStripMenuItem.Name = "全部保存ToolStripMenuItem";
+            this.全部保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.S)));
+            this.全部保存ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.全部保存ToolStripMenuItem.Text = "全部保存(&AS)";
+            this.全部保存ToolStripMenuItem.Click += new System.EventHandler(this.全部保存ToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // 全部关闭CToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
-            this.toolStripMenuItem1.Text = "复制全部";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // 粘贴ToolStripMenuItem
-            // 
-            this.粘贴ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("粘贴ToolStripMenuItem.Image")));
-            this.粘贴ToolStripMenuItem.Name = "粘贴ToolStripMenuItem";
-            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.粘贴ToolStripMenuItem.Text = "粘贴";
-            this.粘贴ToolStripMenuItem.Click += new System.EventHandler(this.粘贴ToolStripMenuItem_Click);
+            this.全部关闭CToolStripMenuItem.Name = "全部关闭CToolStripMenuItem";
+            this.全部关闭CToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.全部关闭CToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.全部关闭CToolStripMenuItem.Text = "关闭其他(&C)";
+            this.全部关闭CToolStripMenuItem.Click += new System.EventHandler(this.全部关闭CToolStripMenuItem_Click);
             // 
             // textEditorControl1
             // 
@@ -88,20 +78,20 @@
             this.textEditorControl1.IsReadOnly = false;
             this.textEditorControl1.Location = new System.Drawing.Point(0, 0);
             this.textEditorControl1.Name = "textEditorControl1";
-            this.textEditorControl1.Size = new System.Drawing.Size(716, 366);
+            this.textEditorControl1.Size = new System.Drawing.Size(1079, 641);
             this.textEditorControl1.TabIndex = 0;
             // 
             // Form_Code_Area
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 366);
+            this.ClientSize = new System.Drawing.Size(1079, 641);
             this.Controls.Add(this.textEditorControl1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.KeyPreview = true;
             this.Name = "Form_Code_Area";
             this.ShowInTaskbar = false;
             this.Text = "Form_Code_Area";
-            this.Load += new System.EventHandler(this.Form_Code_Area_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -109,11 +99,10 @@
 
         #endregion
 
-        private ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
+        public ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 全选ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 粘贴ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 全部保存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 全部关闭CToolStripMenuItem;
     }
 }

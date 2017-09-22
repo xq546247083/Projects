@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -24,54 +25,28 @@ namespace HaoCodeBuilder
             this.textEditorControl1.Text = text;
         }
 
-        private void Form_Code_Area_Load(object sender, EventArgs e)
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MainForm.SaveFile(this.ParentForm as MainForm);
         }
 
-        private void DoEditAction(ICSharpCode.TextEditor.Actions.IEditAction action)
+        private void 全部保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextEditorControl editor = this.textEditorControl1;
-            if (editor != null && action != null)
+            MainForm.SaveAllFile(this.ParentForm as MainForm);
+        }
+
+        private void 全部关闭CToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = this.ParentForm as MainForm;
+
+            mainForm.dockPanel1.Contents.ToList().ForEach((content) =>
             {
-                TextArea area = editor.ActiveTextAreaControl.TextArea;
-                editor.BeginUpdate();
-                try
+                var tempItem = content.DockHandler.Form as Form_Code_Area;
+                if (tempItem != null && tempItem != this)
                 {
-                    lock (editor.Document)
-                    {
-                        action.Execute(area);
-                    }
+                    tempItem.Close();
                 }
-                finally
-                {
-                    editor.EndUpdate();
-                    area.Caret.UpdateCaretPosition();
-                }
-            }
+            });
         }
-
-        private void 全选ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DoEditAction(new ICSharpCode.TextEditor.Actions.SelectWholeDocument());
-        }
-
-        private void 粘贴ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DoEditAction(new ICSharpCode.TextEditor.Actions.Paste());
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            DoEditAction(new ICSharpCode.TextEditor.Actions.SelectWholeDocument());
-            DoEditAction(new ICSharpCode.TextEditor.Actions.Copy());
-        }
-
-        private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DoEditAction(new ICSharpCode.TextEditor.Actions.Copy());
-        }
-
-
     }
 }

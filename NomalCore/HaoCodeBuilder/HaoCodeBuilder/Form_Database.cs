@@ -25,8 +25,6 @@ namespace HaoCodeBuilder
             var serverList = new Common.Config_Servers().GetAll();
             foreach (var server in serverList)
             {
-               
-
                 Model.Servers ser = new Servers();
                 ser.DatabaseName = server.Database;
                 ser.ID = server.Name;
@@ -47,7 +45,6 @@ namespace HaoCodeBuilder
                 RootNode.SelectedImageIndex = 0;
                 RootNode.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.Server, Tag = ser };
                 treeView1.Nodes.Add(RootNode);
-
             }
         }
 
@@ -114,24 +111,23 @@ namespace HaoCodeBuilder
             MainForm.Instance.ShowServerList();
         }
 
-        
+
         private void treeView1_DoubleClick(object sender, EventArgs e)
         {
             AddTreeNode addnode = new AddTreeNode(AddNodes);
             this.treeView1.BeginInvoke(addnode, false);
-           
+
         }
-        
+
         /// <summary>
         /// 加载下级节点
         /// </summary>
         private void AddNodes(bool isRefresh = false)
         {
-            
             TreeNode selNode = treeView1.SelectedNode;
             if (selNode == null) return;
-            if (selNode.Nodes.Count > 0 && !isRefresh) return;
-    
+            if (selNode.Nodes.Count > 1 && !isRefresh) return;
+
             selNode.Nodes.Clear();
             TreeNode rootNode = GetRoot(selNode);
             if (rootNode == null) return;
@@ -146,7 +142,7 @@ namespace HaoCodeBuilder
                 MessageBox.Show(msg, "连接失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            
+
             switch (nodeTag.Type)
             {
                 case TreeNodeType.Server: //服务器加载数据库
@@ -160,6 +156,9 @@ namespace HaoCodeBuilder
                         dbNode.SelectedImageIndex = 1;
                         dbNode.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.DataBase, Tag = db };
                         selNode.Nodes.Add(dbNode);
+
+                        TreeNode emptyNode = new TreeNode();
+                        dbNode.Nodes.Add(emptyNode);
                     }
                     break;
                 case TreeNodeType.DataBase: //数据库加载表视图节点
@@ -167,7 +166,7 @@ namespace HaoCodeBuilder
                     TreeNode tblNode = new TreeNode();
                     tblNode.Name = "表";
                     tblNode.Text = "表";
-                    tblNode.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.TableNode, Tag = nodeTag.Tag.ToString()};
+                    tblNode.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.TableNode, Tag = nodeTag.Tag.ToString() };
                     tblNode.ImageIndex = 4;
                     tblNode.SelectedImageIndex = 4;
                     selNode.Nodes.Add(tblNode);
@@ -180,6 +179,10 @@ namespace HaoCodeBuilder
                     viewNode.ImageIndex = 4;
                     viewNode.SelectedImageIndex = 4;
                     selNode.Nodes.Add(viewNode);
+                    TreeNode empty2Node = new TreeNode();
+                    viewNode.Nodes.Add(empty2Node);
+                    TreeNode empty1Node = new TreeNode();
+                    tblNode.Nodes.Add(empty1Node);
                     break;
                 case TreeNodeType.TableNode: //表节点加载表
                     var tables = Database.GetTables(server.ID, nodeTag.Tag.ToString());
@@ -209,21 +212,12 @@ namespace HaoCodeBuilder
                     break;
                 case TreeNodeType.View:
                 case TreeNodeType.Table: //表加载字段
-                    var fields = Database.GetFields(server.ID, ((Model.TreeNodeTag)selNode.Parent.Tag).Tag.ToString(), ((Model.TreeNodeTag)selNode.Tag).Tag.ToString());
-                    foreach (var field in fields)
-                    {
-                        TreeNode fldNode = new TreeNode();
-                        fldNode.Name = field.Name;
-                        fldNode.Text = string.Format("{0}({1}{2},{3})", field.Name, field.Type, field.Length != -1 ? "("+field.Length.ToString()+")" : "", field.IsNull ? "null" : "not null");
-                        fldNode.ImageIndex = field.IsPrimaryKey ? 5 : 3;
-                        fldNode.SelectedImageIndex = field.IsPrimaryKey ? 5 : 3;
-                        fldNode.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.Field, Tag = field };
-                        selNode.Nodes.Add(fldNode);
-                    }
+                    AddNameSpace();
+                    CreateCode(selNode);
                     break;
             }
             selNode.Expand();
-            
+
         }
         /// <summary>
         /// 得到一个节点的根节点
@@ -246,8 +240,8 @@ namespace HaoCodeBuilder
         {
             if (treeView1.SelectedNode == null) return;
             TreeNode rootNode = GetRoot(treeView1.SelectedNode);
-           
-            if (rootNode == null ) return;
+
+            if (rootNode == null) return;
             Model.TreeNodeTag tag = (Model.TreeNodeTag)rootNode.Tag;
             if (tag.Type != TreeNodeType.Server) return;
             Model.Servers server = (Model.Servers)tag.Tag;
@@ -274,29 +268,6 @@ namespace HaoCodeBuilder
             AddNodes(true);
         }
 
-        private void 生成代码ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowCodeText();
-        }
-
-        public void ShowCodeText()
-        {
-            var Nodes = MainForm.form_Database.GetTreeView1Selected();
-            if (Nodes.Count == 0)
-            {
-                var selNode = MainForm.form_Database.treeView1.SelectedNode;
-                if (selNode == null || (((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.Table && ((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.View))
-                {
-                    MessageBox.Show("请选择要生成代码的表或视图!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    MainForm.Instance.ShowServerList();
-                    return;
-                }
-            }
-
-            Form_Code_SetText fcst = new Form_Code_SetText();
-            fcst.ShowDialog();
-        }
-
         private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeNode node = e.Node;
@@ -304,34 +275,15 @@ namespace HaoCodeBuilder
             {
                 n.Checked = node.Checked;
             }
-            
+
         }
 
-        public void ShowCodeDir()
+        public void ShowCodeSet()
         {
-            List<TreeNode> Nodes = MainForm.form_Database.GetTreeView1Selected();
-            if (Nodes.Count == 0)
-            {
-                var selNode = MainForm.form_Database.treeView1.SelectedNode;
-                if (selNode == null || (((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.Table && ((Model.TreeNodeTag)selNode.Tag).Type != Model.TreeNodeType.View))
-                {
-                    MessageBox.Show("请选择要生成代码的表或视图!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    MainForm.Instance.ShowServerList();
-                    return;
-                }
-                else
-                {
-                    Nodes.Add(selNode);
-                }
-            }
-            Form_Code_SetDir fcsd = new Form_Code_SetDir();
+            Form_SetCodeBuilder fcsd = new Form_SetCodeBuilder();
             fcsd.ShowDialog();
         }
 
-        private void 生成代码至目录ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowCodeDir();
-        }
         /// <summary>
         /// 得到选择节点表集合
         /// </summary>
@@ -364,6 +316,85 @@ namespace HaoCodeBuilder
             }
         }
 
-        
+        private void AddNameSpace()
+        {
+            new Common.Config_NameSpace().Add(new Model.ConfigNameSpace()
+            {
+                Name1 = "",
+                Name2 = ""
+            });
+        }
+
+        private void CreateCode(TreeNode node)
+        {
+            TreeNode dbNode = node.Parent.Parent;
+            TreeNode serverNode = MainForm.form_Database.GetRoot(node);
+            if (dbNode == null || serverNode == null)
+            {
+                return;
+            }
+            List<Model.BuilderMethods> methods = new List<Model.BuilderMethods>();
+            methods.Add(Model.BuilderMethods.Add);
+            methods.Add(Model.BuilderMethods.Count);
+            methods.Add(Model.BuilderMethods.Delete);
+            methods.Add(Model.BuilderMethods.Exists);
+            methods.Add(Model.BuilderMethods.SelectAll);
+            methods.Add(Model.BuilderMethods.SelectByKey);
+            methods.Add(Model.BuilderMethods.Update);
+
+            Model.Servers server = (Model.Servers)((Model.TreeNodeTag)serverNode.Tag).Tag;
+            Business.CreateCode CreateCode = new Business.CreateCode(server.Type);
+            Model.CodeCreate param = new Model.CodeCreate();
+            param.DbName = ((Model.TreeNodeTag)dbNode.Tag).Tag.ToString();
+            param.NameSpace = "";
+            param.NameSpace1 = "";
+            param.ServerID = server.ID;
+            param.TableName = ((Model.TreeNodeTag)node.Tag).Tag.ToString();
+            param.ClassName = GetClassNameByTableName(param.TableName);
+            var buildTypeStr = new Common.Config_CodeBuilder().GetDefalutBuildType();
+            param.BuilderType = buildTypeStr == Model.BuilderType.Custom.ToString() ? Model.BuilderType.Custom : (buildTypeStr == Model.BuilderType.Default.ToString() ? Model.BuilderType.Default : Model.BuilderType.Factory);
+            param.BuilderType = Model.BuilderType.Default;
+            param.MethodList = methods;
+            param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
+
+            if (param.BuilderType == Model.BuilderType.Factory || param.BuilderType == Model.BuilderType.Default)
+            {
+
+                Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("{0}", param.ClassName));
+                fca_model.Show(MainForm.Instance.dockPanel1);
+
+
+                Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("{0}DAL", param.ClassName));
+                fca_data.Show(MainForm.Instance.dockPanel1);
+
+
+                Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("{0}BLL", param.ClassName));
+                fca_business.Show(MainForm.Instance.dockPanel1);
+            }
+
+            if (param.BuilderType == Model.BuilderType.Factory)
+            {
+                Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), string.Format("I{0}", param.ClassName));
+                fca_interface.Show(MainForm.Instance.dockPanel1);
+
+
+                Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), string.Format("{0}Factory", param.ClassName));
+                fca_factory.Show(MainForm.Instance.dockPanel1);
+
+            }
+            this.treeView1.Focus();
+        }
+
+        private String GetClassNameByTableName(string tableName)
+        {
+            String result = String.Empty;
+            var nameArray = tableName.Split('_');
+            foreach (var item in nameArray)
+            {
+                result += item.Substring(0, 1).ToUpper() + item.Substring(1);
+            }
+
+            return result;
+        }
     }
 }

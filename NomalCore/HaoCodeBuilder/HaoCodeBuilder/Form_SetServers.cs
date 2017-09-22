@@ -42,11 +42,6 @@ namespace HaoCodeBuilder
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            refresh();
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             if (this.listView1.SelectedItems.Count > 0)

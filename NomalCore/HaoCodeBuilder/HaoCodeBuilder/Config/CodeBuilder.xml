@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <CodeBuilderDefault>
+    <Name>Default</Name>
+  </CodeBuilderDefault>
+  <CodeBuilder>
+    <Modle>Default</Modle>
+    <Add>true</Add>
+    <Delete>true</Delete>
+    <Update>true</Update>
+    <Exist>true</Exist>
+    <GetAll>true</GetAll>
+    <Get>true</Get>
+    <GetCount>true</GetCount>
+  </CodeBuilder>
+</root>

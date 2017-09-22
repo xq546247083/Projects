@@ -116,7 +116,6 @@ namespace HaoCodeBuilder.Common
             {
                 XElement xelem = XElement.Load(XmlFile);
                 var queryXML = from xele in xelem.Elements("namespaceclass")
-                               where xele.Element("model").Value == model
                                select xele;
                 queryXML.Remove();
                 xelem.Save(XmlFile);
@@ -185,7 +184,7 @@ namespace HaoCodeBuilder.Common
             }
             else
             {
-                return list.Last();
+                return list.First();
             }
 
         }

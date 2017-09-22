@@ -36,15 +36,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.注销连接ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.生成代码ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.生成代码至目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -98,8 +91,6 @@
             // 
             // treeView1
             // 
-            this.treeView1.CheckBoxes = true;
-            this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeView1.HideSelection = false;
@@ -113,54 +104,6 @@
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.刷新ToolStripMenuItem,
-            this.注销连接ToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.生成代码ToolStripMenuItem,
-            this.生成代码至目录ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 98);
-            // 
-            // 刷新ToolStripMenuItem
-            // 
-            this.刷新ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("刷新ToolStripMenuItem.Image")));
-            this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
-            this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.刷新ToolStripMenuItem.Text = "刷新";
-            this.刷新ToolStripMenuItem.Click += new System.EventHandler(this.刷新ToolStripMenuItem_Click);
-            // 
-            // 注销连接ToolStripMenuItem
-            // 
-            this.注销连接ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("注销连接ToolStripMenuItem.Image")));
-            this.注销连接ToolStripMenuItem.Name = "注销连接ToolStripMenuItem";
-            this.注销连接ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.注销连接ToolStripMenuItem.Text = "注销连接";
-            this.注销连接ToolStripMenuItem.Click += new System.EventHandler(this.注销连接ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
-            // 
-            // 生成代码ToolStripMenuItem
-            // 
-            this.生成代码ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("生成代码ToolStripMenuItem.Image")));
-            this.生成代码ToolStripMenuItem.Name = "生成代码ToolStripMenuItem";
-            this.生成代码ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.生成代码ToolStripMenuItem.Text = "生成代码至文本";
-            this.生成代码ToolStripMenuItem.Click += new System.EventHandler(this.生成代码ToolStripMenuItem_Click);
-            // 
-            // 生成代码至目录ToolStripMenuItem
-            // 
-            this.生成代码至目录ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("生成代码至目录ToolStripMenuItem.Image")));
-            this.生成代码至目录ToolStripMenuItem.Name = "生成代码至目录ToolStripMenuItem";
-            this.生成代码至目录ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.生成代码至目录ToolStripMenuItem.Text = "生成代码至目录";
-            this.生成代码至目录ToolStripMenuItem.Click += new System.EventHandler(this.生成代码至目录ToolStripMenuItem_Click);
             // 
             // imageList1
             // 
@@ -187,7 +130,6 @@
             this.Load += new System.EventHandler(this.Form_Database_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,14 +141,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         public System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripMenuItem 注销连接ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 生成代码ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 生成代码至目录ToolStripMenuItem;
     }
 }

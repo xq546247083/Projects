@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config_CodeBuilder.cs" />
     <Compile Include="Config_Directory.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Config_NameSpace.cs" />

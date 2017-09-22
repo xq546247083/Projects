@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using HaoCodeBuilder.Model;
 
 namespace HaoCodeBuilder
 {
@@ -24,26 +20,33 @@ namespace HaoCodeBuilder
         private void refresh()
         {
             var list = new Common.Config_Directory().GetAll();
-            this.listView1.Items.Clear();
-            foreach (var li in list)
+            if (list.Count > 0)
             {
-                this.listView1.Items.Add(new ListViewItem(new string[] { 
-                    li.Name
-                }));
+                textBox1.Text = list.FirstOrDefault().Name;
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            refresh();
+            var cd = new Common.Config_Directory();
+            cd.DeleteAll();
+            if (String.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("请选择路径!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            ConfigDirectory cdir=new ConfigDirectory();
+            cdir.Name = textBox1.Text;
+            cd.Add(cdir);
+
+            this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            if (this.listView1.SelectedItems.Count > 0)
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                new Common.Config_Directory().Delete(this.listView1.SelectedItems[0].Text);
-                refresh();
+                textBox1.Text = folderBrowserDialog1.SelectedPath;
             }
         }
     }

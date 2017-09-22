@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeCreate.cs" />
+    <Compile Include="ConfigCodeBuilder.cs" />
     <Compile Include="ConfigDirectory.cs" />
     <Compile Include="ConfigNameSpace.cs" />
     <Compile Include="ConfigNameSpaceClass.cs" />
