@@ -24,6 +24,7 @@ namespace HaoCodeBuilder
             this.textBox_business.Text = config.Business;
             this.textBox_interface.Text = config.Interface;
             this.textBox_factory.Text = config.Factory;
+            this.textBox1.Text = config.UserName;
         }
 
         private Model.ConfigNameSpaceClass GetModel()
@@ -33,6 +34,7 @@ namespace HaoCodeBuilder
             string business = this.textBox_business.Text;
             string interface1 = this.textBox_interface.Text;
             string factory = this.textBox_factory.Text;
+            string userName = this.textBox1.Text;
 
             if (model.IsNullOrEmpty())
             {
@@ -56,6 +58,7 @@ namespace HaoCodeBuilder
             cnsc.Business = business.Trim();
             cnsc.Interface = interface1.Trim();
             cnsc.Factory = factory.Trim();
+            cnsc.UserName = userName.Trim();
             return cnsc;
         }
 

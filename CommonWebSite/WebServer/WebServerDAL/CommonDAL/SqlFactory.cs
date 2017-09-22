@@ -38,12 +38,13 @@ namespace WebServer.DAL
         /// </summary>
         private static Dictionary<String, Type> mTypeData = new Dictionary<String, Type>();
 
-        private static readonly String Error = "SELECT 'Error:No PrimaryKey';";
-        private static readonly String GetList = "SELECT {0} FROM {1} WHERE {2};";
-        private static readonly String GetAllList = "SELECT {0} FROM {1};";
-        private static readonly String Insert = "INSERT INTO {0} ({1}) VALUES ({2});";
-        private static readonly String Update = "UPDATE {0} SET {1} WHERE {2};";
-        private static readonly String Delete = "DELETE FROM {0} WHERE {1};";
+        private static readonly String ErrorSqlStr = "SELECT 'Error:No PrimaryKey';";
+        private static readonly String GetListSqlStr = "SELECT {0} FROM {1} WHERE {2};";
+        private static readonly String GetAllListSqlStr = "SELECT {0} FROM {1};";
+        private static readonly String InsertSqlStr = "INSERT INTO {0} ({1}) VALUES ({2});";
+        private static readonly String UpdateSqlStr = "UPDATE {0} SET {1} WHERE {2};";
+        private static readonly String DeleteSqlStr = "DELETE FROM {0} WHERE {1};";
+        private static readonly String GetCountSqlStr = " SELECT Count(*) FROM {1}";
 
         #endregion
 
@@ -94,19 +95,21 @@ namespace WebServer.DAL
                     var whereStr = GetTableWhereStr(type.Value);
                     var setStr = GetTableSetStr(type.Value);
 
-                    mData[tableName][SqlType.GetAllList] = String.Format(GetAllList, tableFiled, tableName);
-                    mData[tableName][SqlType.GetList] = String.Format(GetList, tableFiled, tableName, whereStr);
-                    mData[tableName][SqlType.Update] = String.Format(Update, tableName, setStr, whereStr);
-                    mData[tableName][SqlType.Delete] = String.Format(Delete, tableName, whereStr);
-                    mData[tableName][SqlType.Insert] = String.Format(Insert, tableName, tableFiled, tableParamFiled);
+                    mData[tableName][SqlType.GetAllList] = String.Format(GetAllListSqlStr, tableFiled, tableName);
+                    mData[tableName][SqlType.GetList] = String.Format(GetListSqlStr, tableFiled, tableName, whereStr);
+                    mData[tableName][SqlType.GetCount] = String.Format(GetCountSqlStr, tableName);
+                    mData[tableName][SqlType.Update] = String.Format(UpdateSqlStr, tableName, setStr, whereStr);
+                    mData[tableName][SqlType.Delete] = String.Format(DeleteSqlStr, tableName, whereStr);
+                    mData[tableName][SqlType.Insert] = String.Format(InsertSqlStr, tableName, tableFiled, tableParamFiled);
                 }
                 else
                 {
-                    mData[tableName][SqlType.GetAllList] = String.Format(GetAllList, tableFiled, tableName);
-                    mData[tableName][SqlType.Insert] = String.Format(Insert, tableName, tableFiled, tableParamFiled);
-                    mData[tableName][SqlType.GetList] = Error;
-                    mData[tableName][SqlType.Update] = Error;
-                    mData[tableName][SqlType.Delete] = Error;
+                    mData[tableName][SqlType.GetAllList] = String.Format(GetAllListSqlStr, tableFiled, tableName);
+                    mData[tableName][SqlType.Insert] = String.Format(InsertSqlStr, tableName, tableFiled, tableParamFiled);
+                    mData[tableName][SqlType.GetCount] = String.Format(GetCountSqlStr, tableName);
+                    mData[tableName][SqlType.GetList] = ErrorSqlStr;
+                    mData[tableName][SqlType.Update] = ErrorSqlStr;
+                    mData[tableName][SqlType.Delete] = ErrorSqlStr;
                 }
             }
         }

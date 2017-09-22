@@ -44,7 +44,7 @@
             this.全部保存ToolStripMenuItem,
             this.全部关闭CToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 92);
             // 
             // 保存ToolStripMenuItem
             // 
@@ -66,9 +66,9 @@
             // 全部关闭CToolStripMenuItem
             // 
             this.全部关闭CToolStripMenuItem.Name = "全部关闭CToolStripMenuItem";
-            this.全部关闭CToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.全部关闭CToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.全部关闭CToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.全部关闭CToolStripMenuItem.Text = "关闭其他(&C)";
+            this.全部关闭CToolStripMenuItem.Text = "关闭其他(&X)";
             this.全部关闭CToolStripMenuItem.Click += new System.EventHandler(this.全部关闭CToolStripMenuItem_Click);
             // 
             // textEditorControl1

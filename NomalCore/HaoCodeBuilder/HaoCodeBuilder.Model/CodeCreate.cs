@@ -33,6 +33,11 @@ namespace HaoCodeBuilder.Model
         public string TableName { get; set; }
 
         /// <summary>
+        /// 表描述
+        /// </summary>
+        public string TableDescrible { get; set; }
+
+        /// <summary>
         /// 类名
         /// </summary>
         public string ClassName { get; set; }

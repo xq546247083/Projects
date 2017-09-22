@@ -52,6 +52,7 @@
     <Compile Include="Builder_Data.cs" />
     <Compile Include="Builder_Factory.cs" />
     <Compile Include="Builder_Interface.cs" />
+    <Compile Include="Builder_Field.cs" />
     <Compile Include="Builder_Model.cs" />
     <Compile Include="CreateCode.cs" />
     <Compile Include="Database.cs" />

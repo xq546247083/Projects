@@ -49,7 +49,8 @@ namespace HaoCodeBuilder.Common
                                    data = xele.Element("data").Value,
                                    business = xele.Element("business").Value,
                                    interface1 = xele.Element("interface").Value,
-                                   factory = xele.Element("factory").Value
+                                   factory = xele.Element("factory").Value,
+                                   userName = xele.Element("userName").Value
                                };
                 foreach (var q in queryXML)
                 {
@@ -59,7 +60,8 @@ namespace HaoCodeBuilder.Common
                         Data = q.data,
                         Business = q.business,
                         Factory = q.factory,
-                        Interface = q.interface1
+                        Interface = q.interface1,
+                        UserName=q.userName
                     });
                 }
                 
@@ -83,7 +85,8 @@ namespace HaoCodeBuilder.Common
                                       new XElement("data", cns.Data),
                                       new XElement("business", cns.Business),
                                       new XElement("interface", cns.Interface),
-                                      new XElement("factory", cns.Factory)
+                                      new XElement("factory", cns.Factory),
+                                      new XElement("userName", cns.UserName)
                                   );
                 xelem.Add(newLog);
                 xelem.Save(XmlFile);
@@ -145,7 +148,7 @@ namespace HaoCodeBuilder.Common
                                    business = xele.Element("business").Value,
                                    interface1 = xele.Element("interface").Value,
                                    factory = xele.Element("factory").Value,
-                                   isdefault = xele.Element("isdefault").Value.ToLower()
+                                   userName = xele.Element("userName").Value
                                };
                 Model.ConfigNameSpaceClass cns = new Model.ConfigNameSpaceClass();
                 if (queryXML.Count() > 0)
@@ -155,6 +158,7 @@ namespace HaoCodeBuilder.Common
                     cns.Business = queryXML.First().business;
                     cns.Interface = queryXML.First().interface1;
                     cns.Factory = queryXML.First().factory;
+                    cns.UserName = queryXML.First().userName;
                 }
                 return cns;
             }
@@ -179,7 +183,8 @@ namespace HaoCodeBuilder.Common
                     Data = "Data",
                     Business = "Business",
                     Factory = "Factory",
-                    Interface = "IData"
+                    Interface = "IData",
+                    UserName="XQ"
                 };
             }
             else

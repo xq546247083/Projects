@@ -71,12 +71,12 @@ namespace HaoCodeBuilder.Data.MySql
             using (MySqlConnection conn = new MySqlConnection(Common.Config.GetConnectionString(serverID, dbName)))
             {
                 conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand(string.Format("show full tables from {0} where table_type!='VIEW'", dbName), conn))
+                using (MySqlCommand cmd = new MySqlCommand(string.Format("SELECT table_name,table_comment FROM information_schema.tables WHERE table_schema='webserver' AND table_type='base table';", dbName), conn))
                 {
                     MySqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        tblList.Add(new Model.Tables() { Name = dr.GetString(0) });
+                        tblList.Add(new Model.Tables() { Name = dr.GetString(0), Describle = dr.GetString(1) });
                     }
                     dr.Close();
                     dr.Dispose();
@@ -100,7 +100,7 @@ namespace HaoCodeBuilder.Data.MySql
                     MySqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        viewList.Add(new Model.Views() { Name = dr.GetString(0) });
+                        viewList.Add(new Model.Views() { Name = dr.GetString(0)});
                     }
                     dr.Close();
                     dr.Dispose();
@@ -135,7 +135,7 @@ namespace HaoCodeBuilder.Data.MySql
                             IsPrimaryKey = "PRI" == dr[4].ToString().ToUpper(),
                             Default = dr[5].ToString(),
                             IsIdentity = "auto_increment" == dr[6].ToString().ToLower(),
-                            DotNetType = GetFieldType(GetFieldType(dr[1].ToString()), "YES" == dr[3].ToString().ToUpper()),
+                            DotNetType = GetFieldType(GetFieldType(dr[1].ToString()), "YES" == dr[3].ToString().ToUpper(), GetFieldLength(dr[1].ToString())),
                             DotNetSqlType = GetFieldSqlType(GetFieldType(dr[1].ToString())),
                             Note = dr[8].ToString()
                         });
@@ -180,8 +180,9 @@ namespace HaoCodeBuilder.Data.MySql
         /// <param name="tName"></param>
         /// <param name="isNull"></param>
         /// <returns></returns>
-        private string GetFieldType(string typeName, bool isNull)
+        private string GetFieldType(string typeName, bool isNull,Int32 length)
         {
+            
             string r = string.Empty;
             switch (typeName.Trim().ToLower())
             {
@@ -189,12 +190,17 @@ namespace HaoCodeBuilder.Data.MySql
                 case "mediumtext":
                 case "text":
                 case "longtext":
-                case "char":
                 case "tinytext":
-                    r = "string";
+                    r = "String";
+                    break;
+                case "char":
+                    if (length == 36)
+                        r = "Guid";
+                    else
+                        r = "String";
                     break;
                 case "bit":
-                    r = isNull ? "bool?" : "bool";
+                    r = isNull ? "Boolean?" : "Boolean";
                     break;
                 case "bigint":
                 case "mediumint":
@@ -203,22 +209,20 @@ namespace HaoCodeBuilder.Data.MySql
                 case "year":
                 case "int":
                 case "integer":
-                    r = isNull ? "int?" : "int";
+                    r = isNull ? "Int32?" : "Int32";
                     break;
                 case "tinyint":
-                    r = isNull ? "byte?" : "byte";
+                    r = isNull ? "Byte?" : "Byte";
                     break;
                 case "smallint":
                     r = isNull ? "short?" : "short";
                     break;
                 case "decimal":
-                    r = isNull ? "decimal?" : "decimal";
+                    r = isNull ? "Decimal?" : "Decimal";
                     break;
                 case "float":
-                    r = isNull ? "float?" : "float";
-                    break;
                 case "double":
-                    r = isNull ? "double?" : "double";
+                    r = isNull ? "Double?" : "Double";
                     break;
                 case "date":
                 case "datetime":
@@ -298,6 +302,6 @@ namespace HaoCodeBuilder.Data.MySql
             return r;
         }
 
-        
+
     }
 }

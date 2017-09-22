@@ -6,5 +6,6 @@
     <business>WebServer.BLL</business>
     <interface>WebServer.Interface</interface>
     <factory>WebServer.Factory</factory>
+    <userName>xiaoqiang</userName>
   </namespaceclass>
 </root>

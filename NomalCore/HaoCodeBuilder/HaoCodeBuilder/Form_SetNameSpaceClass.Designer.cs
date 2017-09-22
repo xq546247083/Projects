@@ -39,6 +39,8 @@
             this.textBox_factory = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -107,7 +109,7 @@
             // 
             // textBox_factory
             // 
-            this.textBox_factory.Location = new System.Drawing.Point(50, 120);
+            this.textBox_factory.Location = new System.Drawing.Point(50, 121);
             this.textBox_factory.Name = "textBox_factory";
             this.textBox_factory.Size = new System.Drawing.Size(191, 21);
             this.textBox_factory.TabIndex = 9;
@@ -115,7 +117,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 123);
+            this.label5.Location = new System.Drawing.Point(18, 124);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 12);
             this.label5.TabIndex = 8;
@@ -123,7 +125,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(98, 147);
+            this.button2.Location = new System.Drawing.Point(91, 186);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(54, 23);
             this.button2.TabIndex = 11;
@@ -131,11 +133,29 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(94, 153);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(88, 21);
+            this.textBox1.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(41, 156);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "使用者:";
+            // 
             // Form_SetNameSpaceClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(258, 176);
+            this.ClientSize = new System.Drawing.Size(258, 221);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox_factory);
             this.Controls.Add(this.label5);
@@ -173,5 +193,7 @@
         private System.Windows.Forms.TextBox textBox_factory;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label6;
     }
 }

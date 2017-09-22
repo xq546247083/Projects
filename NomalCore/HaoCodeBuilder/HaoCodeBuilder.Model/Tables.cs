@@ -15,6 +15,9 @@ namespace HaoCodeBuilder.Model
         /// </summary>
         public string Name { get; set; }
 
-
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Describle { get; set; }
     }
 }

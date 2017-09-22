@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace HaoCodeBuilder.Model
+﻿namespace HaoCodeBuilder.Model
 {
     /// <summary>
     /// 字段类
@@ -14,6 +9,16 @@ namespace HaoCodeBuilder.Model
         /// 名称
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 名称首字母小写
+        /// </summary>
+        public string NameLower
+        {
+            get
+            {
+                return Name.Substring(0, 1).ToLower() + Name.Substring(1); ;
+            }
+        }
         /// <summary>
         /// 类型
         /// </summary>
@@ -50,6 +55,6 @@ namespace HaoCodeBuilder.Model
         /// 备注说明
         /// </summary>
         public string Note { get; set; }
-       
+
     }
 }

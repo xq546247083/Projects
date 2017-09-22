@@ -35,6 +35,11 @@ namespace WebServer.DAL
         /// <summary>
         /// 删除数据
         /// </summary>
-        Delete = 4
+        Delete = 4,
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        GetCount = 5
     }
 }

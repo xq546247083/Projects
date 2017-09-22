@@ -29,20 +29,56 @@ namespace HaoCodeBuilder.Business
                 return string.Empty;
             }
             List<Model.Fields> fields = databaseInstance.GetFields(server.ID, param.DbName, param.TableName);
-            StringBuilder data = new StringBuilder(import.GetImport_Data());
-
-            data.Append("namespace " + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Data + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "\r\n");
+            StringBuilder data = new StringBuilder();
+            data.Append("/************************************************************************" + Environment.NewLine);
+            data.Append("* 标题: " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + "的DAL" + Environment.NewLine);
+            data.Append("* 描述: " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + "的DAL" + Environment.NewLine);
+            data.Append("* 数据表:" + param.TableName + Environment.NewLine);
+            data.Append("* 作者：" + param.CNSC.UserName + Environment.NewLine);
+            data.Append("* 日期：" + DateTime.Now + "" + Environment.NewLine);
+            data.Append("* 版本：V1.0" + Environment.NewLine);
+            data.Append("*************************************************************************/" + Environment.NewLine + Environment.NewLine);
+            data.Append(import.GetImport_Model() + Environment.NewLine);
+            data.Append("namespace " + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Data + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "\r\n");
             data.Append("{\r\n");
-            data.Append("\tpublic class " + param.ClassName + (param.BuilderType == Model.BuilderType.Factory ? " : " + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Interface + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + ".I" + param.ClassName : "") + "\r\n");
+            data.Append("\t" + import.GetImport_Data_Inside() + Environment.NewLine);
+            data.Append("\t/// <summary>\r\n");
+            data.Append("\t/// " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + "的DAL" + "\r\n");
+            data.Append("\t/// </summary>\r\n");
+            data.Append("\tpublic class " + param.ClassName + (param.BuilderType == Model.BuilderType.Factory ? " : " + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Interface + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + ".I" + param.ClassName : "") + "DAL: BaseDal\r\n");
             data.Append("\t{\r\n");
-            data.Append("\t\tprivate DBHelper dbHelper = new DBHelper();\r\n");
+
+            data.Append("\t\t#region 属性\r\n\r\n");
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 构造函数\r\n");
+            data.Append("\t\t/// 数据库名\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tpublic " + param.ClassName + "()\r\n");
-            data.Append("\t\t{\r\n");
-            data.Append("\t\t}\r\n");
-            
+            data.Append("\t\tprivate static readonly String tableName = \"" + param.TableName + "\";\r\n\r\n");
+            data.Append("\t\t#endregion\r\n\r\n");
+            data.Append("\t\t#region 方法\r\n\r\n");
+
+            //查询所有记录
+            if (param.MethodList.Contains(Model.BuilderMethods.SelectAll))
+            {
+                data.Append(GetAllMethod(fields, param));
+            }
+
+            //查询主键记录
+            if (param.MethodList.Contains(Model.BuilderMethods.SelectByKey) && fields.Where(p => p.IsPrimaryKey).Count() > 0)
+            {
+                data.Append(GetByKeyMethod(fields, param));
+            }
+
+            //删除记录
+            if (param.MethodList.Contains(Model.BuilderMethods.Delete) && fields.Where(p => p.IsPrimaryKey).Count() > 0)
+            {
+                data.Append(GetDeleteMethod(fields, param));
+            }
+
+            //查询记录数
+            if (param.MethodList.Contains(Model.BuilderMethods.Count))
+            {
+                data.Append(GetCountMethod(fields, param));
+            }
 
             //新增记录
             if (param.MethodList.Contains(Model.BuilderMethods.Add))
@@ -56,33 +92,10 @@ namespace HaoCodeBuilder.Business
                 data.Append(GetUpdateMethod(fields, param));
             }
 
-            //删除记录
-            if (param.MethodList.Contains(Model.BuilderMethods.Delete) && fields.Where(p => p.IsPrimaryKey).Count() > 0)
-            {
-                data.Append(GetDeleteMethod(fields, param));
-            }
-
             //转换List
-            data.Append(GetConvertDataReaderToListMethod(fields, param));
+            //data.Append(GetConvertDataReaderToListMethod(fields, param));
 
-            //查询所有记录
-            if (param.MethodList.Contains(Model.BuilderMethods.SelectAll))
-            {
-                data.Append(GetAllMethod(fields, param));
-            }
-
-            //查询记录数
-            if (param.MethodList.Contains(Model.BuilderMethods.Count))
-            {
-                data.Append(GetCountMethod(fields, param));
-            }
-
-            //查询主键记录
-            if (param.MethodList.Contains(Model.BuilderMethods.SelectByKey) && fields.Where(p => p.IsPrimaryKey).Count() > 0)
-            {
-                data.Append(GetByKeyMethod(fields, param));
-            }
-
+            data.Append("\t\t#endregion\r\n");
             data.Append("\t}\r\n");
             data.Append("}");
             return data.ToString();
@@ -97,71 +110,35 @@ namespace HaoCodeBuilder.Business
         /// <returns></returns>
         private string GetAddMethod(List<Model.Fields> fields, Model.CodeCreate param)
         {
-            //自增列
-            var Identitys = fields.Where(p => p.IsIdentity);
-            var NotIdeneitys = fields.Where(p => !p.IsIdentity);
-            bool HasIdentity = Identitys.Count() > 0;
-
-            //主键
-            var Primarykeys = fields.Where(p => p.IsPrimaryKey);
-            var NotPrimarykeys = fields.Where(p => !p.IsPrimaryKey);
-            bool HasPrimarykey = Primarykeys.Count() > 0;
-
             StringBuilder data = new StringBuilder();
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 添加记录\r\n");
+            data.Append("\t\t/// 插入数据\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\t/// <param name=\"model\">" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "实体类</param>\r\n");
-            data.Append("\t\t/// <returns>" + (HasIdentity ? "新增记录的ID" : "操作所影响的行数") + "</returns>\r\n");
-            data.Append("\t\tpublic " + (HasIdentity ? Identitys.First().DotNetType : "int") + " Add(" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + " model)\r\n");
+            foreach (var field in fields)
+            {
+                data.Append("\t\t/// <param name=\"" + field.NameLower + "\">" + field.Note + "</param>\r\n");
+            }
+            data.Append("\t\t/// <returns>受影响的行数</returns>\r\n");
+            data.Append("\t\tpublic static Int32 Insert(");
+            foreach (var field in fields)
+            {
+                data.Append(field.DotNetType + " " + field.NameLower);
+                data.Append(field.Name != fields.Last().Name ? ", " : "");
+            }
+
+            data.Append(")\r\n");
             data.Append("\t\t{\r\n");
 
-            data.Append("\t\t\tstring sql = @\"INSERT INTO " + param.TableName);
-            data.Append("\r\n\t\t\t\t(");
-            foreach (var field in NotIdeneitys)
+            data.Append("\t\t\tMySqlParameter[] mySqlParameter = new MySqlParameter[]\r\n");
+            data.Append("\t\t\t{\r\n");
+            foreach (var field in fields)
             {
-                data.Append(field.Name);
-                data.Append(field.Name != NotIdeneitys.Last().Name ? "," : "");
+                data.Append("\t\t\t\tnew MySqlParameter(FiledConst." + field.Name + "," + field.NameLower + "),\r\n");
             }
-            data.Append(") \r\n");
-            data.Append("\t\t\t\tVALUES(");
-            foreach (var field in NotIdeneitys)
-            {
-                data.Append(createInstance.GetParamsName(field.Name));
-                data.Append(field.Name != NotIdeneitys.Last().Name ? "," : "");
-            }
-            data.Append(")" + (HasIdentity ? ";\r\n\t\t\t\tSELECT " + createInstance.GetIdentityMethod() + ";" : "") + "\";\r\n");
-            data.Append("\t\t\t" + createInstance.GetParamsType() + "[] parameters = new " + createInstance.GetParamsType() + "[]{\r\n");
-            foreach (var field in NotIdeneitys)
-            {
-                
-                if (field.IsNull)
-                {
-                    data.Append("\t\t\t\tmodel." + field.Name + " == null ? ");
-                    data.Append("new " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ") { Value = DBNull.Value } : ");
-                    data.Append("new " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ") { Value = model." + field.Name + " }");
-                }
-                else
-                {
-                    data.Append("\t\t\t\tnew " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ")");
-                    data.Append("{ Value = model." + field.Name + " }");
-                }
-                data.Append(field.Name != NotIdeneitys.Last().Name ? "," : "");
-                data.Append("\r\n");
-            }
+            data.Append("\t\t\t};\r\n\r\n");
+            data.Append("\t\t\treturn ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.Insert], mySqlParameter);\r\n");
 
-            data.Append("\t\t\t};\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            if (HasIdentity)
-            {
-                data.Append("\t\t\t" + Identitys.First().DotNetType+" maxID;\r\n");
-                data.Append("\t\t\treturn " + Identitys.First().DotNetType + ".TryParse(dbHelper.ExecuteScalar(sql, parameters),out maxID) ? maxID : -1;\r\n");
-            }
-            else
-            {
-                data.Append("\t\t\treturn dbHelper.Execute(sql, parameters);\r\n");
-            }
-            data.Append("\t\t}\r\n");
+            data.Append("\t\t}\r\n\r\n");
 
             return data.ToString();
         }
@@ -174,69 +151,35 @@ namespace HaoCodeBuilder.Business
         /// <returns></returns>
         private string GetUpdateMethod(List<Model.Fields> fields, Model.CodeCreate param)
         {
-            //自增列
-            var Identitys = fields.Where(p => p.IsIdentity);
-            var NotIdeneitys = fields.Where(p => !p.IsIdentity);
-            bool HasIdentity = Identitys.Count() > 0;
-
-            //主键
-            var Primarykeys = fields.Where(p => p.IsPrimaryKey);
-            var NotPrimarykeys = fields.Where(p => !p.IsPrimaryKey);
-            bool HasPrimarykey = Primarykeys.Count() > 0;
-
             StringBuilder data = new StringBuilder();
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 更新记录\r\n");
+            data.Append("\t\t/// 更新数据\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\t/// <param name=\"model\">" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "实体类</param>\r\n");
-            data.Append("\t\tpublic int Update(" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + " model)\r\n");
+            foreach (var field in fields)
+            {
+                data.Append("\t\t/// <param name=\"" + field.NameLower + "\">" + field.Note + "</param>\r\n");
+            }
+            data.Append("\t\t/// <returns>受影响的行数</returns>\r\n");
+            data.Append("\t\tpublic static Int32 Update(");
+            foreach (var field in fields)
+            {
+                data.Append(field.DotNetType + " " + field.NameLower);
+                data.Append(field.Name != fields.Last().Name ? ", " : "");
+            }
+
+            data.Append(")\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tstring sql = @\"UPDATE " + param.TableName + " SET \r\n\t\t\t\t");
 
-            foreach (var field in NotPrimarykeys)
+            data.Append("\t\t\tMySqlParameter[] mySqlParameter = new MySqlParameter[]\r\n");
+            data.Append("\t\t\t{\r\n");
+            foreach (var field in fields)
             {
-                data.Append(field.Name + "=" + createInstance.GetParamsName(field.Name));
-                data.Append(field.Name != NotPrimarykeys.Last().Name ? "," : "");
+                data.Append("\t\t\t\tnew MySqlParameter(FiledConst." + field.Name + "," + field.NameLower + "),\r\n");
             }
-            data.Append("\r\n\t\t\t\tWHERE ");
+            data.Append("\t\t\t};\r\n\r\n");
+            data.Append("\t\t\treturn ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.Update], mySqlParameter);\r\n");
 
-            foreach (var field in Primarykeys)
-            {
-                if (field.IsPrimaryKey)
-                {
-                    data.Append(field.Name + "=" + createInstance.GetParamsName(field.Name));
-                    data.Append(field.Name != Primarykeys.Last().Name ? " and " : "");
-                }
-            }
-            data.Append("\";\r\n");
-            data.Append("\t\t\t" + createInstance.GetParamsType() + "[] parameters = new " + createInstance.GetParamsType() + "[]{\r\n");
-            foreach (var field in NotPrimarykeys)
-            {
-                if (field.IsNull)
-                {
-                    data.Append("\t\t\t\tmodel." + field.Name + " == null ? ");
-                    data.Append("new " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ") { Value = DBNull.Value } : ");
-                    data.Append("new " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ") { Value = model." + field.Name + " }");
-                }
-                else
-                {
-                    data.Append("\t\t\t\tnew " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ")");
-                    data.Append("{ Value = model." + field.Name + " }");
-                }
-                data.Append(",");
-                data.Append("\r\n");
-            }
-            foreach (var field in Primarykeys)
-            {
-                data.Append("\t\t\t\tnew " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : ", -1") + ")");
-                data.Append("{ Value = model." + field.Name + " }");
-                data.Append(field.Name != Primarykeys.Last().Name ? "," : "");
-                data.Append("\r\n");
-            }
-            data.Append("\t\t\t};\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            data.Append("\t\t\treturn dbHelper.Execute(sql, parameters);\r\n");
-            data.Append("\t\t}\r\n");
+            data.Append("\t\t}\r\n\r\n");
 
             return data.ToString();
         }
@@ -248,11 +191,6 @@ namespace HaoCodeBuilder.Business
         /// <returns></returns>
         private string GetDeleteMethod(List<Model.Fields> fields, Model.CodeCreate param)
         {
-            //自增列
-            var Identitys = fields.Where(p => p.IsIdentity);
-            var NotIdeneitys = fields.Where(p => !p.IsIdentity);
-            bool HasIdentity = Identitys.Count() > 0;
-
             //主键
             var Primarykeys = fields.Where(p => p.IsPrimaryKey);
             var NotPrimarykeys = fields.Where(p => !p.IsPrimaryKey);
@@ -260,35 +198,32 @@ namespace HaoCodeBuilder.Business
 
             StringBuilder data = new StringBuilder();
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 删除记录\r\n");
+            data.Append("\t\t/// 删除\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tpublic int Delete(");
             foreach (var field in Primarykeys)
             {
-                data.Append(field.DotNetType + " " + field.Name.ToLower());
+                data.Append("\t\t/// <param name=\"" + field.NameLower + "\">" + field.Note + "</param>\r\n");
+            }
+            data.Append("\t\t/// <returns>受影响的行数</returns>\r\n");
+            data.Append("\t\tpublic static Int32 Delete(");
+            foreach (var field in Primarykeys)
+            {
+                data.Append(field.DotNetType + " " + field.NameLower);
                 data.Append(field.Name != Primarykeys.Last().Name ? ", " : "");
             }
             data.Append(")\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tstring sql = \"DELETE FROM " + param.TableName + " WHERE ");
-            foreach (var field in Primarykeys)
-            {
-                data.Append(field.Name + "=" + createInstance.GetParamsName(field.Name));
-                data.Append(field.Name != Primarykeys.Last().Name ? " AND " : "");
-            }
-            data.Append("\";\r\n");
-            data.Append("\t\t\t" + createInstance.GetParamsType() + "[] parameters = new " + createInstance.GetParamsType() + "[]{\r\n");
-            foreach (var field in Primarykeys)
-            {
-                data.Append("\t\t\t\tnew " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : "") + "){ Value = " + field.Name.ToLower() + " }");
-                data.Append(field.Name != Primarykeys.Last().Name ? "," : "");
-                data.Append("\r\n");
-            }
-            data.Append("\t\t\t};\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            data.Append("\t\t\treturn dbHelper.Execute(sql, parameters);\r\n");
-            data.Append("\t\t}\r\n");
 
+            data.Append("\t\t\tMySqlParameter[] mySqlParameter = new MySqlParameter[]\r\n");
+            data.Append("\t\t\t{\r\n");
+            foreach (var field in Primarykeys)
+            {
+                data.Append("\t\t\t\tnew MySqlParameter(FiledConst." + field.Name + "," + field.NameLower + "),\r\n");
+            }
+            data.Append("\t\t\t};\r\n\r\n");
+            data.Append("\t\t\treturn ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.Delete], mySqlParameter);\r\n");
+
+            data.Append("\t\t}\r\n\r\n");
             return data.ToString();
         }
 
@@ -314,20 +249,20 @@ namespace HaoCodeBuilder.Business
             data.Append("\t\t/// <summary>\r\n");
             data.Append("\t\t/// 将DataRedar转换为List\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tprivate List<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> DataReaderToList(" + createInstance.GetDataReaderType() + " dataReader)\r\n");
+            data.Append("\t\tprivate List<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> DataReaderToList(" + createInstance.GetDataReaderType() + " dataReader)\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tList<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> List = new List<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + ">();\r\n");
-            data.Append("\t\t\t" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + " model = null;\r\n");
+            data.Append("\t\t\tList<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> List = new List<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + ">();\r\n");
+            data.Append("\t\t\t" + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + " model = null;\r\n");
             data.Append("\t\t\twhile(dataReader.Read())\r\n");
             data.Append("\t\t\t{\r\n");
 
-            data.Append("\t\t\t\tmodel = new " + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "();\r\n");
+            data.Append("\t\t\t\tmodel = new " + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "();\r\n");
             int i = 0;
             string nullString = string.Empty;
             foreach (var field in fields)
             {
                 nullString = field.IsNull ? "\t\t\t\tif (!dataReader.IsDBNull(" + i + "))\r\n\t\t\t\t\t" : "\t\t\t\t";
-                switch (field.DotNetType.Replace("?","").ToLower())
+                switch (field.DotNetType.Replace("?", "").ToLower())
                 {
                     case "string":
                         data.Append(nullString + "model." + field.Name + " = dataReader.GetString(" + i.ToString() + ");\r\n");
@@ -383,18 +318,13 @@ namespace HaoCodeBuilder.Business
         {
             StringBuilder data = new StringBuilder();
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 查询所有记录\r\n");
+            data.Append("\t\t/// 获取所有数据\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tpublic List<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> GetAll()\r\n");
+            data.Append("\t\t/// <returns>获取所有数据</returns>\r\n");
+            data.Append("\t\tpublic static DataTable GetAllList()\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tstring sql = \"SELECT * FROM " + param.TableName + "\";\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            data.Append("\t\t\t"+createInstance.GetDataReaderType()+" dataReader = dbHelper.GetDataReader(sql);\r\n");
-            data.Append("\t\t\tList<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> List = DataReaderToList(dataReader);\r\n");
-            data.Append("\t\t\tdataReader.Close();\r\n");
-            //data.Append("\t\t\tdbHelper.Dispose();\r\n");
-            data.Append("\t\t\treturn List;\r\n");
-            data.Append("\t\t}\r\n");
+            data.Append("\t\t\treturn ExecuteDataTable(SqlFactory.mData[tableName][SqlType.GetAllList]);\r\n");
+            data.Append("\t\t}\r\n\r\n");
 
             return data.ToString();
         }
@@ -407,11 +337,6 @@ namespace HaoCodeBuilder.Business
         /// <returns></returns>
         private string GetByKeyMethod(List<Model.Fields> fields, Model.CodeCreate param)
         {
-            //自增列
-            var Identitys = fields.Where(p => p.IsIdentity);
-            var NotIdeneitys = fields.Where(p => !p.IsIdentity);
-            bool HasIdentity = Identitys.Count() > 0;
-
             //主键
             var Primarykeys = fields.Where(p => p.IsPrimaryKey);
             var NotPrimarykeys = fields.Where(p => !p.IsPrimaryKey);
@@ -419,38 +344,32 @@ namespace HaoCodeBuilder.Business
 
             StringBuilder data = new StringBuilder();
             data.Append("\t\t/// <summary>\r\n");
-            data.Append("\t\t/// 根据主键查询一条记录\r\n");
+            data.Append("\t\t/// 获取数据\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tpublic " + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + " Get(");
             foreach (var field in Primarykeys)
             {
-                data.Append(field.DotNetType + " " + field.Name.ToLower());
+                data.Append("\t\t/// <param name=\"" + field.NameLower + "\">" + field.Note + "</param>\r\n");
+            }
+            data.Append("\t\t/// <returns>获取数据</returns>\r\n");
+            data.Append("\t\tpublic static DataTable GetList(");
+            foreach (var field in Primarykeys)
+            {
+                data.Append(field.DotNetType + " " + field.NameLower);
                 data.Append(field.Name != Primarykeys.Last().Name ? ", " : "");
             }
             data.Append(")\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tstring sql = \"SELECT * FROM " + param.TableName + " WHERE ");
+
+            data.Append("\t\t\tMySqlParameter[] mySqlParameter = new MySqlParameter[]\r\n");
+            data.Append("\t\t\t{\r\n");
             foreach (var field in Primarykeys)
             {
-                data.Append(field.Name + "=" + createInstance.GetParamsName(field.Name));
-                data.Append(field.Name != Primarykeys.Last().Name ? " AND " : "");
+                data.Append("\t\t\t\tnew MySqlParameter(FiledConst." + field.Name + "," + field.NameLower + "),\r\n");
             }
-            data.Append("\";\r\n");
-            data.Append("\t\t\t" + createInstance.GetParamsType() + "[] parameters = new " + createInstance.GetParamsType() + "[]{\r\n");
-            foreach (var field in Primarykeys)
-            {
-                data.Append("\t\t\t\tnew " + createInstance.GetParamsType() + "(\"" + createInstance.GetParamsName1(field.Name) + "\", " + field.DotNetSqlType + (field.Length != -1 ? ", " + field.Length.ToString() : "") + "){ Value = " + field.Name.ToLower() + " }");
-                data.Append(field.Name != Primarykeys.Last().Name ? "," : "");
-                data.Append("\r\n");
-            }
-            data.Append("\t\t\t};\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            data.Append("\t\t\t" + createInstance.GetDataReaderType() + " dataReader = dbHelper.GetDataReader(sql, parameters);\r\n");
-            data.Append("\t\t\tList<" + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "." + param.ClassName + "> List = DataReaderToList(dataReader);\r\n");
-            data.Append("\t\t\tdataReader.Close();\r\n");
-            //data.Append("\t\t\tdbHelper.Dispose();\r\n");
-            data.Append("\t\t\treturn List.Count > 0 ? List[0] : null;\r\n");
-            data.Append("\t\t}\r\n");
+            data.Append("\t\t\t};\r\n\r\n");
+            data.Append("\t\t\treturn ExecuteDataTable(SqlFactory.mData[tableName][SqlType.GetList], mySqlParameter);\r\n");
+
+            data.Append("\t\t}\r\n\r\n");
             return data.ToString();
         }
 
@@ -466,13 +385,12 @@ namespace HaoCodeBuilder.Business
             data.Append("\t\t/// <summary>\r\n");
             data.Append("\t\t/// 查询记录数\r\n");
             data.Append("\t\t/// </summary>\r\n");
-            data.Append("\t\tpublic long GetCount()\r\n");
+            data.Append("\t\t/// <returns>获取所有数据</returns>\r\n");
+            data.Append("\t\tpublic static Int32 Count()\r\n");
             data.Append("\t\t{\r\n");
-            data.Append("\t\t\tstring sql = \"SELECT COUNT(*) FROM " + param.TableName + "\";\r\n");
-            //data.Append("\t\t\tDBHelper dbHelper = new DBHelper();\r\n");
-            data.Append("\t\t\tlong count;\r\n");
-            data.Append("\t\t\treturn long.TryParse(dbHelper.GetFieldValue(sql), out count) ? count : 0;\r\n");
-            data.Append("\t\t}\r\n");
+            data.Append("\t\t\treturn ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.GetCount]);\r\n");
+            data.Append("\t\t}\r\n\r\n");
+
             return data.ToString();
         }
 

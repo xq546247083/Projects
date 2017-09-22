@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <server>
+    <name>localhost(MySql)</name>
+    <type>MySql</type>
+    <servername>localhost</servername>
+    <database></database>
+    <uid>root</uid>
+    <pwd>fkP4jE85VOFZZW0K9+PmSQ==</pwd>
+    <port>3306</port>
+    <file></file>
+  </server>
+  <server>
     <name>test</name>
     <type>MySql</type>
     <servername>10.1.0.10</servername>
