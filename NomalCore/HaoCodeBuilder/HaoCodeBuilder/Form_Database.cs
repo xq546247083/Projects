@@ -248,10 +248,6 @@ namespace HaoCodeBuilder
             new Common.Config_Servers().Delete(server.ID);
             rootNode.Remove();
         }
-        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddNodes(true);
-        }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
@@ -261,11 +257,6 @@ namespace HaoCodeBuilder
         private void 注销连接ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RemoveServer();
-        }
-
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            AddNodes(true);
         }
 
         private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
@@ -359,30 +350,67 @@ namespace HaoCodeBuilder
 
             if (param.BuilderType == Model.BuilderType.Factory || param.BuilderType == Model.BuilderType.Default)
             {
+                var modelClassName = string.Format("{0}", param.ClassName);
+                if (!IsExist(modelClassName))
+                {
+                    Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), modelClassName);
+                    fca_model.Show(MainForm.Instance.dockPanel1);
+                }
 
-                Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), string.Format("{0}", param.ClassName));
-                fca_model.Show(MainForm.Instance.dockPanel1);
 
+                var dalClassName = string.Format("{0}DAL", param.ClassName);
+                if (!IsExist(dalClassName))
+                {
+                    Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), dalClassName);
+                    fca_data.Show(MainForm.Instance.dockPanel1);
+                }
 
-                Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), string.Format("{0}DAL", param.ClassName));
-                fca_data.Show(MainForm.Instance.dockPanel1);
-
-
-                Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), string.Format("{0}BLL", param.ClassName));
-                fca_business.Show(MainForm.Instance.dockPanel1);
+                var bllClassName = string.Format("{0}BLL", param.ClassName);
+                if (!IsExist(bllClassName))
+                {
+                    Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), bllClassName);
+                    fca_business.Show(MainForm.Instance.dockPanel1);
+                }
             }
 
             if (param.BuilderType == Model.BuilderType.Factory)
             {
-                Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), string.Format("I{0}", param.ClassName));
-                fca_interface.Show(MainForm.Instance.dockPanel1);
+                var iClassName = string.Format("i{0}", param.ClassName);
+                if (!IsExist(iClassName))
+                {
+                    Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), iClassName);
+                    fca_interface.Show(MainForm.Instance.dockPanel1);
+                }
 
-
-                Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), string.Format("{0}Factory", param.ClassName));
-                fca_factory.Show(MainForm.Instance.dockPanel1);
+                var factoryClassName = string.Format("{0}Factory", param.ClassName);
+                if (!IsExist(factoryClassName))
+                {
+                    Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), factoryClassName);
+                    fca_factory.Show(MainForm.Instance.dockPanel1);
+                }
 
             }
             this.treeView1.Focus();
+        }
+
+        private bool IsExist(string name)
+        {
+            var mainForm = this.ParentForm as MainForm;
+            foreach (var content in mainForm.dockPanel1.Contents)
+            {
+                var item = content.DockHandler.Form as Form_Code_Area;
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (item.Text == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private String GetClassNameByTableName(string tableName)

@@ -26,6 +26,7 @@ namespace HaoCodeBuilder
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            dockPanel1.DockLeftPortion = 300;
             form_Database = new Form_Database();
             form_Database.Show(dockPanel1, DockState.DockLeft);
 
@@ -48,8 +49,9 @@ namespace HaoCodeBuilder
             if (form_Database == null)
             {
                 form_Database = new Form_Database();
-                form_Database.Show(dockPanel1, DockState.DockLeftAutoHide);
+                form_Database.Show(dockPanel1, DockState.DockLeft);
             }
+
             form_Database.Activate();
         }
 
