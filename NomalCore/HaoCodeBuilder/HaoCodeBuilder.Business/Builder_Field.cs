@@ -37,7 +37,20 @@ namespace HaoCodeBuilder.Business
                 model.Append("public const String " + field.Name + " = \"@" + field.Name + "\";" + Environment.NewLine);
             }
 
-            model.Append(Environment.NewLine + Environment.NewLine + Environment.NewLine);
+            return model.ToString();
+        }
+
+        public string GetFieldClass2(Model.CodeCreate param)
+        {
+            Model.Servers server = Common.Config.GetServer(param.ServerID);
+            if (server == null)
+            {
+                return string.Empty;
+            }
+
+            List<Model.Fields> fields = databaseInstance.GetFields(server.ID, param.DbName, param.TableName);
+            StringBuilder model = new StringBuilder();
+;
             foreach (var field in fields)
             {
                 model.Append("public const String " + field.Name + " = \"" + field.Name + "\";" + Environment.NewLine);

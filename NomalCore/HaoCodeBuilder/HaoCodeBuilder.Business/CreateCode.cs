@@ -20,8 +20,17 @@ namespace HaoCodeBuilder.Business
         public string GetFieldClass(Model.CodeCreate param)
         {
             return new Builder_Field(dbType).GetFieldClass(param);
-
         }
+
+        /// <summary>
+        /// 得到实体层代码
+        /// </summary>
+        /// <returns></returns>
+        public string GetFieldClass2(Model.CodeCreate param)
+        {
+            return new Builder_Field(dbType).GetFieldClass2(param);
+        }
+
         /// <summary>
         /// 得到实体层代码
         /// </summary>
