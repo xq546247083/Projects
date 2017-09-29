@@ -16,6 +16,9 @@ namespace HaoCodeBuilder
 {
     public partial class Form_Code_Area : Form_Base
     {
+        private string contentOne = "";
+        private string contentTwo = "";
+
         public Form_Code_Area(string text, string title)
         {
             InitializeComponent();
@@ -23,6 +26,39 @@ namespace HaoCodeBuilder
             this.textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             this.textEditorControl1.Encoding = System.Text.Encoding.Default;
             this.textEditorControl1.Text = text;
+        }
+
+        public Form_Code_Area(string text, string textTwo, string title)
+        {
+            InitializeComponent();
+            this.Text = title;
+            this.textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
+            this.textEditorControl1.Encoding = System.Text.Encoding.Default;
+            contentOne = text;
+            contentTwo = textTwo;
+
+            this.textEditorControl1.Text = contentOne + Environment.NewLine + Environment.NewLine + Environment.NewLine + contentTwo;
+        }
+
+        public void SetText(String txtOne, String txtTwo)
+        {
+            contentOne += txtOne;
+            contentTwo += txtTwo;
+            var contentOneList = contentOne.Split(new String[] { Environment.NewLine }, StringSplitOptions.None).Distinct();
+            var contentTwoList = contentOne.Split(new String[] { Environment.NewLine }, StringSplitOptions.None).Distinct();
+            var resultOne = String.Empty;
+            var resultTwo = String.Empty;
+
+            foreach (var item in contentOneList)
+            {
+                resultOne += item + Environment.NewLine;
+            }
+            foreach (var item in contentTwoList)
+            {
+                resultTwo += item + Environment.NewLine;
+            }
+
+            this.textEditorControl1.Text = resultOne + Environment.NewLine + Environment.NewLine + Environment.NewLine + resultTwo;
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)

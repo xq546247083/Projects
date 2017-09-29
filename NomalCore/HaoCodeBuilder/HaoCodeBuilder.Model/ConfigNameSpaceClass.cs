@@ -27,6 +27,10 @@ namespace HaoCodeBuilder.Model
         /// 工厂
         /// </summary>
         public string Factory { get; set; }
-       
+
+        /// <summary>
+        /// 使用者
+        /// </summary>
+        public string UserName { get; set; }
     }
 }

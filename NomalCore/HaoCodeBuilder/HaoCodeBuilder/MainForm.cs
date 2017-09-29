@@ -193,7 +193,7 @@ namespace HaoCodeBuilder
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.C && e.Control)
+            if (e.KeyCode == Keys.X && e.Control)
             {
                 var curForm = this.dockPanel1.ActiveDocument.DockHandler.Form as Form_Code_Area;
                 this.dockPanel1.Contents.ToList().ForEach((content) =>

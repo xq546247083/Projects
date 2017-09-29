@@ -30,20 +30,40 @@ namespace HaoCodeBuilder.Business
             }
 
             List<Model.Fields> fields = databaseInstance.GetFields(server.ID, param.DbName, param.TableName);
-            StringBuilder model = new StringBuilder(import.GetImport_Model());
-            model.Append("namespace " + param.NameSpace + (param.NameSpace.IsNullOrEmpty()?"": ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "\r\n");
+            StringBuilder model = new StringBuilder();
+            model.Append("/************************************************************************" + Environment.NewLine);
+            model.Append("* 标题: " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + Environment.NewLine);
+            model.Append("* 描述: " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + Environment.NewLine);
+            model.Append("* 数据表:" + param.TableName + Environment.NewLine);
+            model.Append("* 作者：" + param.CNSC.UserName + Environment.NewLine);
+            model.Append("* 日期：" + DateTime.Now + "" + Environment.NewLine);
+            model.Append("* 版本：V1.0" + Environment.NewLine);
+            model.Append("*************************************************************************/" + Environment.NewLine + Environment.NewLine);
+
+            model.Append(import.GetImport_Model() + Environment.NewLine);
+            model.Append("namespace " + param.NameSpace + (param.NameSpace.IsNullOrEmpty() ? "" : ".") + param.CNSC.Model + (param.NameSpace1.IsNullOrEmpty() ? "" : "." + param.NameSpace1) + "\r\n");
             model.Append("{\r\n");
-            model.Append("\t[Serializable]\r\n");
+            model.Append("\t" + import.GetImport_Model_Inside() + Environment.NewLine);
+            model.Append("\t/// <summary>\r\n");
+            model.Append("\t/// " + (!String.IsNullOrEmpty(param.TableDescrible) ? param.TableDescrible : param.TableName) + "\r\n");
+            model.Append("\t/// </summary>\r\n");
+            model.Append("\t[DataBaseTable(\"" + param.TableName + "\")]\r\n");
             model.Append("\tpublic class " + param.ClassName + "\r\n");
             model.Append("\t{\r\n");
+            model.Append("\t\t#region 属性" + Environment.NewLine + Environment.NewLine);
             foreach (var field in fields)
             {
                 model.Append("\t\t/// <summary>\r\n");
                 model.Append("\t\t/// " + (field.Note.IsNullOrEmpty() ? field.Name : field.Note) + "\r\n");
                 model.Append("\t\t/// </summary>\r\n");
-                model.Append("\t\t[DisplayName(\"" + (field.Note.IsNullOrEmpty() ? field.Name : field.Note) + "\")]\r\n");
+                if (field.IsPrimaryKey)
+                {
+                    model.Append("\t\t[PrimaryKey]\r\n");
+                }
+
                 model.Append("\t\tpublic " + field.DotNetType + " " + field.Name + " { get; set; }\r\n\r\n");
             }
+            model.Append("\t\t#endregion" + Environment.NewLine);
             model.Append("\t}\r\n");
             model.Append("}\r\n");
             return model.ToString();

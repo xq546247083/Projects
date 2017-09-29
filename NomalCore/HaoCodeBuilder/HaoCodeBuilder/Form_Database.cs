@@ -1,12 +1,7 @@
-﻿using System;
+﻿using HaoCodeBuilder.Model;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using HaoCodeBuilder.Model;
 
 namespace HaoCodeBuilder
 {
@@ -194,6 +189,7 @@ namespace HaoCodeBuilder
                         tblNode1.ImageIndex = 2;
                         tblNode1.SelectedImageIndex = 2;
                         tblNode1.Tag = new Model.TreeNodeTag() { Type = TreeNodeType.Table, Tag = table.Name };
+                        tblNode1.ToolTipText = table.Describle;
                         selNode.Nodes.Add(tblNode1);
                     }
                     break;
@@ -341,59 +337,74 @@ namespace HaoCodeBuilder
             param.NameSpace1 = "";
             param.ServerID = server.ID;
             param.TableName = ((Model.TreeNodeTag)node.Tag).Tag.ToString();
+            param.TableDescrible = node.ToolTipText;
             param.ClassName = GetClassNameByTableName(param.TableName);
             var buildTypeStr = new Common.Config_CodeBuilder().GetDefalutBuildType();
             param.BuilderType = buildTypeStr == Model.BuilderType.Custom.ToString() ? Model.BuilderType.Custom : (buildTypeStr == Model.BuilderType.Default.ToString() ? Model.BuilderType.Default : Model.BuilderType.Factory);
-            param.BuilderType = Model.BuilderType.Default;
             param.MethodList = methods;
             param.CNSC = new Common.Config_NameSpaceClass().GetDefault();
 
+            if (param.BuilderType == Model.BuilderType.Factory)
+            {
+                var factoryClassName = string.Format("{0}Factory", param.ClassName);
+                if (GetFormCode(factoryClassName) == null)
+                {
+                    Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), factoryClassName);
+                    fca_factory.Show(MainForm.Instance.dockPanel1);
+                }
+
+                var iClassName = string.Format("I{0}", param.ClassName);
+                if (GetFormCode(iClassName) == null)
+                {
+                    Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), iClassName);
+                    fca_interface.Show(MainForm.Instance.dockPanel1);
+                }
+            }
+
             if (param.BuilderType == Model.BuilderType.Factory || param.BuilderType == Model.BuilderType.Default)
             {
-                var modelClassName = string.Format("{0}", param.ClassName);
-                if (!IsExist(modelClassName))
-                {
-                    Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), modelClassName);
-                    fca_model.Show(MainForm.Instance.dockPanel1);
-                }
-
-
-                var dalClassName = string.Format("{0}DAL", param.ClassName);
-                if (!IsExist(dalClassName))
-                {
-                    Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), dalClassName);
-                    fca_data.Show(MainForm.Instance.dockPanel1);
-                }
-
                 var bllClassName = string.Format("{0}BLL", param.ClassName);
-                if (!IsExist(bllClassName))
+                if (GetFormCode(bllClassName) == null)
                 {
                     Form_Code_Area fca_business = new Form_Code_Area(CreateCode.GetBusinessClass(param), bllClassName);
                     fca_business.Show(MainForm.Instance.dockPanel1);
                 }
             }
 
-            if (param.BuilderType == Model.BuilderType.Factory)
+            if (param.BuilderType == Model.BuilderType.Custom)
             {
-                var iClassName = string.Format("i{0}", param.ClassName);
-                if (!IsExist(iClassName))
+                var formCode = GetFormCode("Field");
+                if (formCode == null)
                 {
-                    Form_Code_Area fca_interface = new Form_Code_Area(CreateCode.GetInterfaceClass(param), iClassName);
-                    fca_interface.Show(MainForm.Instance.dockPanel1);
+                    Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetFieldClass(param), CreateCode.GetFieldClass2(param), "Field");
+                    fca_model.Show(MainForm.Instance.dockPanel1);
                 }
-
-                var factoryClassName = string.Format("{0}Factory", param.ClassName);
-                if (!IsExist(factoryClassName))
+                else
                 {
-                    Form_Code_Area fca_factory = new Form_Code_Area(CreateCode.GetFactoryClass(param), factoryClassName);
-                    fca_factory.Show(MainForm.Instance.dockPanel1);
+                    formCode.SetText(CreateCode.GetFieldClass(param), CreateCode.GetFieldClass2(param));
                 }
-
             }
+            if (param.BuilderType == Model.BuilderType.Factory || param.BuilderType == Model.BuilderType.Default || param.BuilderType == Model.BuilderType.Custom)
+            {
+                var dalClassName = string.Format("{0}DAL", param.ClassName);
+                if (GetFormCode(dalClassName) == null)
+                {
+                    Form_Code_Area fca_data = new Form_Code_Area(CreateCode.GetDataClass(param), dalClassName);
+                    fca_data.Show(MainForm.Instance.dockPanel1);
+                }
+
+                var modelClassName = string.Format("{0}", param.ClassName);
+                if (GetFormCode(modelClassName) == null)
+                {
+                    Form_Code_Area fca_model = new Form_Code_Area(CreateCode.GetModelClass(param), modelClassName);
+                    fca_model.Show(MainForm.Instance.dockPanel1);
+                }
+            }
+
             this.treeView1.Focus();
         }
 
-        private bool IsExist(string name)
+        private Form_Code_Area GetFormCode(string name)
         {
             var mainForm = this.ParentForm as MainForm;
             foreach (var content in mainForm.dockPanel1.Contents)
@@ -406,11 +417,11 @@ namespace HaoCodeBuilder
 
                 if (item.Text == name)
                 {
-                    return true;
+                    return item;
                 }
             }
 
-            return false;
+            return null;
         }
 
         private String GetClassNameByTableName(string tableName)

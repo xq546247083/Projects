@@ -1,9 +1,9 @@
 ﻿/************************************************************************
-* 标题: u_blog的DAL
-* 描述: u_blog的DAL
+* 标题: 博客表的DAL
+* 描述: 博客表的DAL
 * 数据表:u_blog
 * 作者：xiaoqiang
-* 日期：2017/9/10 0:25:48
+* 日期：2017/9/23 2:04:16
 * 版本：V1.0
 *************************************************************************/
 
@@ -15,7 +15,7 @@ namespace WebServer.DAL
     using MySql.Data.MySqlClient;
 
     /// <summary>
-    /// u_blog的DAL
+    /// 博客表的DAL
     /// </summary>
     public class UBlogDAL : BaseDal
     {
@@ -42,7 +42,7 @@ namespace WebServer.DAL
         /// <summary>
         /// 获取数据
         /// </summary>
-        /// <param name="iD">主键</param> 
+        /// <param name="iD">主键</param>
         /// <returns>获取数据</returns>
         public static DataTable GetList(Guid iD)
         {
@@ -58,7 +58,7 @@ namespace WebServer.DAL
         /// 删除
         /// </summary>
         /// <param name="iD">主键</param>
-        /// <returns>删除</returns>
+        /// <returns>受影响的行数</returns>
         public static Int32 Delete(Guid iD)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
@@ -82,8 +82,8 @@ namespace WebServer.DAL
         /// <param name="status">状态【0：草稿，1：正常，2：删除，3：彻底删除】</param>
         /// <param name="crDate">创建时间</param>
         /// <param name="reDate">更新时间</param>
-        /// <returns>更新</returns>
-        public static Int32 Insert(Guid iD, Guid userId, String title, String content, String tag, String aTUsers, Int32 blogType, Int32 status, DateTime crDate, DateTime reDate)
+        /// <returns>受影响的行数</returns>
+        public static Int32 Insert(Guid iD, Guid userId, String title, String content, String tag, String aTUsers, Int32 blogType, Byte status, DateTime crDate, DateTime reDate)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -103,7 +103,7 @@ namespace WebServer.DAL
         }
 
         /// <summary>
-        /// 更新
+        /// 更新数据
         /// </summary>
         /// <param name="iD">主键</param>
         /// <param name="userId">用户id</param>
@@ -115,8 +115,8 @@ namespace WebServer.DAL
         /// <param name="status">状态【0：草稿，1：正常，2：删除，3：彻底删除】</param>
         /// <param name="crDate">创建时间</param>
         /// <param name="reDate">更新时间</param>
-        /// <returns>更新</returns>
-        public static Int32 Update(Guid iD, Guid userId, String title, String content, String tag, String aTUsers, Int32 blogType, Int32 status, DateTime crDate, DateTime reDate)
+        /// <returns>受影响的行数</returns>
+        public static Int32 Update(Guid iD, Guid userId, String title, String content, String tag, String aTUsers, Int32 blogType, Byte status, DateTime crDate, DateTime reDate)
         {
             MySqlParameter[] mySqlParameter = new MySqlParameter[]
             {
@@ -133,6 +133,15 @@ namespace WebServer.DAL
             };
 
             return ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.Update], mySqlParameter);
+        }
+
+        /// <summary>
+        /// 查询记录数
+        /// </summary>
+        /// <returns>获取所有数据</returns>
+        public static Int32 Count()
+        {
+            return ExecuteNonQuery(SqlFactory.mData[tableName][SqlType.GetCount]);
         }
 
         #endregion

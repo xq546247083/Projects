@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace HaoCodeBuilder.Business
@@ -12,6 +10,7 @@ namespace HaoCodeBuilder.Business
         {
             createInstance = Factory.Factory.CreateCreateCodeInstance(dataBaseType);
         }
+
         /// <summary>
         /// 得到实体层引用字符串
         /// </summary>
@@ -19,9 +18,19 @@ namespace HaoCodeBuilder.Business
         public string GetImport_Model()
         {
             StringBuilder import = new StringBuilder();
-            import.Append("using System;\r\n");
-            import.Append("using System.ComponentModel;\r\n");
-            import.Append("using System.ComponentModel.DataAnnotations;\r\n\r\n");
+            import.Append("using System;" + Environment.NewLine);
+            import.Append("using System.Data;" + Environment.NewLine);
+            return import.ToString();
+        }
+
+        /// <summary>
+        /// 得到实体层引用字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetImport_Model_Inside()
+        {
+            StringBuilder import = new StringBuilder();
+            import.Append("using Tool.CustomAttribute;" + Environment.NewLine);
             return import.ToString();
         }
 
@@ -32,11 +41,19 @@ namespace HaoCodeBuilder.Business
         public string GetImport_Data()
         {
             StringBuilder import = new StringBuilder();
-            import.Append("using System;\r\n");
-            import.Append("using System.Collections.Generic;\r\n");
-            import.Append("using System.Text;\r\n");
-            import.Append("using System.Data;\r\n");
-            import.Append("using " + createInstance.GetDataNameSpace() + ";\r\n\r\n");
+            import.Append("using System;" + Environment.NewLine);
+            import.Append("using System.Data;" + Environment.NewLine);
+            return import.ToString();
+        }
+
+        /// <summary>
+        /// 数据层引用字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetImport_Data_Inside()
+        {
+            StringBuilder import = new StringBuilder();
+            import.Append("using " + createInstance.GetDataNameSpace() + ";" + Environment.NewLine);
             return import.ToString();
         }
 
@@ -48,8 +65,17 @@ namespace HaoCodeBuilder.Business
         {
             StringBuilder import = new StringBuilder();
             import.Append("using System;\r\n");
-            import.Append("using System.Collections.Generic;\r\n");
             import.Append("using System.Text;\r\n\r\n");
+            return import.ToString();
+        }
+
+        /// <summary>
+        /// 数据层引用字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetImport_Business_Inside()
+        {
+            StringBuilder import = new StringBuilder();
             return import.ToString();
         }
 
@@ -61,7 +87,16 @@ namespace HaoCodeBuilder.Business
         {
             StringBuilder import = new StringBuilder();
             import.Append("using System;\r\n");
-            import.Append("using System.Collections.Generic;\r\n\r\n");
+            return import.ToString();
+        }
+
+        /// <summary>
+        /// 数据层引用字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetImport_Interfacl_Inside()
+        {
+            StringBuilder import = new StringBuilder();
             return import.ToString();
         }
 
@@ -74,6 +109,16 @@ namespace HaoCodeBuilder.Business
             StringBuilder import = new StringBuilder();
             import.Append("using System;\r\n");
             import.Append("using System.Reflection;\r\n\r\n");
+            return import.ToString();
+        }
+
+        /// <summary>
+        /// 数据层引用字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetImport_Factory_Inside()
+        {
+            StringBuilder import = new StringBuilder();
             return import.ToString();
         }
     }
