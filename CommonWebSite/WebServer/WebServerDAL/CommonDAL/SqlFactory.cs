@@ -44,7 +44,7 @@ namespace WebServer.DAL
         private static readonly String InsertSqlStr = "INSERT INTO {0} ({1}) VALUES ({2});";
         private static readonly String UpdateSqlStr = "UPDATE {0} SET {1} WHERE {2};";
         private static readonly String DeleteSqlStr = "DELETE FROM {0} WHERE {1};";
-        private static readonly String GetCountSqlStr = " SELECT Count(*) FROM {1}";
+        private static readonly String GetCountSqlStr = " SELECT Count(*) FROM {0}";
 
         #endregion
 
