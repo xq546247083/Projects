@@ -61,7 +61,7 @@ CREATE TABLE `sys_user` (
   `FullName` varchar(128) NOT NULL COMMENT '用户真实姓名',
   `Password` varchar(512) NOT NULL COMMENT '登陆密码',
   `PwdExpiredTime` datetime DEFAULT NULL COMMENT '密码过期时间',
-  `Sex` bit(1) DEFAULT b'1' COMMENT '性别 1男0女',
+  `Sex` tinyint(1) DEFAULT NULL COMMENT '性别 1男0女',
   `Phone` varchar(36) DEFAULT NULL COMMENT '工作电话',
   `Email` varchar(36) DEFAULT NULL COMMENT '电子邮箱',
   `Status` int(10) DEFAULT NULL COMMENT '状态 1 启用 2禁用 3已删',
@@ -75,21 +75,7 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('448cfeb6-37a2-40c4-84e9-72599fd3722f','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 14:35:39','\0','','546247083@qq.com',1,54,'2017-09-14 13:35:39',NULL,'1','2017-09-09 00:08:37'),('f0f5b41b-7d00-48d7-96ae-67fcbefc4e87','xiao','xiao','i6ymhZhRCbqMFp7ojyw9k4qujvIu9I56tP443TNp5ZlbBkCqTrkbNKGOsZLNVj4zyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 13:16:29','\0','','295787943@qq.com',1,1,'2017-09-14 12:10:39',NULL,'1','2017-09-14 12:10:08');
-
-/*Table structure for table `sys_userinfo` */
-
-DROP TABLE IF EXISTS `sys_userinfo`;
-
-CREATE TABLE `sys_userinfo` (
-  `UserInfoID` char(36) NOT NULL COMMENT '用户ID',
-  `CompanyID` varchar(50) DEFAULT NULL COMMENT '公司ID（未用到）',
-  `Memo` varchar(150) DEFAULT NULL COMMENT '用户备注',
-  `AreaID` char(36) DEFAULT NULL COMMENT '区域ID（未用到）',
-  PRIMARY KEY (`UserInfoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `sys_userinfo` */
+insert  into `sys_user`(`UserID`,`UserName`,`FullName`,`Password`,`PwdExpiredTime`,`Sex`,`Phone`,`Email`,`Status`,`LoginCount`,`LastLoginTime`,`LastLoginIP`,`RoleIDs`,`CreateTime`) values ('448cfeb6-37a2-40c4-84e9-72599fd3722f','xiaoqiang','xiaoqiang','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-29 17:02:12',0,'','546247083@qq.com',1,90,'2017-09-29 16:02:11',NULL,'1','2017-09-09 00:08:37'),('534ffe87-8aca-48ac-a48a-0ebd341ae57f','xq123456','xq123456','PJIlyB4C718+mExM8RFsrs0yNo61tWIgMfyyJIC89C1dmOrtpn9ZBeapruQ80CsfyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-20 14:32:40',0,'','331671897@qq.com',1,5,'2017-09-20 13:26:19',NULL,'1','2017-09-20 11:35:10'),('f0f5b41b-7d00-48d7-96ae-67fcbefc4e87','xiao','xiao','i6ymhZhRCbqMFp7ojyw9k4qujvIu9I56tP443TNp5ZlbBkCqTrkbNKGOsZLNVj4zyiCPJ3ASQBahvTM+ACMLQg##=2','2017-09-14 13:16:29',0,'','295787943@qq.com',1,1,'2017-09-14 12:10:39',NULL,'1','2017-09-14 12:10:08');
 
 /*Table structure for table `u_blog` */
 
