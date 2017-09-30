@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WebServer.BLL
 {
@@ -178,7 +179,12 @@ namespace WebServer.BLL
                 sysUser = GetItemByUserName(userNameOrEmail);
             }
 
-            return sysUser.PwdExpiredTime < DateTime.Now;
+            if (sysUser != null)
+            {
+                return sysUser.PwdExpiredTime < DateTime.Now;
+            }
+
+            return false;
         }
 
         /// <summary>
