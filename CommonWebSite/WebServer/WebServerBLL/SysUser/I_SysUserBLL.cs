@@ -192,13 +192,7 @@ namespace WebServer.BLL
 
             #region 检测请求
 
-            if (String.IsNullOrEmpty(userName))
-            {
-                result.ResultStatus = ResultStatus.UserNameCantBeEmpty;
-                return result;
-            }
-
-            if (String.IsNullOrEmpty(fullName))
+            if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(fullName))
             {
                 result.ResultStatus = ResultStatus.UserNameCantBeEmpty;
                 return result;
