@@ -135,15 +135,12 @@ namespace WebServer.BLL
 
             #region 处理请求
 
-            if (sysUser != null)
+            TransactionHandler.Handle(() =>
             {
-                TransactionHandler.Handle(() =>
-                {
-                    sysUser.PwdExpiredTime = DateTime.Now;
+                sysUser.PwdExpiredTime = DateTime.Now;
 
-                    Update(sysUser);
-                }, null);
-            }
+                Update(sysUser);
+            }, null);
 
             #endregion
 
@@ -281,7 +278,7 @@ namespace WebServer.BLL
             {
                 roleIds = roleIds.Substring(0, roleIds.Length - 1);
             }
-            
+
 
             var sexFlag = true;
             Boolean.TryParse(sex.ToString(), out sexFlag);
