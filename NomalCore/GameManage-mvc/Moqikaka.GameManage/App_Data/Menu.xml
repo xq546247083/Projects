@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Menu>
+  <MenuItem ID="1" Text="活动管理" Controller="" Action="" >
+    <MenuItem ID="1.2" Text="限时活动" Controller="LimitActivity" Action="Index" ChildAction="Search,Data" CSSClass="glyphicon"></MenuItem>
+    <!-- -->
+    <!--<MenuItem ID="1.3" Text="限时秒杀活动" Controller="TimesMiaosha" Action="Index" ChildAction="Search,Data" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="1.4" Text="限时活动时间配置管理5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="1.5" Text="活动导入导出10" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--
+    <MenuItem ID="1.6" Text="膜拜配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    -->
+    <!--<MenuItem ID="1.7" Text="限时配置导入10" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--
+    <MenuItem ID="2.11" Text="回归奖励配置8" Controller="ReturnPackage" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.16" Text="开工奖励配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.17" Text="秒杀王配置7" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    -->
+    <!--<MenuItem ID="2.18" Text="一元活动7" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--
+    <MenuItem ID="2.19" Text="老玩家回老服奖励配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.20" Text="老玩家回新服奖励配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.21" Text="老玩家回新服道具奖励5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.22" Text="老玩家回新服等级奖励5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.23" Text="杀殿宝藏配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+
+    <MenuItem ID="2.24" Text="商城出售礼包模型管理2" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.25" Text="商城出售道具模型管理2" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.26" Text="商城道具价格关系管理2" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.27" Text="限时招募运营配置1" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.28" Text="限时活动名称配置3" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    -->
+    <!--<MenuItem ID="2.29" Text="幸运大翻牌2" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!---->
+  </MenuItem>
+  <MenuItem ID="2" Text="运营管理" Controller="" Action="" >
+    <MenuItem ID="2.1" Text="资源字符串编辑" Controller="Resource" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.2" Text="玩家奖励" Controller="AwardToPlayers" Action="AwardToPlayers" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.3" Text="全体奖励" Controller="GlobalReward" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.4" Text="公告管理" Controller="NoticeManage" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.5" Text="工会管理" Controller="GlobalGuild" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.6" Text="代金卷" Controller="Voucher" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.7" Text="邮件管理" Controller="PlayerEmail" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.8" Text="模块控制" Controller="ModuleRelation" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.9" Text="走马灯消息" Controller="SystemMessage" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="2.27" Text="发放月卡" Controller="MonthCard" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <!--<MenuItem ID="2.13" Text="活动信息查看(活动刷新负责备份)10" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--<MenuItem ID="2.24" Text="资源数量使用管理5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>    
+    <MenuItem ID="2.26" Text="内购渠道配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--<MenuItem ID="2.28" Text="新服限时活动配置5" Controller="" Action="" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <!--<dd>
+      <a href="">游戏服务器组设置1</a>  
+      <a href="">发送奖励白名单x5</a>    
+      <a href="">策划数据查询2</a>
+      <a href="">商品折扣概率2</a>
+      <a href="">设备锁定解锁2</a>
+      <a href="">玩家星级修改2</a>
+      <a href="">火箭活动基本配置2</a>
+      <a href="">设备用户禁用(合作商)1</a>
+      <a href="">火箭大主宰和纪念徽章1</a>
+      <a href="">火箭语音奖励1</a>
+      <a href="">产品购买次数限制配置2</a>
+      <a href="">微信福利页内容配置2</a>
+      <a href="">微信关注礼包配置2</a>
+      <a href="">微信充值红包配置2</a>
+      <a href="">微信签到2</a>
+      <a href="">每日礼包2</a>
+      <a href="">限时商店2</a>
+      <a href="">限时道具兑换购买商店2</a>
+      <a href="">名人堂1</a>
+      <a href="">捐献道具积分兑换配置1</a>
+      <a href="">周任务配置2</a>
+    </dd>-->
+  </MenuItem>
+  <MenuItem ID="3" Text="游戏数据管理" Controller="" Action="" >
+    <MenuItem ID="3.1" Text="玩家数据查询" Controller="PlayerDataSearch" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <!--<MenuItem ID="3.2" Text="玩家阵容查看5" Controller="" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>-->
+    <MenuItem ID="3.3" Text="在线数量查询" Controller="OnLinePlayer" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="3.4" Text="玩家账号设置" Controller="InnerPlayer" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="3.5" Text="交换玩家渠道" Controller="ExchangePartner" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+  </MenuItem>
+  <MenuItem ID="4" Text="聊天管理" Controller="" Action="" >
+    <MenuItem ID="4.1" Text="屏蔽字敏感词管理" Controller="WordManage" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="4.3" Text="聊天信息管理" Controller="PlayerChatInfo" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="4.4" Text="玩家禁言管理" Controller="PlayerChatBanned" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="4.5" Text="GM频道消息推送" Controller="PushToChatLog" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+  </MenuItem>
+  <MenuItem ID="5" Text="系统管理" Controller="" Action="" >
+    <MenuItem ID="5.1" Text="用户管理 " Controller="User" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="5.2" Text="角色管理" Controller="Role" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+    <MenuItem ID="5.5" Text="用户操作日志" Controller="UserOperationLog" Action="Index" ChildAction="Search,Data,Create" CSSClass="glyphicon"></MenuItem>
+  </MenuItem>
+  <MenuItem ID="6" Text="服务器刷新" Controller="DataRefresh" Action="Index" >
+  </MenuItem>
+</Menu>

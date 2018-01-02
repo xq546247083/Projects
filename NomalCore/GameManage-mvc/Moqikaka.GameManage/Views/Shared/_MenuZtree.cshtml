@@ -1,0 +1,40 @@
+﻿@model Moqikaka.GameManage.UserViewModel
+
+<link href="~/Content/zTree/zTreeStyle.css" rel="stylesheet" />
+<script src="~/Content/zTree/jquery.ztree.core-3.5.min.js"></script>
+<script src="~/Content/zTree/jquery.ztree.excheck-3.5.min.js"></script>
+<div class="content_wrap">
+    <div class="zTreeDemoBackground left">
+        <ul id="listTree" class="ztree"></ul>
+    </div>
+</div>
+<style>
+    ul.ztree {
+        margin-top: 10px;
+        border: 1px solid #617775;
+        background: #f0f6e4;
+        height: 300px;
+        overflow-y: scroll;
+        overflow-x: auto;
+    }
+</style>
+<script>
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var zTreeNodes = [@Html.TreeListData(Model.MenuId)];
+
+    $(document).ready(function () {
+        $.fn.zTree.init($("#listTree"), setting, zTreeNodes);
+    });
+
+</script>
+

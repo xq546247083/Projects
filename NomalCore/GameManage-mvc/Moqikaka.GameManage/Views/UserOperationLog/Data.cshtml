@@ -1,0 +1,89 @@
+﻿@model CommViewModel<UserOperationLogViewModel>
+@{
+    ViewBag.Title = "data";
+    Layout = null;
+}
+<style>
+    .layui-table tbody tr:hover {
+        background-color: #5FB878;
+    }
+
+    .layui-table tbody td:hover {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -o-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+</style>
+<table class="layui-table">
+    <colgroup>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>@Html.LabelFor(model => model.ViewModel.ID)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.UserID)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.UserName)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.OperationName)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.OperationMothod)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.OperationData)</th>
+            <th>@Html.LabelFor(model => model.ViewModel.Crdate)</th>
+        </tr>
+    </thead>
+    <tbody class="data">
+        @if (Model.ViewModelList != null && Model.ViewModelList.Count > 0)
+        {
+            @Html.Hidden("serverGroupId", Model.ServerGroupId)
+            foreach (var item in Model.ViewModelList)
+            {
+                <tr>
+                    <td><nobr>@item.ID</nobr></td>
+                    <td><nobr>@item.UserID</nobr></td>
+                    <td><nobr>@item.UserName</nobr></td>
+                    <td><nobr>@item.OperationName</nobr></td>
+                    <td><nobr>@item.OperationMothod</nobr></td>
+                    <td><div title="@item.OperationData" style="width: 400px; word-break: keep-all; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;text-align:center;">@item.OperationData</div></td>
+                    <td><nobr>@item.Crdate</nobr></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="8">没有数据...</td></tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8">
+                <div id="pageDiv" style="text-align:center;"></div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<script>
+    //分页
+    layui.use('laypage',
+        function() {
+            var laypage = layui.laypage;
+
+            laypage({
+                cont: 'pageDiv', //分页所在容器
+                pages: '@Model.PageCount', //总页数
+                groups: 5, //连续显示分页数
+                curr: '@Model.PageIndex', //当前页码
+                jump: function(obj) { //跳转页面
+                    if (Number('@Model.PageIndex') != obj.curr) {
+                        $("#PageIndex").val(obj.curr);
+                        $("#search_form").submit();
+                    }
+                }
+            });
+        })
+</script>

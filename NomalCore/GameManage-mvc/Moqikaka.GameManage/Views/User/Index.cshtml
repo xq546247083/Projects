@@ -1,0 +1,27 @@
+﻿@using Moqikaka.GameManage
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <fieldset class="layui-elem-field">
+        <legend><i class="layui-icon">&#xe615;</i>Seach</legend>
+        <div class="" id="searchDiv">
+            @Html.Action("Search")
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field">
+        <legend><i class="layui-icon">&#xe60a;</i>Data</legend>
+        <div class="" id="dataDiv">
+            @Html.Action("Data", new { ServerGroupId = 0 })
+        </div>
+    </fieldset>
+</div>
+@Html.DivLoadingStations("div_loading")
+
+<script type="text/javascript">
+    layui.use(['form', 'layer'], function () {
+        var $ = layui.jquery, form = layui.form();
+        form.render();
+    });
+</script>

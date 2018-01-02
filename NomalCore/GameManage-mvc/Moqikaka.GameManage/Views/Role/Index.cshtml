@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "角色管理";
+}
+
+<div>
+    <fieldset class="layui-elem-field" style="display:none;">
+        <legend><i class="layui-icon">&#xe615;</i>Seach</legend>
+        <div class="" id="searchDiv">
+            @Html.Action("Search")
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field">
+        <legend><i class="layui-icon">&#xe60a;</i>Data</legend>
+        <div class="" id="dataDiv">
+            @Html.Action("Data")
+        </div>
+    </fieldset>
+</div>
+@Html.DivLoadingStations("div_loading")

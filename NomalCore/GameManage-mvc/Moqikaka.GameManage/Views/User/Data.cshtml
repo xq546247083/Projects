@@ -1,0 +1,78 @@
+﻿@model  Moqikaka.GameManage.CommViewModel<Moqikaka.GameManage.UserViewModel>
+@{
+    ViewBag.Title = "Data";
+    Layout = null;
+}
+
+<style>
+    .layui-table tbody tr:hover {
+        background-color: #5FB878;
+    }
+
+    .layui-table tbody td:hover {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -o-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+    .selected {
+        background-color: #5FB878;
+    }
+</style>
+@using (Ajax.BeginForm("DeleteList", null, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onDataMidff", LoadingElementId = "div_loading" }, new { id = "data_form" }))
+{
+    @Ajax.ActionLinkPackaging("<i class='layui-icon'>&#xe654;</i>添加用户", "Create", new { }, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "AddModalShow" }, new { @class = "layui-btn layui-btn-small", title = "添加用户", id = "addUser", style = "margin-left:5px;" })
+    <table class="layui-table">
+        <colgroup>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>@Html.LabelFor(model => model.ViewModel.UserID)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.UserName)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.IfSuper)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.UserRoleName)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.Status)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.LastLoginTime)</th>
+                <th>@Html.LabelFor(model => model.ViewModel.LastLoginIP)</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="data">
+            @if (Model.ViewModelList != null && Model.ViewModelList.Count > 0)
+            {
+                foreach (var item in Model.ViewModelList)
+                {
+                    <tr>
+                        <td><nobr>@item.UserID</nobr></td>
+                        <td><nobr>@item.UserName</nobr></td>
+                        <td><nobr>@item.IfSuper</nobr></td>
+                        <td><nobr>@item.UserRoleName</nobr></td>
+                        <td><nobr>@(item.Status == 0 ? "正常" : "锁定")</nobr></td>
+                        <td><nobr>@item.LastLoginTime</nobr></td>
+                        <td><nobr>@item.LastLoginIP</nobr></td>
+                        <td>
+                            @if (!item.IfSuper)
+                            {
+                                @Ajax.ActionLinkPackaging("<i class='layui-icon'>&#xe640;</i>删除", "Delete", new { id = item.UserID }, new AjaxOptions() { HttpMethod = "POST", OnBegin = " return confirm('确定删除用户[" + item.UserName + "]?')", OnSuccess = "onDataMidff" }, new { @class = "layui-btn layui-btn-primary layui-btn-mini", title = "删除", data_toggle = "tooltip" })
+                                @Ajax.ActionLinkPackaging("<i class='layui-icon'>&#xe642;</i>修改", "Edit", new { id = item.UserID }, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "AddModalShow" }, new { @class = "layui-btn layui-btn-primary layui-btn-mini", title = "修改", data_toggle = "tooltip" })
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="8">没有数据...</td></tr>
+            }
+        </tbody>
+    </table>
+}

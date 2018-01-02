@@ -1,0 +1,21 @@
+﻿@model CommViewModel<RoleViewModel>
+@{
+    ViewBag.Title = "Search";
+    Layout = null;
+}
+
+
+<div>
+    @using (Ajax.BeginForm("Data", "Role", null, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId ="dataDiv", LoadingElementId = "div_loading" }, new { id = "search_form" }))
+    {
+        <div>
+            @Html.HiddenFor(model => model.ViewModel.Id)
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn layui-btn-small"><i class="layui-icon">&#xe615;</i>查 询</button>
+            </div>
+        </div>
+    }
+</div>

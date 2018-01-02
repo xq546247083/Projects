@@ -1,0 +1,22 @@
+﻿@model CommViewModel<UserViewModel>
+@{
+    ViewBag.Title = "Search";
+    Layout = null;
+}
+
+<div style="background-color: rgba(86,61,124,.15);border-radius:5px;padding:10px;">
+    @using (Ajax.BeginForm("Data", "User", null, new AjaxOptions() { UpdateTargetId = "dataDiv", LoadingElementId = "div_Loding" }, new { id = "search_form", @class = "form-inline" }))
+    {
+        <div class="layui-form-item">
+            @Html.LabelFor(model => model.ViewModel.UserName, new { @class = "layui-form-label" })
+            <div class="layui-input-block">
+                @Html.TextBox("userName", ' ', new { @class = "layui-input", placeholder = "输入登录名", style = "width:200px;" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn layui-btn-small"> <i class="layui-icon">&#xe615;</i>查询</button>
+            </div>
+        </div>
+    }
+</div>

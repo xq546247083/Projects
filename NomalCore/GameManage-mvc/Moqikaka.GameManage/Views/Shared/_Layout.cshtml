@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title 游戏运营管理系统</title>
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    @Styles.Render("~/Content/select2-master/css/select2.min.css")
+    @Styles.Render("~/Content/bootstrap/css/bootstrap-datetimepicker.min.css")
+    <script src="~/Content/bootstrap/js/1.11.3-jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/layui/layui.js"></script>
+    @Scripts.Render("/Content/select2-master/js/select2.full.min.js")
+    @Scripts.Render("~/Content/bootstrap/js/bootstrap-datetimepicker.js")
+    @Scripts.Render("~/Content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script language="javascript">
+        // 调用 页面弹出框 模态框（Modal）
+        function AddModalShow(html) {
+            $('#dialog').html(html);
+            $('#dialog').modal('show');
+        }
+
+        //修改数据 回调
+        function onDataMidff(data) {
+            if (data.Result) {
+                $('#dialog').modal('hide');
+                if (data.Message) {
+                    layer.msg(data.Message, { icon: 1 });
+                    $("#search_form").submit();
+                }
+            } else {
+                if (data.Message) {
+                    layer.alert(data.Message, { icon: 2 });
+                    console.log(data.Message);
+                }
+            }
+        }
+
+        //修改数据 回调
+        function onDataMidffNoHide(data) {
+            if (data.Message) {
+                layer.alert(data.Message);
+                console.log(data.Message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- 布局容器 -->
+    <div class="layui-layout layui-layout-admin">
+        <!-- 头部 -->
+        <div class="layui-header">
+            <div class="layui-main">
+                <!-- logo -->
+                <a href="/" class="logo">
+                    <img src="~/Content/Image/logo_new.png" alt="摩奇互娱" style="max-width:90px;" />
+                </a>
+                <div id="Platform" class="layui-form" style="line-height:50px; width: 400px;height:30px;left:200px; top: 0px;position: absolute;color:#ffffff">@Moqikaka.GameManage.Common.WebConfig.Platform @DateTime.Now.ToString("yyyy-MM-dd HH:mm")</div>
+
+                <!-- 头部右侧菜单 -->
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+        <!-- 左侧菜单 -->
+        <div class="layui-side layui-bg-black menu">
+            <div class="layui-side-scroll">
+                @Html.Partial("_Menu")
+            </div>
+        </div>
+
+        <!-- 主体 -->
+        <div class="layui-body" style="padding:5px;">
+            @RenderBody()
+        </div>
+
+        <!-- 底部 -->
+        <div class="layui-footer">
+            <div style="text-align: center;padding:10px;font-size:12px;color:#000;">
+                成都摩奇互娱科技有限责任公司 &nbsp;版权所有 Copyright @@ 2010-2012 All rights reserved&nbsp;蜀ICP备12006569号-1&nbsp;
+                <a>川网文（2016） 1986-064 号</a>
+            </div>
+
+        </div>
+
+        <!-- 模态框（Modal）页面弹出框 -->
+        <div class="modal fade " role="dialog" id="dialog" data-backdrop="false" data-keyboard="true" aria-labelledby="myModalLabel" aria-hidden="true">
+        </div>
+        <div id="div_loading_max" style="display: none;"> <div class="layui-layer-shade" style="z-index:99998; background-color:#fff; opacity:0.5; filter:alpha(opacity=1);"></div><div class="layui-layer layui-layer-dialog layui-layer-msg layer-anim" style="z-index: 99999; top: 40%; left: 45%;"><div class="layui-layer-content layui-layer-padding"><i class="layui-layer-ico layui-layer-ico16"></i>加载中..</div></div></div>
+    </div>
+    <script>
+        layui.use(['form', 'element', 'layer', 'jquery', 'laypage'], function () {
+            //导航的hover效果、二级菜单等功能，需要依赖element模块
+            var form = layui.form(),
+                layer = layui.layer,
+                laypage = layui.laypage,
+                element = layui.element();
+            $ = layui.jquery;
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
