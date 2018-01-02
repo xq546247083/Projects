@@ -421,6 +421,7 @@
     <Content Include="Content\select2-master\js\select2.full.min.js" />
     <Content Include="Content\select2-master\js\select2.js" />
     <Content Include="Content\select2-master\js\select2.min.js" />
+    <Content Include="Content\custom.css" />
     <Content Include="Content\zTree\img\diy\1_close.png" />
     <Content Include="Content\zTree\img\diy\1_open.png" />
     <Content Include="Content\zTree\img\diy\2.png" />

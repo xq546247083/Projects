@@ -9,12 +9,10 @@
     {
         <div class="layui-form-item">
             @Html.LabelFor(model => model.ViewModel.UserName, new { @class = "layui-form-label" })
-            <div class="layui-input-block">
+            <div class="layui-input-block  search-float-0">
                 @Html.TextBox("userName", ' ', new { @class = "layui-input", placeholder = "输入登录名", style = "width:200px;" })
             </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
+            <div class="layui-input-block search-float-4">
                 <button type="submit" class="layui-btn layui-btn-small"> <i class="layui-icon">&#xe615;</i>查询</button>
             </div>
         </div>

@@ -49,6 +49,9 @@ namespace Moqikaka.GameManage
                 "~/Content/bootstrap/js/bootstrap-datetimepicker.js",
                 "~/Content/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"
             ));
+            bundles.Add(new ScriptBundle("~/Content/custom/css").Include(
+                "~/Content/custom.css"
+            ));
         }
     }
 }
