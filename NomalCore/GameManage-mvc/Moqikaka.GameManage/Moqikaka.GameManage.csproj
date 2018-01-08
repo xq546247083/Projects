@@ -171,7 +171,6 @@
     <Compile Include="Common\UI\UI.cs" />
     <Compile Include="Common\UI\Menu\MenuItem.cs" />
     <Compile Include="Common\UI\Menu\MenuProvider.cs" />
-    <Compile Include="Common\UI\PageHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
