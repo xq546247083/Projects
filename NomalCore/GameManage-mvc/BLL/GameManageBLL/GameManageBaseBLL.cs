@@ -12,7 +12,6 @@ namespace Moqikaka.GameManage.BLL
     /// <summary>
     /// 后台数据库BLL
     /// </summary>
-    /// <typeparam name="T">表model</typeparam>
     public class GameManageBaseBLL
     {
         /// <summary>
@@ -41,12 +40,13 @@ namespace Moqikaka.GameManage.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="paramObj">参数</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="orderStr">排序字符串</param>
         /// <returns>数据</returns>
-        public static List<T> GetDefinedList<T>(T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true) where T : class
+        public static List<T> GetDefinedList<T>(T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "") where T : class
         {
             try
             {
-                return GameManageBaseDAL<T>.GetDefinedList(paramObj, pageNo, pageSize, isLike);
+                return GameManageBaseDAL<T>.GetDefinedList(paramObj, pageNo, pageSize, isLike, orderStr);
             }
             catch (Exception e)
             {

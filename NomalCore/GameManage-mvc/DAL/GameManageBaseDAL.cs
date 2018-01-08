@@ -23,6 +23,7 @@ namespace Moqikaka.GameManage.DAL
         /// 获取数据
         /// </summary>
         /// <param name="paramObj">条件模型</param>
+        /// <param name="orderStr">排序字符串</param>
         /// <returns></returns>
         public static List<T> GetList(T paramObj = null)
         {
@@ -44,10 +45,11 @@ namespace Moqikaka.GameManage.DAL
         /// <param name="pageNo">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="orderStr">排序字符串</param>
         /// <returns></returns>
-        public static List<T> GetDefinedList(T paramObj, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true)
+        public static List<T> GetDefinedList(T paramObj, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "")
         {
-            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GeDefinedList, paramObj, pageNo, pageSize, isLike);
+            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GeDefinedList, paramObj, pageNo, pageSize, isLike, orderStr);
             return ExecuteDataTable<T>(Conn, sqlStr);
         }
 

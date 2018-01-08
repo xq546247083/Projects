@@ -130,7 +130,7 @@ namespace Moqikaka.GameManage.DAL
             var properties = type.GetProperties();
             foreach (var property in properties)
             {
-                if (property.CustomAttributes.All(r => r.AttributeType != typeof(PrimaryKeyAttribute) && r.AttributeType != typeof(IgnoreAttribute)))
+                if (property.CustomAttributes.All(r => r.AttributeType != typeof(IgnoreAttribute)))
                 {
                     sb.Append($"`{property.Name}`=@{property.Name},");
                 }
@@ -231,8 +231,9 @@ namespace Moqikaka.GameManage.DAL
         /// <param name="pageNo">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <param name="isLike">是否用like</param>
+        /// <param name="orderStr">排序字符串</param>
         /// <returns>操作字符串</returns>
-        public static String GetDefinedSqlStr<T>(SqlType sqlType, T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true) where T : class
+        public static String GetDefinedSqlStr<T>(SqlType sqlType, T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "") where T : class
         {
             var mType = GetType<T>(sqlType);
             var andStr = isLike ? "like" : "=";
@@ -265,6 +266,8 @@ namespace Moqikaka.GameManage.DAL
 
                 }
             }
+
+            result += " " + orderStr;
 
             // page参数添加
             if (pageNo != -1 && pageSize != -1)
