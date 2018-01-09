@@ -258,6 +258,7 @@ namespace Moqikaka.GameManage.DAL
                         case "True":
                         case "False":
                         case "0":
+                        case "00000000-0000-0000-0000-000000000000":
                             break;
                         default:
                             result += $" and `{field.Key}` " + andStr + $" '%{value}%'";
