@@ -7,6 +7,7 @@ using System.Web.Routing;
 
 namespace Moqikaka.GameManage
 {
+    using Moqikaka.GameManage.Common;
     using Moqikaka.GameManage.DAL;
 
     /// <summary>
@@ -39,7 +40,22 @@ namespace Moqikaka.GameManage
         /// </summary>
         void InitData()
         {
+            // 检测配置是否配置
+            WebConfig.Check();
+
+            // 构造数据库语句
             SqlFactory.BuildCommond();
+
+            // 回调服务器启动
+            CallbackServerManager.Start(WebConfig.CallbackServerUrl);
+        }
+
+        /// <summary>
+        /// 结束
+        /// </summary>
+        protected void Application_End()
+        {
+            CallbackServerManager.Stop();
         }
     }
 }

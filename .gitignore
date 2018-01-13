@@ -1,7 +1,6 @@
 *.suo
 *.user
 *.sln.docstates
-[Ww]eb.config
 [Dd]ebug/
 [Rr]elease/
 x64/
