@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title 游戏运营管理系统</title>
 
-
     @Styles.Render("~/Content/css")
     <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
@@ -60,10 +59,10 @@
         <div class="layui-header">
             <div class="layui-main">
                 <!-- logo -->
-                <a href="/" class="logo">
+                <a href="/" class="logo" style="float: left;">
                     <img src="~/Content/Image/logo_new.png" alt="摩奇互娱" style="max-width:90px;" />
                 </a>
-                <div id="Platform" class="layui-form" style="line-height:50px; width: 400px;height:30px;left:200px; top: 0px;position: absolute;color:#ffffff">@Moqikaka.GameManage.Common.WebConfig.Platform @DateTime.Now.ToString("yyyy-MM-dd HH:mm")</div>
+                <div id="Platform" class="layui-form" style="float: left; margin:20px; color:#ffffff">@Moqikaka.GameManage.Common.WebConfig.Platform <label id="TimeShow"></label></div>
 
                 <!-- 头部右侧菜单 -->
                 @Html.Partial("_LoginPartial")
@@ -97,6 +96,30 @@
         <div id="div_loading_max" style="display: none;"> <div class="layui-layer-shade" style="z-index:99998; background-color:#fff; opacity:0.5; filter:alpha(opacity=1);"></div><div class="layui-layer layui-layer-dialog layui-layer-msg layer-anim" style="z-index: 99999; top: 40%; left: 45%;"><div class="layui-layer-content layui-layer-padding"><i class="layui-layer-ico layui-layer-ico16"></i>加载中..</div></div></div>
     </div>
     <script>
+        $(document).ready(function () {
+            time();
+        });
+
+        // 时间方法
+        function time() {
+            var dt = new Date();
+            var years = dt.getFullYear();
+            var month = addZero(dt.getMonth() + 1);
+            var days = addZero(dt.getDate());
+            var hours = addZero(dt.getHours());
+            var minutes = addZero(dt.getMinutes());
+            var seconds = addZero(dt.getSeconds());
+            var ndate = years + "-" + month + "-" + days + "  " + hours + ":" + minutes + ":" + seconds;
+            $("#TimeShow").html(ndate);
+            setTimeout(time, 1000);
+        }
+
+        // 添加0
+        function addZero(num) {
+            if (num < 10) return "0" + num;
+            else return num;
+        }
+
         layui.use(['form', 'element', 'layer', 'jquery', 'laypage'], function () {
             //导航的hover效果、二级菜单等功能，需要依赖element模块
             var form = layui.form(),

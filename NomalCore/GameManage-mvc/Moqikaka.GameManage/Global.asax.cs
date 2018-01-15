@@ -45,9 +45,6 @@ namespace Moqikaka.GameManage
 
             // 构造数据库语句
             SqlFactory.BuildCommond();
-
-            // 回调服务器启动
-            CallbackServerManager.Start(WebConfig.CallbackServerUrl);
         }
 
         /// <summary>
@@ -55,7 +52,6 @@ namespace Moqikaka.GameManage
         /// </summary>
         protected void Application_End()
         {
-            CallbackServerManager.Stop();
         }
     }
 }

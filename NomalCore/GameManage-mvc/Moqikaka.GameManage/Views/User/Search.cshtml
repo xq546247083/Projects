@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<div style="background-color: rgba(86,61,124,.15);border-radius:5px;padding:10px;">
+<div class="search-div">
     @using (Ajax.BeginForm("Data", "User", null, new AjaxOptions() { UpdateTargetId = "dataDiv", LoadingElementId = "div_Loding" }, new { id = "search_form", @class = "form-inline" }))
     {
         <div class="layui-form-item">

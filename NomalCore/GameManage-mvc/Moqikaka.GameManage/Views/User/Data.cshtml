@@ -1,4 +1,4 @@
-﻿@model  Moqikaka.GameManage.CommViewModel<Moqikaka.GameManage.UserViewModel>
+﻿@model  CommViewModel<UserViewModel>
 @{
     ViewBag.Title = "Data";
     Layout = null;
@@ -20,7 +20,7 @@
         background-color: #5FB878;
     }
 </style>
-@using (Ajax.BeginForm("DeleteList", null, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onDataMidff", LoadingElementId = "div_loading" }, new { id = "data_form" }))
+@using (Ajax.BeginForm("Delete", null, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onDataMidff", LoadingElementId = "div_loading" }, new { id = "data_form" }))
 {
     @Ajax.ActionLinkPackaging("<i class='layui-icon'>&#xe654;</i>添加用户", "Create", new { }, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "AddModalShow" }, new { @class = "layui-btn layui-btn-small", title = "添加用户", id = "addUser", style = "margin-left:5px;" })
     <table class="layui-table">

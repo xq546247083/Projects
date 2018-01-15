@@ -5,10 +5,10 @@
 }
 
 
-<div>
+<div class="search-div">
     @using (Ajax.BeginForm("Data", "Role", null, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId ="dataDiv", LoadingElementId = "div_loading" }, new { id = "search_form" }))
     {
-        <div>
+        <div class="layui-form-item">
             @Html.HiddenFor(model => model.ViewModel.Id)
         </div>
 

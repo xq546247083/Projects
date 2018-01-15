@@ -4,7 +4,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace Moqikaka.GameManage.Controllers
+namespace Moqikaka.GameManage
 {
     using Moqikaka.GameManage.BLL;
     using Moqikaka.GameManage.Model;

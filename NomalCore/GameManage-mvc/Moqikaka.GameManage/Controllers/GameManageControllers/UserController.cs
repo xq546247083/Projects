@@ -176,7 +176,6 @@ namespace Moqikaka.GameManage
             }
         }
 
-
         /// <summary>
         /// 编辑
         /// </summary>
@@ -339,6 +338,11 @@ namespace Moqikaka.GameManage
             return GameManageBaseBLL.Insert(user) > 0;
         }
 
+        /// <summary>
+        /// 转换
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         private UserViewModel ModelConvert(User model)
         {
             if (model == null)
@@ -365,6 +369,11 @@ namespace Moqikaka.GameManage
             };
         }
 
+        /// <summary>
+        /// 转换
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         private User ModelConvert(UserViewModel model)
         {
             if (model == null)

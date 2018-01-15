@@ -65,7 +65,7 @@ namespace Moqikaka.GameManage
         /// 操作类型(1,游戏服务器 2,聊天服务器 3,中心服务器)
         /// </summary>
         [Display(Name = "操作类型")]
-        public RefreshTypeEnum OperationTypeEnum { get; set; }
+        public Int32 OperationTypeEnum { get; set; }
 
         #endregion
 

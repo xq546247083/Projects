@@ -21,20 +21,20 @@
 
 }
 
-<div style="background-color: rgba(86,61,124,.15);border-radius:5px;padding:10px;">
+<div class="search-div">
     @using (Ajax.BeginForm("Data", "UserOperationLog", null, new AjaxOptions() { UpdateTargetId = "dataDiv", LoadingElementId = "div_Loding" }, new { id = "search_form", @class = "form-inline" }))
     {
         @Html.HiddenFor(model => model.PageIndex)
         @Html.HiddenFor(model => model.PageSize)
-        <div class="layui-form-item">
-            @Html.LabelFor(model => model.ViewModel.UserName, new { @class = "layui-form-label" })
-            <div class="layui-input-block search-float-0" >
-                @Html.DropDownList("userId", selectList, new { @class = "layui-input select2-serverGroupDrop", placeholder = "输入登录名", style = "width:200px;" })
-            </div>
-            <div class="layui-input-block search-float-4">
-                <button type="submit" class="layui-btn layui-btn-small"> <i class="layui-icon">&#xe615;</i>查询</button>
-            </div>
+    <div class="layui-form-item">
+        @Html.LabelFor(model => model.ViewModel.UserName, new { @class = "layui-form-label" })
+        <div class="layui-input-block search-float-0">
+            @Html.DropDownList("userId", selectList, new { @class = "layui-input select2-serverGroupDrop", placeholder = "输入登录名", style = "width:200px;" })
         </div>
+        <div class="layui-input-block search-float-4">
+            <button type="submit" class="layui-btn layui-btn-small"> <i class="layui-icon">&#xe615;</i>查询</button>
+        </div>
+    </div>
     }
 </div>
 <script>

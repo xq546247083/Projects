@@ -26,26 +26,11 @@ CREATE TABLE `role` (
   `Remark` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
   `Page` varchar(2048) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '角色具有的权限',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`ID`,`RolesName`,`Remark`,`Page`) values (1,'管理员','老大','1,1.2,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.9,2.10,2.11,3,3.1,3.2,3.3,4,4.1,4.3,4.4,5,5.1,5.2,5.5,6'),(2,'所有权限','hahah','1,1.2,1.3,1.4,1.5,1.6,1.7,2.11,2.16,2.17,2.18,2.19,2.20,2.21,2.22,2.23,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.9,2.10,2.13,2.14,2.24,2.25,2.26,2.27,2.28,3,3.1,3.2'),(3,'合作方运营','合作方运营的高档权限','2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,2.10,2.11,2.12,2.13,2.14,2.15,2.16,2.17,2.18,2.19,2.20,2.21,2.22,2.23,2.24,2.25,2.26,2.27,2.28'),(9,'所有权限','sdsd','1,1.2,1.3,1.4,1.5,1.6,1.7');
-
-/*Table structure for table `system_config` */
-
-DROP TABLE IF EXISTS `system_config`;
-
-CREATE TABLE `system_config` (
-  `ConfigKey` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '配置的键',
-  `ConfigValue` varchar(256) CHARACTER SET utf8 NOT NULL COMMENT '配置的值',
-  `ConfigDesc` varchar(256) CHARACTER SET utf8 NOT NULL COMMENT '配置描述信息',
-  PRIMARY KEY (`ConfigKey`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-/*Data for the table `system_config` */
-
-insert  into `system_config`(`ConfigKey`,`ConfigValue`,`ConfigDesc`) values ('AdminType','Mix','当前后台所属 IOS/Mix'),('AppId','HZGG','AppKey'),('CallbackConfigApiUrl','CallbackConfig.ashx','ManageCenter获取回调配置Api页面名称'),('ConfirmDiamondInput','1000','需要提示确认的输入钻石数量'),('GameChartConnectionString','\"\"','聊天服务器数据库地址'),('GameServerApiUrl','GameManage.ashx','GameServer后台接口Api页面名称'),('GameServerConnectionString','DataSource=10.1.0.10;port=3312;UserId=root;Password=moqikaka3312;Database=2_model_develop;Allow Zero Datetime=true;charset=utf8;pooling=true;MinimumPoolSize=10;maximumpoolsize=10;command timeout=60;','游戏服务器Model库地址'),('GameVersionApiUrl','GameVersionList.ashx','ManageCenter版本Api页面名称'),('ManageCenterUrl','http://managecentertest.hzgg.moqikaka.com/API/','ManageCenter地址'),('MaxDiamondInput','20000','最大输入钻石数量'),('PartnerApiUrl','PartnerList.ashx','ManageCenter合作商Api页面名称'),('Platform','还珠格格-开发测试服后台','当前后台名称'),('RefreshInfoInterval','10','刷新间隔时间'),('ReloadDynamicDataApiUrl','ReloadDynamicData.ashx','GameServer刷新d表数据Api页面名称'),('ReloadManageCenterDataApiUrl','GetManageCenterInfo.ashx','GameServer刷新ManageCenter数据Api页面名称'),('SendMailList','wuyong@moqikaka.com;xiaolingjun@moqikaka.com;munanke@moqikaka.com;wangbiao@moqikaka.com;','邮件发送通知人'),('ServerGroupApiUrl','ServerGroupList.ashx','ManageCenter服务器组Api页面名称'),('ServerGroupIdRange','0,999999','显示服务器id的范围 例如:“400,600|800,900,1000” 范围400到600 和800、900、1000'),('ServerGroupMaintainApiUrl','Maintain.ashx','ManageCenter服务器组维护Api页面名称'),('ServerListApiUrl','ServerList.ashx','ManageCenteServerListApi页面名称');
+insert  into `role`(`ID`,`RolesName`,`Remark`,`Page`) values (1,'管理员','老大','1,1.2,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.9,2.10,2.11,3,3.1,3.2,3.3,4,4.1,4.3,4.4,5,5.1,5.2,5.5,6'),(3,'合作方运营','合作方运营的高档权限','2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,2.10,2.11,2.12,2.13,2.14,2.15,2.16,2.17,2.18,2.19,2.20,2.21,2.22,2.23,2.24,2.25,2.26,2.27,2.28');
 
 /*Table structure for table `system_data_refresh_log` */
 
@@ -60,7 +45,7 @@ CREATE TABLE `system_data_refresh_log` (
   `Remark` text COMMENT '操作说明',
   `Crdate` datetime NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='服务器刷新记录';
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8 COMMENT='服务器刷新记录';
 
 /*Data for the table `system_data_refresh_log` */
 
@@ -95,25 +80,6 @@ CREATE TABLE `system_operation_log` (
 
 /*Data for the table `system_operation_log` */
 
-/*Table structure for table `system_push_to_chat_log` */
-
-DROP TABLE IF EXISTS `system_push_to_chat_log`;
-
-CREATE TABLE `system_push_to_chat_log` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `PushServers` varchar(512) DEFAULT NULL COMMENT '推送到的服务器',
-  `PushMsg` varchar(512) DEFAULT NULL COMMENT '推送的消息',
-  `PushNum` tinyint(10) DEFAULT NULL COMMENT '推送次数',
-  `OpUser` varchar(25) DEFAULT NULL COMMENT '推送者',
-  `StartDate` datetime DEFAULT NULL COMMENT '推送起始时间',
-  `EndDate` datetime DEFAULT NULL COMMENT '推送结束时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='后台推送信息到聊天服务器log';
-
-/*Data for the table `system_push_to_chat_log` */
-
-insert  into `system_push_to_chat_log`(`ID`,`PushServers`,`PushMsg`,`PushNum`,`OpUser`,`StartDate`,`EndDate`) values (19,'20018','test啊哈哈哈\r\n',1,'admin','2017-09-27 16:03:17','2017-09-27 17:03:17'),(20,'20018','test啊哈哈哈\r\n',1,'admin','2017-09-27 16:03:17','2017-09-27 17:03:17'),(21,'20018','testy哈哈哈\r\n',1,'admin','2017-09-27 16:05:32','2017-09-27 17:05:32');
-
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
@@ -130,11 +96,11 @@ CREATE TABLE `user` (
   `Crdate` datetime DEFAULT NULL COMMENT '添加时间',
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserName` (`UserName`)
-) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`UserID`,`UserName`,`UserPwd`,`UserRole`,`IfSuper`,`Status`,`LastLoginIP`,`LastLoginTime`,`Crdate`) values (1,'admin','E10ADC3949BA59ABBE56E057F20F883E',1,1,0,'::1','2018-01-02 10:53:15','2015-01-05 18:27:37'),(232,'x1x','1',1,1,1,NULL,'0001-01-01 00:00:00','2017-12-29 11:10:02');
+insert  into `user`(`UserID`,`UserName`,`UserPwd`,`UserRole`,`IfSuper`,`Status`,`LastLoginIP`,`LastLoginTime`,`Crdate`) values (1,'admin','E10ADC3949BA59ABBE56E057F20F883E',1,1,0,'::1','2018-01-12 16:35:15','2015-01-05 18:27:37');
 
 /*Table structure for table `user_operation_log` */
 
@@ -150,11 +116,9 @@ CREATE TABLE `user_operation_log` (
   `Crdate` datetime NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`ID`),
   KEY `IX_UserID` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1019 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 /*Data for the table `user_operation_log` */
-
-insert  into `user_operation_log`(`ID`,`UserID`,`UserName`,`OperationName`,`OperationMothod`,`OperationData`,`Crdate`) values (363,1,'admin','系统登录','Home.Login','','2018-01-02 10:48:50'),(364,0,'未知用户','登出','Home.LoginOut','{}','2018-01-02 10:52:06'),(365,1,'admin','系统登录','Home.Login','','2018-01-02 10:52:17'),(366,0,'未知用户','登出','Home.LoginOut','{}','2018-01-02 10:52:22'),(367,1,'admin','系统登录','Home.Login','','2018-01-02 10:52:30'),(368,0,'未知用户','登出','Home.LoginOut','{}','2018-01-02 10:52:40'),(369,1,'admin','系统登录','Home.Login','','2018-01-02 10:53:15');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

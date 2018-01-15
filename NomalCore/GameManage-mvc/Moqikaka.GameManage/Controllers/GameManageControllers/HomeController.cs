@@ -31,11 +31,11 @@ namespace Moqikaka.GameManage
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Login(String ReturnUrl = null)
+        public ActionResult Login(String returnUrl = null)
         {
             FormsAuthenticationService.SignOut();
             Session.Clear();
-            return View(new UserViewModel() { ReturnUrl = ReturnUrl });
+            return View(new UserViewModel() { ReturnUrl = returnUrl });
         }
 
         /// <summary>

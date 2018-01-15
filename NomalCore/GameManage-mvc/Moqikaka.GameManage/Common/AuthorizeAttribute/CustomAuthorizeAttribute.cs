@@ -28,9 +28,6 @@ namespace Moqikaka.GameManage
         /// <returns>验证是否通过</returns>
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            String action = httpContext.Request.RequestContext.RouteData.Values["action"].ToString();
-            String controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();
-
             var user = FormsAuthenticationService.GetAuthenticatedUser();
             if (user == null)
             {

@@ -167,18 +167,17 @@
     <Compile Include="Common\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Common\Authentication\ValidateCode.cs" />
     <Compile Include="Common\Caching\MemoryCacheManager.cs" />
-    <Compile Include="Common\Enum\GameServerEnums.cs" />
-    <Compile Include="Common\Enum\RefreshTypeEnum.cs" />
     <Compile Include="Common\AuthorizeAttribute\OperationLogAttribute.cs" />
     <Compile Include="Common\Extension\AjaxExtensions.cs" />
     <Compile Include="Common\UI\Menu\Menu.cs" />
     <Compile Include="Common\UI\UI.cs" />
     <Compile Include="Common\UI\Menu\MenuItem.cs" />
     <Compile Include="Common\UI\Menu\MenuProvider.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UserOperationLogController.cs" />
+    <Compile Include="Controllers\ApiControllers\InnerApiController.cs" />
+    <Compile Include="Controllers\GameManageControllers\HomeController.cs" />
+    <Compile Include="Controllers\GameManageControllers\RoleController.cs" />
+    <Compile Include="Controllers\GameManageControllers\UserController.cs" />
+    <Compile Include="Controllers\GameManageControllers\UserOperationLogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -245,8 +244,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
-    <Content Include="Content\Image\bg1x.jpg" />
-    <Content Include="Content\Image\bg1x_bak.jpg" />
+    <Content Include="Content\Image\bg.jpg" />
     <Content Include="Content\Image\head.gif" />
     <Content Include="Content\Image\logo.png" />
     <Content Include="Content\Image\logonew.png" />
