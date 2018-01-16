@@ -30,7 +30,6 @@ namespace Moqikaka.GameManage
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Login(String returnUrl = null)
         {
             FormsAuthenticationService.SignOut();
@@ -41,7 +40,6 @@ namespace Moqikaka.GameManage
         /// <summary>
         /// 验证码
         /// </summary>
-        [AllowAnonymous]
         [OutputCache(Location = OutputCacheLocation.None)]
         public void VCode()
         {
@@ -56,7 +54,6 @@ namespace Moqikaka.GameManage
         /// 登录
         /// </summary>
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Login(UserViewModel model, String vcode)
         {
             String message = String.Empty;
@@ -141,8 +138,7 @@ namespace Moqikaka.GameManage
         /// 退出
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
-        [OperationLogAttribute("登出", "")]
+        [OperationLog("登出", "")]
         public ActionResult LoginOut()
         {
             //登出

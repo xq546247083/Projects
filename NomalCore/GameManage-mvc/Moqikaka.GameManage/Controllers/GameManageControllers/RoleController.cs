@@ -69,7 +69,7 @@ namespace Moqikaka.GameManage
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [OperationLogAttribute("添加角色", "Id|RolesName|Page|Remark")]
+        [OperationLog("添加角色", "Id|RolesName|Page|Remark")]
         public JsonResult Create(CommViewModel<RoleViewModel> model, FormCollection collection)
         {
             ViewBag.Action = "Create";
@@ -113,7 +113,7 @@ namespace Moqikaka.GameManage
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [OperationLogAttribute("删除角色", "id")]
+        [OperationLog("删除角色", "id")]
         public JsonResult Delete(Int32 id)
         {
             Boolean ret = false;
@@ -173,7 +173,7 @@ namespace Moqikaka.GameManage
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        [OperationLogAttribute("修改角色", "ViewModel.Id|ViewModel.Page|ViewModel.RolesName|ViewModel.Remark")]
+        [OperationLog("修改角色", "ViewModel.Id|ViewModel.Page|ViewModel.RolesName|ViewModel.Remark")]
         public JsonResult EditSubmit(CommViewModel<RoleViewModel> model, FormCollection collection)
         {
             Boolean ret = false;

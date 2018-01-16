@@ -17,7 +17,6 @@ namespace Moqikaka.GameManage
         /// 测试
         /// </summary>
         /// <returns>测试</returns>
-        [AllowAnonymous]
         public String Test()
         {
             return "测试成功！";
