@@ -14,7 +14,7 @@ namespace Moqikaka.GameManage
     /// <summary>
     /// 登录权限验证
     /// </summary>
-    public class CustomAuthorizeAttribute : AuthorizeAttribute
+    public class CustomAuthorizeAttribute : AuthorizeAttribute, IExceptionFilter
     {
         /// <summary>
         /// 角色列表
@@ -103,6 +103,40 @@ namespace Moqikaka.GameManage
             String returnUrl = filterContext.HttpContext.Request.RawUrl;
             String redirectUrl = $"~/Home/Login?ReturnUrl={returnUrl}";
             filterContext.Result = new RedirectResult(redirectUrl, true);
+        }
+
+        /// <summary>
+        /// ajax发生异常时调用
+        /// </summary>
+        /// <param name="filterContext">错误上下文</param>
+        public void OnException(ExceptionContext filterContext)
+        {
+            // 记录日志
+            LogUtil.Error(filterContext.Exception.ToString());
+
+            // 如果ajax请求，返回错误信息
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                // 组装结果
+                var resultData = new
+                {
+                    Result = false,
+                    Message = $"操作失败! 发生异常：{filterContext.Exception}",
+                    Data = ""
+                };
+
+                // 返回
+                filterContext.Result = new JsonResult()
+                {
+                    Data = resultData,
+                    ContentType = null,
+                    ContentEncoding = null,
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+                // 处理错误
+                filterContext.ExceptionHandled = true;
+            }
         }
     }
 }
