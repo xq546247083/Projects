@@ -22,98 +22,50 @@ USE `Manage`;
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
-  `RolesName` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '角色名称',
-  `Remark` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
-  `Page` varchar(2048) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '角色具有的权限',
+  `ID` INT(10) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
+  `RolesName` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '角色名称',
+  `Remark` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
+  `Page` VARCHAR(2048) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '角色具有的权限',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 /*Data for the table `role` */
 
-insert  into `role`(`ID`,`RolesName`,`Remark`,`Page`) values (1,'管理员','老大','1,1.2,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.9,2.10,2.11,3,3.1,3.2,3.3,4,4.1,4.3,4.4,5,5.1,5.2,5.5,6'),(3,'合作方运营','合作方运营的高档权限','2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,2.10,2.11,2.12,2.13,2.14,2.15,2.16,2.17,2.18,2.19,2.20,2.21,2.22,2.23,2.24,2.25,2.26,2.27,2.28');
-
-/*Table structure for table `system_data_refresh_log` */
-
-DROP TABLE IF EXISTS `system_data_refresh_log`;
-
-CREATE TABLE `system_data_refresh_log` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT COMMENT '自增id',
-  `UserName` varchar(32) NOT NULL COMMENT '操作用户',
-  `ServerGroupIDs` varchar(1024) NOT NULL COMMENT '操作的服务器id',
-  `OperationType` tinyint(3) NOT NULL COMMENT '操作类型(1,游戏服务器 2,聊天服务器 3,中心服务器)',
-  `HaveError` bit(1) NOT NULL COMMENT '是否有失败',
-  `Remark` text COMMENT '操作说明',
-  `Crdate` datetime NOT NULL COMMENT '操作时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8 COMMENT='服务器刷新记录';
-
-/*Data for the table `system_data_refresh_log` */
-
-/*Table structure for table `system_month_card_log` */
-
-DROP TABLE IF EXISTS `system_month_card_log`;
-
-CREATE TABLE `system_month_card_log` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT COMMENT '自增id',
-  `UserName` varchar(32) NOT NULL COMMENT '操作用户',
-  `ServerGroupID` int(11) NOT NULL COMMENT '操作的服务器id',
-  `PlayerNames` varchar(1024) NOT NULL COMMENT '玩家名称',
-  `MonthCardType` tinyint(3) NOT NULL COMMENT '月卡类型(1,20月卡 2,50月卡)',
-  `Crdate` datetime NOT NULL COMMENT '操作时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发放月卡记录';
-
-/*Data for the table `system_month_card_log` */
-
-/*Table structure for table `system_operation_log` */
-
-DROP TABLE IF EXISTS `system_operation_log`;
-
-CREATE TABLE `system_operation_log` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志唯一标识',
-  `OperationName` varchar(100) NOT NULL COMMENT '操作说明',
-  `OperationMothod` varchar(50) NOT NULL COMMENT '操作方法',
-  `OperationData` text NOT NULL COMMENT '操作数据内容',
-  `Crdate` datetime NOT NULL COMMENT '操作时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统操作日志';
-
-/*Data for the table `system_operation_log` */
+INSERT  INTO `role`(`ID`,`RolesName`,`Remark`,`Page`) VALUES (1,'管理员','老大','1,1.2,2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.9,2.10,2.11,3,3.1,3.2,3.3,4,4.1,4.3,4.4,5,5.1,5.2,5.5,6'),(3,'合作方运营','合作方运营的高档权限','2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,2.10,2.11,2.12,2.13,2.14,2.15,2.16,2.17,2.18,2.19,2.20,2.21,2.22,2.23,2.24,2.25,2.26,2.27,2.28');
 
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `UserID` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户唯一标识',
-  `UserName` varchar(64) NOT NULL COMMENT '用户名称',
-  `UserPwd` varchar(64) NOT NULL COMMENT '用户密码',
-  `UserRole` int(10) NOT NULL COMMENT '用户角色',
-  `IfSuper` tinyint(1) NOT NULL COMMENT '是否超级用户',
-  `Status` int(10) unsigned NOT NULL COMMENT '状态(0-正常，-1-锁定)',
-  `LastLoginIP` varchar(128) DEFAULT NULL COMMENT '上次登陆IP',
-  `LastLoginTime` datetime NOT NULL DEFAULT '1900-01-01 00:00:00' COMMENT '上次登陆时间',
-  `Crdate` datetime DEFAULT NULL COMMENT '添加时间',
+  `UserID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户唯一标识',
+  `UserName` VARCHAR(64) NOT NULL COMMENT '用户名称',
+  `UserPwd` VARCHAR(64) NOT NULL COMMENT '用户密码',
+  `UserRole` INT(10) NOT NULL COMMENT '用户角色',
+  `IfSuper` TINYINT(1) NOT NULL COMMENT '是否超级用户',
+  `Status` INT(10) UNSIGNED NOT NULL COMMENT '状态(0-正常，-1-锁定)',
+  `LastLoginIP` VARCHAR(128) DEFAULT NULL COMMENT '上次登陆IP',
+  `LastLoginTime` DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00' COMMENT '上次登陆时间',
+  `Crdate` DATETIME DEFAULT NULL COMMENT '添加时间',
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserName` (`UserName`)
-) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`UserID`,`UserName`,`UserPwd`,`UserRole`,`IfSuper`,`Status`,`LastLoginIP`,`LastLoginTime`,`Crdate`) values (1,'admin','E10ADC3949BA59ABBE56E057F20F883E',1,1,0,'::1','2018-01-12 16:35:15','2015-01-05 18:27:37');
+INSERT  INTO `user`(`UserID`,`UserName`,`UserPwd`,`UserRole`,`IfSuper`,`Status`,`LastLoginIP`,`LastLoginTime`,`Crdate`) VALUES (1,'admin','E10ADC3949BA59ABBE56E057F20F883E',1,1,0,'::1','2018-01-12 16:35:15','2015-01-05 18:27:37');
 
 /*Table structure for table `user_operation_log` */
 
 DROP TABLE IF EXISTS `user_operation_log`;
 
 CREATE TABLE `user_operation_log` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志唯一标识',
-  `UserID` int(10) unsigned NOT NULL COMMENT '操作用户唯一标识',
-  `UserName` varchar(32) NOT NULL COMMENT '操作用户名称',
-  `OperationName` varchar(100) NOT NULL COMMENT '操作说明',
-  `OperationMothod` varchar(50) NOT NULL COMMENT '操作方法',
-  `OperationData` text NOT NULL COMMENT '操作数据内容',
+  `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志唯一标识',
+  `UserID` INT(10) UNSIGNED NOT NULL COMMENT '操作用户唯一标识',
+  `UserName` VARCHAR(32) NOT NULL COMMENT '操作用户名称',
+  `OperationName` VARCHAR(100) NOT NULL COMMENT '操作说明',
+  `OperationMothod` VARCHAR(50) NOT NULL COMMENT '操作方法',
+  `OperationData` TEXT NOT NULL COMMENT '操作数据内容',
   `Crdate` datetime NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`ID`),
   KEY `IX_UserID` (`UserID`)
