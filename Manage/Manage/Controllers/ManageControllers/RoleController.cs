@@ -75,35 +75,20 @@ namespace Manage
             ViewBag.Action = "Create";
             ViewBag.Title = "添加";
 
-            Boolean ret = false;
-            String msg = String.Empty;
-
-            try
+            Role role = new Role()
             {
-                Role role = new Role()
-                {
-                    ID = model.ViewModel.Id,
-                    Page = model.ViewModel.Page,
-                    RolesName = model.ViewModel.RolesName,
-                    Remark = model.ViewModel.Remark
-                };
+                ID = model.ViewModel.Id,
+                Page = model.ViewModel.Page,
+                RolesName = model.ViewModel.RolesName,
+                Remark = model.ViewModel.Remark
+            };
 
-                if (ManageBaseBLL.Insert<Role>(role) > 0)
-                {
-                    ret = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
-            }
+            bool ret = ManageBaseBLL.Insert(role) > 0;
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "添加成功\r\n" : "添加失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "添加成功\r\n" : "添加失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }
@@ -116,26 +101,12 @@ namespace Manage
         [OperationLog("删除角色", "id")]
         public JsonResult Delete(Int32 id)
         {
-            Boolean ret = false;
-            String msg = String.Empty;
-
-            try
-            {
-                if (ManageBaseBLL.Delete<Role>(new Role() { ID = id }) > 0)
-                {
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
-            }
+            bool ret = ManageBaseBLL.Delete<Role>(new Role() { ID = id }) > 0;
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "成功\r\n" : "失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "成功\r\n" : "失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }
@@ -151,6 +122,7 @@ namespace Manage
             ViewBag.Title = "修改";
 
             CommViewModel<RoleViewModel> vModel = new CommViewModel<RoleViewModel>();
+
             try
             {
                 var role = ManageBaseBLL.GetList(new Role() { ID = id }).FirstOrDefault();
@@ -170,44 +142,35 @@ namespace Manage
         /// <summary>
         /// 修改角色 提交
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [OperationLog("修改角色", "ViewModel.Id|ViewModel.Page|ViewModel.RolesName|ViewModel.Remark")]
         public JsonResult EditSubmit(CommViewModel<RoleViewModel> model, FormCollection collection)
         {
             Boolean ret = false;
-            String msg = String.Empty;
 
-            try
+            var role = ManageBaseBLL.GetList(new Role() { ID = model.ViewModel.Id }).FirstOrDefault();
+            if (role != null)
             {
-                var role = ManageBaseBLL.GetList(new Role() { ID = model.ViewModel.Id }).FirstOrDefault();
-                if (role != null)
+                role = new Role
                 {
-                    role = new Role
-                    {
-                        ID = model.ViewModel.Id,
-                        Page = model.ViewModel.Page,
-                        RolesName = model.ViewModel.RolesName,
-                        Remark = model.ViewModel.Remark
-                    };
+                    ID = model.ViewModel.Id,
+                    Page = model.ViewModel.Page,
+                    RolesName = model.ViewModel.RolesName,
+                    Remark = model.ViewModel.Remark
+                };
 
-                    if (ManageBaseBLL.Update(role) > 0)
-                    {
-                        ret = true;
-                    }
+                if (ManageBaseBLL.Update(role) > 0)
+                {
+                    ret = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
             }
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "修改成功\r\n" : "修改失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "修改成功\r\n" : "修改失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }

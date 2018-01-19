@@ -88,37 +88,22 @@ namespace Manage
             ViewBag.Action = "Create";
             ViewBag.Title = "添加";
 
-            Boolean ret = false;
-            String msg = String.Empty;
-
-            try
+            User user = new User()
             {
-                User user = new User()
-                {
-                    UserName = model.ViewModel.UserName,
-                    UserPwd = model.ViewModel.UserPwd,
-                    Status = model.ViewModel.Status,
-                    IfSuper = false,
-                    UserRole = model.ViewModel.UserRole,
-                    Crdate = DateTime.Now,
-                };
+                UserName = model.ViewModel.UserName,
+                UserPwd = model.ViewModel.UserPwd,
+                Status = model.ViewModel.Status,
+                IfSuper = false,
+                UserRole = model.ViewModel.UserRole,
+                Crdate = DateTime.Now,
+            };
 
-                if (Insert(user))
-                {
-                    ret = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
-            }
+            bool ret = Insert(user);
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "添加成功\r\n" : "添加失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "添加成功\r\n" : "添加失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }
@@ -131,26 +116,12 @@ namespace Manage
         [OperationLog("删除用户", "id")]
         public ActionResult Delete(Int32 id)
         {
-            Boolean ret = false;
-            String msg = String.Empty;
-
-            try
-            {
-                if (ManageBaseBLL.Delete(new User() { UserID = id }) > 0)
-                {
-                    ret = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
-            }
+            bool ret = ManageBaseBLL.Delete(new User() { UserID = id }) > 0;
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "成功\r\n" : "失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "成功\r\n" : "失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }
@@ -214,32 +185,23 @@ namespace Manage
         public ActionResult EditSubmit(CommViewModel<UserViewModel> model, FormCollection collection)
         {
             Boolean ret = false;
-            String msg = String.Empty;
 
-            try
+            var user = ManageBaseBLL.GetList(new User() { UserID = model.ViewModel.UserID }).FirstOrDefault();
+            if (user != null)
             {
-                var user = ManageBaseBLL.GetList(new User() { UserID = model.ViewModel.UserID }).FirstOrDefault();
-                if (user != null)
+                user.UserRole = model.ViewModel.UserRole;
+                user.Status = model.ViewModel.Status;
+
+                if (ManageBaseBLL.Update(user) > 0)
                 {
-                    user.UserRole = model.ViewModel.UserRole;
-                    user.Status = model.ViewModel.Status;
-
-                    if (ManageBaseBLL.Update(user) > 0)
-                    {
-                        ret = true;
-                    }
+                    ret = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
             }
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "修改成功\r\n" : "修改失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "修改成功\r\n" : "修改失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }
@@ -274,38 +236,30 @@ namespace Manage
             Boolean ret = false;
             String msg = String.Empty;
 
-            try
+            var cacheUser = FormsAuthenticationService.GetAuthenticatedUser();
+            var oldUser = GetUserById(cacheUser.UserID);
+            if (oldUser != null)
             {
-                var cacheUser = FormsAuthenticationService.GetAuthenticatedUser();
-                var oldUser = GetUserById(cacheUser.UserID);
-                if (oldUser != null)
+                String newPwd = MD5Tool.MD5(model.ViewModel.OldPassword);
+                if (oldUser.UserPwd != newPwd)
                 {
-                    String newPwd = MD5Tool.MD5(model.ViewModel.OldPassword);
-                    if (oldUser.UserPwd != newPwd)
-                    {
-                        throw new Exception("旧密码不正确!");
-                    }
-
-                    oldUser.UserPwd = MD5Tool.MD5(model.ViewModel.NewPassword);
-
-                    ret = ManageBaseBLL.Update(oldUser) > 0;
-
-                    if (ret)
-                    {
-                        FormsAuthenticationService.SignOut();
-                    }
+                    throw new Exception("旧密码不正确!");
                 }
-            }
-            catch (Exception ex)
-            {
-                ret = false;
-                msg = "错误信息:" + ex.Message;
+
+                oldUser.UserPwd = MD5Tool.MD5(model.ViewModel.NewPassword);
+
+                ret = ManageBaseBLL.Update(oldUser) > 0;
+
+                if (ret)
+                {
+                    FormsAuthenticationService.SignOut();
+                }
             }
 
             return Json(new
             {
                 Result = ret,
-                Message = ret ? "修改成功\r\n" : "修改失败\r\n" + (String.IsNullOrEmpty(msg) ? "" : ":" + msg),
+                Message = ret ? "修改成功\r\n" : "修改失败\r\n数据库操作失败",
                 Data = ""
             }, JsonRequestBehavior.AllowGet);
         }

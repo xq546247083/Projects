@@ -46,8 +46,7 @@ namespace Manage
         public ActionResult Data(CommViewModel<UserViewModel> model)
         {
             CommViewModel<UserOperationLogViewModel> vModel = new CommViewModel<UserOperationLogViewModel>();
-            Int32 userId = 0;
-            Int32.TryParse(Request["userId"], out userId);
+            Int32.TryParse(Request["userId"], out var userId);
 
             var searchModel = new UserOperationLog
             {
