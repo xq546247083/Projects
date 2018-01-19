@@ -1,0 +1,89 @@
+﻿@using Manage.BLL
+@using Manage.Model
+@model CommViewModel<UserViewModel>
+@{
+    Layout = null;
+
+    List<SelectListItem> roleList = new List<SelectListItem>();
+    roleList.AddRange(ManageBaseBLL.GetDefinedList(new Role()).Select(s => new SelectListItem
+    {
+        Text = s.RolesName,
+        Value = s.ID.ToString()
+    }));
+}
+
+<div class="modal-dialog" style="width:400px;">
+    @Scripts.Render("~/bundles/jqueryval")
+    @using (Ajax.BeginForm((string)ViewBag.Action, "User", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "onDataMidff" }, new { @class = "form-horizontal" }))
+    {
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h5>
+                    @ViewBag.Title
+                </h5>
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(model => model.ViewModel.UserID)
+                <div class="layui-form-item">
+                    @Html.LabelFor(model => model.ViewModel.UserRole, new { @class = "layui-form-label" })
+                    <div class="layui-input-block">
+                        @Html.DropDownListFor(model => model.ViewModel.UserRole, roleList, new { id = "select2-UserRole", @class = "select2" })
+                        @Html.ValidationMessageFor(model => model.ViewModel.UserRole)
+                    </div>
+                </div>
+                @if (ViewBag.Action == "Create")
+                {
+                    <div class="layui-form-item">
+                        @Html.LabelFor(model => model.ViewModel.UserName, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.ViewModel.UserName, new { @class = "layui-input", autocomplete = "off", style = "width:200px;" })
+                            @Html.ValidationMessageFor(model => model.ViewModel.UserName)
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        @Html.LabelFor(model => model.ViewModel.UserPwd, new { @class = "layui-form-label" })
+                        <div class="layui-input-block">
+                            @Html.TextBoxFor(model => model.ViewModel.UserPwd, new { @class = "layui-input", autocomplete = "off", style = "width:200px;", type = "password" })
+                            @Html.ValidationMessageFor(model => model.ViewModel.UserPwd)
+                        </div>
+                    </div>
+                }
+                <div class="layui-form-item layui-form">
+                    @Html.LabelFor(model => model.ViewModel.Status, new { @class = "layui-form-label" })
+                    <div class="layui-input-block">
+                        @Html.RadioButtonFor(model => model.ViewModel.Status, 0, new { title = "正常", @checked = "" })
+                        @Html.RadioButtonFor(model => model.ViewModel.Status, -1, new { title = "锁定" })
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="submit" onclick="return CheckMenus()" class="btn btn-primary">
+                    提交
+                </button>
+            </div>
+        </div>
+    }
+    <script>
+        layui.use('form', function () {
+            var form = layui.form();
+            form.render();
+        });
+
+        $(function () {
+            //select2初始化
+            $("#select2-UserRole").select2({
+                placeholder: '角色',
+                allowClear: true,
+                width: "200px"
+            });
+        });
+    </script>
+</div>
