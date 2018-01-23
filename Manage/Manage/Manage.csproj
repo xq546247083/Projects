@@ -155,10 +155,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="CallbackServer\Api\BaseApi.cs" />
-    <Compile Include="CallbackServer\Api\TestApi.cs" />
-    <Compile Include="CallbackServer\CallbackServerManager.cs" />
-    <Compile Include="CallbackServer\HttpListnerExtend.cs" />
     <Compile Include="Common\AuthorizeAttribute\CustomAuthorizeAttribute.cs" />
     <Compile Include="Common\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Common\Authentication\ValidateCode.cs" />

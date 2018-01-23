@@ -288,6 +288,70 @@ namespace Tool.Common
         }
 
         /// <summary>
+        /// 写错误日志
+        /// </summary>
+        /// <param name="content">内容</param>
+        /// <param name="param">参数</param>
+        public static void Error(String content, params object[] param)
+        {
+            if (param == null || param.Length <= 0)
+            {
+                Write(content, LogType.Error);
+                return;
+            }
+
+            Write(String.Format(content, param), LogType.Error);
+        }
+
+        /// <summary>
+        /// 写警告日志
+        /// </summary>
+        /// <param name="content">内容</param>
+        /// <param name="param">参数</param>
+        public static void Warn(String content, params object[] param)
+        {
+            if (param == null || param.Length <= 0)
+            {
+                Write(content, LogType.Warn);
+                return;
+            }
+
+            Write(String.Format(content, param), LogType.Warn);
+        }
+
+        /// <summary>
+        /// 写Debug日志
+        /// </summary>
+        /// <param name="content">内容</param>
+        /// <param name="param">参数</param>
+        public static void Debug(String content, params object[] param)
+        {
+            if (param == null || param.Length <= 0)
+            {
+                Write(content, LogType.Debug);
+                return;
+            }
+
+            Write(String.Format(content, param), LogType.Debug);
+        }
+
+        /// <summary>
+        /// 写消息日志
+        /// </summary>
+        /// <param name="content">内容</param>
+        /// <param name="param">参数</param>
+        public static void Info(String content, params object[] param)
+        {
+            if (param == null || param.Length <= 0)
+            {
+                Write(content, LogType.Info);
+                return;
+            }
+
+            Write(String.Format(content, param), LogType.Info);
+        }
+
+        /// <summary>
         /// 压缩日志
         /// </summary>
         public static void ZipLog(DateTime dtNow)
