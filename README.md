@@ -1,8 +1,5 @@
-﻿个人项目：
-CommonWebSite：个人网站
-1、FileServer：
-文件服务器，go写的
-2、WebServer:
-业务服务器，C#写的
-3、WebSite：
-网站，静态页面，html
+﻿CommonCore：工具项目
+CommonWebSite：webapi服务端
+Manage：asp mvc的一个后台管理系统
+NomalCore：其他项目
+SocketServer：socketserver服务器
