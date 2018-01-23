@@ -20,7 +20,7 @@ namespace SocketServer
         static void Main(string[] args)
         {
             Init();
-            Console.WriteLine("Hello World!");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -30,16 +30,16 @@ namespace SocketServer
         {
             try
             {
-                // 初始化配置
+                // 配置文件检测
                 SocketServerConfig.Check();
 
-                // 日志地址
-                Log.LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
-                
-                // 设置邮件信息
-                EmailTool.SetSenderInfo(WebConfig.EmailHost, WebConfig.EmailAddress, WebConfig.EmailPass);
+                // 日志设置
+                Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), CommonWebSiteConfig.LogInfoFlag, CommonWebSiteConfig.LogDebugFlag, CommonWebSiteConfig.LogWarnFlag, CommonWebSiteConfig.LogErrorFlag);
 
-                CallbackServerManager.Start();
+                // 设置邮件信息
+                EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
+
+                //CallbackServerManager.Start();
             }
             catch (Exception ex)
             {

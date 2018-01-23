@@ -54,27 +54,12 @@ namespace Manage.Common
         }
 
         /// <summary>
-        ///回调服地址
-        /// </summary>
-        public static string CallbackServerUrl
-        {
-            get
-            {
-                var temp = ConfigurationManager.AppSettings["CallbackServerUrl"];
-                if (temp == null)
-                {
-                    throw new Exception("CallbackServerUrl没有配置");
-                }
-
-                return temp;
-            }
-        }
-
-        /// <summary>
         /// check方法
         /// </summary>
         public static void Check()
         {
+            object temp;
+            temp = ManageConnString;
         }
     }
 }
