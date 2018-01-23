@@ -3,10 +3,11 @@
 *************************************************************************/
 using System;
 using System.IO;
+using Tool.Common;
 
 namespace SocketServer
 {
-    using Tool.Common;
+
 
     /// <summary>
     /// 启动
@@ -20,6 +21,10 @@ namespace SocketServer
         static void Main(string[] args)
         {
             Init();
+
+            Console.WriteLine("服务器启动成功！");
+            Log.Info("服务器启动成功！");
+
             Console.ReadKey();
         }
 
@@ -34,12 +39,13 @@ namespace SocketServer
                 SocketServerConfig.Check();
 
                 // 日志设置
-                Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), CommonWebSiteConfig.LogInfoFlag, CommonWebSiteConfig.LogDebugFlag, CommonWebSiteConfig.LogWarnFlag, CommonWebSiteConfig.LogErrorFlag);
+                Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), SocketServerConfig.LogInfoFlag, SocketServerConfig.LogDebugFlag, SocketServerConfig.LogWarnFlag, SocketServerConfig.LogErrorFlag);
 
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
 
-                //CallbackServerManager.Start();
+                // 启动回调服务器
+                CallbackServerManager.Start(SocketServerConfig.CallbackServerUrl);
             }
             catch (Exception ex)
             {
