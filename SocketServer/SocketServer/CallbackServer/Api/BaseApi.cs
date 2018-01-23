@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Text;
 
-namespace Manage
+namespace SocketServer
 {
     using System.Collections.Specialized;
 

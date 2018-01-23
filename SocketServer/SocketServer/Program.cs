@@ -38,6 +38,8 @@ namespace SocketServer
                 
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(WebConfig.EmailHost, WebConfig.EmailAddress, WebConfig.EmailPass);
+
+                CallbackServerManager.Start();
             }
             catch (Exception ex)
             {

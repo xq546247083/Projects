@@ -78,7 +78,7 @@ namespace WebServer.BLL
             TransactionHandler.Handle(() =>
             {
                 sysUser.LastLoginTime = DateTime.Now;
-                sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
+                sysUser.PwdExpiredTime = DateTime.Now.AddHours(CommonWebSiteConfig.PwdExpiredTime);
                 sysUser.LoginCount += 1;
 
                 Update(sysUser);
@@ -296,7 +296,7 @@ namespace WebServer.BLL
                 LoginCount = 0,
                 RoleIDs = roleIds,
                 CreateTime = DateTime.Now,
-                PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime)
+                PwdExpiredTime = DateTime.Now.AddHours(CommonWebSiteConfig.PwdExpiredTime)
             };
 
             #endregion
@@ -410,7 +410,7 @@ namespace WebServer.BLL
             #region 处理数据
 
             sysUser.Password = EncrpytTool.Encrypt(userPwd);
-            sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
+            sysUser.PwdExpiredTime = DateTime.Now.AddHours(CommonWebSiteConfig.PwdExpiredTime);
 
             #endregion
 

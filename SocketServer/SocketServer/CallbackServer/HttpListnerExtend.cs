@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 
-namespace Manage
+namespace SocketServer
 {
     /// <summary>
     /// Http的扩展处理

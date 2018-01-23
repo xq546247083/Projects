@@ -21,7 +21,7 @@ namespace WebSite
         protected void Application_Start(object sender, EventArgs e)
         {
             Log.LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
-            EmailTool.SetSenderInfo(WebConfig.EmailHost, WebConfig.EmailAddress, WebConfig.EmailPass);
+            EmailTool.SetSenderInfo(CommonWebSiteConfig.EmailHost, CommonWebSiteConfig.EmailAddress, CommonWebSiteConfig.EmailPass);
 
             //启动服务器
             Log.Write("服务器开始启动", LogType.Info);

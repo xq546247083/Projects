@@ -12,10 +12,10 @@ using System.Reflection;
 
 namespace WebServer.Model
 {
+    using Tool.Common;
     using Dapper;
     using MySql.Data.MySqlClient;
     using System.Linq;
-    using Tool.Common;
     using Tool.CustomAttribute;
 
     /// <summary>
@@ -26,7 +26,7 @@ namespace WebServer.Model
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        private static readonly String Conn = WebConfig.ConfigConneString;
+        private static readonly String Conn = CommonWebSiteConfig.ConfigConneString;
 
         /// <summary>
         /// 执行查询

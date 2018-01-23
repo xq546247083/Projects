@@ -52,11 +52,11 @@
     <Compile Include="Common\EmailTool.cs" />
     <Compile Include="Common\EncrpytTool.cs" />
     <Compile Include="Common\ParseTool.cs" />
+    <Compile Include="Config\CommonWebSiteConfig.cs" />
     <Compile Include="Extension\ExExtention.cs" />
     <Compile Include="Common\ReaderWriterLockTool.cs" />
     <Compile Include="Common\ReflectionTool.cs" />
     <Compile Include="Common\ThreadTool.cs" />
-    <Compile Include="Common\WebConfig.cs" />
     <Compile Include="CustomAttribute\MethodDescribeAttribute.cs" />
     <Compile Include="CustomAttribute\InvokeClassAttribute.cs" />
     <Compile Include="CustomAttribute\PrimaryKeyAttribute.cs" />

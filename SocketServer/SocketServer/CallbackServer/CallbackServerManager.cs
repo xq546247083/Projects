@@ -7,11 +7,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Manage.Common;
 
-namespace Manage
+namespace SocketServer
 {
-    using Manage.Api;
+    using Tool.Common;
 
     /// <summary>
     /// 回调服务处理

@@ -24,27 +24,27 @@ namespace Tool.Common
         /// <summary>
         /// 是否写Info日志
         /// </summary>
-        public static Boolean LogInfoFlag { get; set; }
+        public static Boolean LogInfoFlag { get; private set; }
 
         /// <summary>
         /// 是否写Debug日志
         /// </summary>
-        public static Boolean LogDebugFlag { get; set; }
+        public static Boolean LogDebugFlag { get; private set; }
 
         /// <summary>
         /// 是否写Warn日志
         /// </summary>
-        public static Boolean LogWarnFlag { get; set; }
+        public static Boolean LogWarnFlag { get; private set; }
 
         /// <summary>
         /// 是否写Error日志
         /// </summary>
-        public static Boolean LogErrorFlag { get; set; }
+        public static Boolean LogErrorFlag { get; private set; }
 
         /// <summary>
         /// 日志地址
         /// </summary>
-        public static String LogPath { get; set; }
+        public static String LogPath { get; private set; }
 
         /// <summary>
         /// 记录Info日志队列
@@ -93,11 +93,6 @@ namespace Tool.Common
         /// </summary>
         static Log()
         {
-            LogInfoFlag = WebConfig.LogInfoFlag;
-            LogDebugFlag = WebConfig.LogDebugFlag;
-            LogWarnFlag = WebConfig.LogWarnFlag;
-            LogErrorFlag = WebConfig.LogErrorFlag;
-
             //开始写日志
             RunWriteLog();
         }
@@ -233,10 +228,10 @@ namespace Tool.Common
             {
                 content = String.Format("{0}{1} {2}", "#", DateTimeTool.GetGreenWichTime(now), content);
                 FileTool.WriteFile(filePath, fileName, true, new String[]
-				{
-					content,
-					"---------------------------------------------------------------------"
-				});
+                {
+                    content,
+                    "---------------------------------------------------------------------"
+                });
             }
             catch (Exception)
             {

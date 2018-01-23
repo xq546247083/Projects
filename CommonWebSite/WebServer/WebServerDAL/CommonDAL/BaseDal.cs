@@ -22,7 +22,7 @@ namespace WebServer.DAL
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        public static String Conn = WebConfig.CommonConnString;
+        public static String Conn = CommonWebSiteConfig.CommonConnString;
 
         /// <summary>
         /// 执行无返回值的数据库操作，仅返回受影响的行数

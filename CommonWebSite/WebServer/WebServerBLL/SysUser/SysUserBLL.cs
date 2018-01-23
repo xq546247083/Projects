@@ -156,7 +156,7 @@ namespace WebServer.BLL
 
             if (sysUser != null)
             {
-                sysUser.PwdExpiredTime = DateTime.Now.AddHours(WebConfig.PwdExpiredTime);
+                sysUser.PwdExpiredTime = DateTime.Now.AddHours(CommonWebSiteConfig.PwdExpiredTime);
 
                 Update(sysUser);
             }

@@ -107,15 +107,10 @@ namespace Tool.Common
                 throw new Exception("messageCountPerThread不能大于100");
             }
 
-            if (threadStartFunc == null)
-            {
-                throw new Exception("threadStartFunc不能为空");
-            }
-
             this.MinThreadCount = minThreadCount;
             this.MaxThreadCount = maxThreadCount;
             this.MessageCountPerThread = messageCountPerThread;
-            this.ThreadStartFunc = threadStartFunc;
+            this.ThreadStartFunc = threadStartFunc ?? throw new Exception("threadStartFunc不能为空");
             this.InitNewThread(this.MinThreadCount);
         }
 
