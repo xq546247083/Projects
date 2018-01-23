@@ -43,7 +43,9 @@ namespace SocketServer
             }
             catch (Exception ex)
             {
-                Log.Error($"服务器初始化失败。错误信息：{ex}");
+                var exStr = $"服务器初始化失败。错误信息：{ex}";
+                Console.WriteLine(exStr);
+                Log.Error(exStr);
             }
         }
     }

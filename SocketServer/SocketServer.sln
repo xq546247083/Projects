@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketServer", "SocketServer\SocketServer.csproj", "{38D9AB98-244C-4C85-AA1D-4056EEFE6B01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketServer", "SocketServer\SocketServer.csproj", "{38D9AB98-244C-4C85-AA1D-4056EEFE6B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{8C47DEA5-581A-4B4A-B717-AA64763AE347}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{8C47DEA5-581A-4B4A-B717-AA64763AE347}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{98E191C8-A278-4E0C-81B4-BCAC3EBA7280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{98E191C8-A278-4E0C-81B4-BCAC3EBA7280}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{CD018D1B-C113-4A82-9112-691BF0281F6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{CD018D1B-C113-4A82-9112-691BF0281F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{9543F805-CAF6-46F2-90EF-DB89B426F1EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{9543F805-CAF6-46F2-90EF-DB89B426F1EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "..\CommonCore\Tool\Tool.csproj", "{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{860C56BB-0C93-458E-9055-1911F28D2FD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{9543F805-CAF6-46F2-90EF-DB89B426F1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9543F805-CAF6-46F2-90EF-DB89B426F1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9543F805-CAF6-46F2-90EF-DB89B426F1EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2F0DF98-0F21-4E13-947E-C5E4B5543A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860C56BB-0C93-458E-9055-1911F28D2FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860C56BB-0C93-458E-9055-1911F28D2FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860C56BB-0C93-458E-9055-1911F28D2FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860C56BB-0C93-458E-9055-1911F28D2FD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
