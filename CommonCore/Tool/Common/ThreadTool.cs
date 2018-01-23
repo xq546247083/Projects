@@ -158,8 +158,9 @@ namespace Tool.Common
                     {
                         thread2.Abort();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
+                        // ignored
                     }
                 }
             }

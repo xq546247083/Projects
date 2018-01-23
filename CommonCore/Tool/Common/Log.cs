@@ -238,7 +238,7 @@ namespace Tool.Common
 					"---------------------------------------------------------------------"
 				});
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }

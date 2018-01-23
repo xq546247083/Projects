@@ -105,3 +105,4 @@ $RECYCLE.BIN/
 /CommonWebSite/.vs/CommonWebSite/v15/sqlite3/storage.ide
 *.ide
 /CommonWebSite/.vs/CommonWebSite/v15
+/SocketServer/.vs/SocketServer/v15/Server/sqlite3
