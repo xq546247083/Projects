@@ -31,9 +31,9 @@ namespace SocketServer
             try
             {
                 // 初始化配置
-                WebConfig.Check();
+                SocketServerConfig.Check();
 
-                //设置日志地址
+                // 日志地址
                 Log.LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
                 
                 // 设置邮件信息

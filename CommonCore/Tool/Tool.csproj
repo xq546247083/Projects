@@ -52,6 +52,7 @@
     <Compile Include="Common\EmailTool.cs" />
     <Compile Include="Common\EncrpytTool.cs" />
     <Compile Include="Common\ParseTool.cs" />
+    <Compile Include="Config\SocketServerConfig.cs" />
     <Compile Include="Config\CommonWebSiteConfig.cs" />
     <Compile Include="Extension\ExExtention.cs" />
     <Compile Include="Common\ReaderWriterLockTool.cs" />
