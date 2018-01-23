@@ -97,6 +97,8 @@ namespace Tool.Common
             RunWriteLog();
         }
 
+        #region 私有方法
+
         /// <summary>
         /// 开启写日志方法
         /// </summary>
@@ -237,6 +239,27 @@ namespace Tool.Common
             {
                 // ignored
             }
+        }
+
+        #endregion
+
+        #region  公有方法
+
+        /// <summary>
+        /// 日志设置
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <param name="isLogInfo">是否记录log</param>
+        /// <param name="isLogDebug">是否记录debug</param>
+        /// <param name="isLogWarn">是否记录警告</param>
+        /// <param name="isLogError">是否记录错误</param>
+        public static void Set(String path, Boolean isLogInfo, Boolean isLogDebug, Boolean isLogWarn, Boolean isLogError)
+        {
+            LogPath = path;
+            LogInfoFlag = isLogInfo;
+            LogDebugFlag = isLogDebug;
+            LogWarnFlag = isLogWarn;
+            LogErrorFlag = isLogError;
         }
 
         /// <summary>
@@ -408,6 +431,8 @@ namespace Tool.Common
 
             }
         }
+
+        #endregion
     }
 
     /// <summary>

@@ -5,8 +5,8 @@ using System.Threading;
 
 namespace WebSite
 {
-    using WebServer.BLL;
     using Tool.Common;
+    using WebServer.BLL;
 
     /// <summary>
     /// 网站启动页面
@@ -20,7 +20,7 @@ namespace WebSite
         /// <param name="e">e</param>
         protected void Application_Start(object sender, EventArgs e)
         {
-            Log.LogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+            Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), CommonWebSiteConfig.LogInfoFlag, CommonWebSiteConfig.LogDebugFlag, CommonWebSiteConfig.LogWarnFlag, CommonWebSiteConfig.LogErrorFlag);
             EmailTool.SetSenderInfo(CommonWebSiteConfig.EmailHost, CommonWebSiteConfig.EmailAddress, CommonWebSiteConfig.EmailPass);
 
             //启动服务器
