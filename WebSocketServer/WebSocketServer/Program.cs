@@ -3,9 +3,11 @@
 *************************************************************************/
 using System;
 using System.IO;
+using System.Threading;
 
-namespace SocketServer
+namespace WebSocketServer
 {
+    using CallbackServer;
     using Tool.Common;
 
     /// <summary>
@@ -13,23 +15,36 @@ namespace SocketServer
     /// </summary>
     class Program
     {
+        #region 属性
+
+        /// <summary>
+        /// 停止处理信号量
+        /// </summary>
+        private static Semaphore mStopSemaphore = new Semaphore(0, 1);
+
+        #endregion
+
         /// <summary>
         /// 入口
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             Init();
             StartServer();
 
             Console.WriteLine("服务器启动成功！");
             Log.Info("服务器启动成功！");
 
-            Console.ReadKey();
+            mStopSemaphore.WaitOne();
         }
 
+        #region 方法
+
         /// <summary>
-        /// 服务器启动初始化
+        /// 服务器初始化
         /// </summary>
         static void Init()
         {
@@ -69,5 +84,22 @@ namespace SocketServer
                 Log.Error(exStr);
             }
         }
+
+        #endregion
+
+        #region 事件
+
+        /// <summary>
+        /// 程序出现异常退出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log.Error(((Exception)e.ExceptionObject).ToString());
+            mStopSemaphore.Release();
+        }
+
+        #endregion
     }
 }

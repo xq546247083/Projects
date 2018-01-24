@@ -1,5 +1,4 @@
-﻿
-/************************************************************************
+﻿/************************************************************************
 * 描述:回调服务处理
 *************************************************************************/
 using System;
@@ -8,8 +7,9 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SocketServer
+namespace CallbackServer
 {
+    using CallbackServer.Api;
     using Tool.Common;
 
     /// <summary>

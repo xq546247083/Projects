@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 
-namespace SocketServer
+namespace CallbackServer
 {
     /// <summary>
     /// Http的扩展处理

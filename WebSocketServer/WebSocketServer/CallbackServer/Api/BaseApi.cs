@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Text;
 
-namespace SocketServer
+namespace CallbackServer.Api
 {
     using System.Collections.Specialized;
 
