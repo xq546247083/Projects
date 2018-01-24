@@ -13,7 +13,8 @@ namespace CallbackServer.Api
         /// </summary>
         public override void Process()
         {
-            this.Response.Write("调用成功了噢:{0}" + this.RequestData["aasdasd"]);
+            var name = RequestData["Name"];
+            this.Response.Write($"{name}调用成功了噢!");
         }
 
         /// <summary>

@@ -12,6 +12,9 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\Tool\ReferenceFiles\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

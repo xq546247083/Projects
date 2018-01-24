@@ -9,4 +9,10 @@
     <ProjectReference Include="..\..\CommonCore\CoreTool\CoreTool.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\..\CommonCore\CoreTool\ReferenceFiles\websocket-sharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

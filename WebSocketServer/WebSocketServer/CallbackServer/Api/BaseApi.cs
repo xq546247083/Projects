@@ -7,6 +7,7 @@ using System.Text;
 
 namespace CallbackServer.Api
 {
+    using Tool.Common;
     using System.Collections.Specialized;
 
     /// <summary>
@@ -56,6 +57,23 @@ namespace CallbackServer.Api
         #region 基础方法
 
         /// <summary>
+        /// 获取通过POST方式传递的请求数据
+        /// </summary>
+        /// <returns>请求的数据</returns>
+        protected String GetRequestString()
+        {
+            // 获取POST过来的二进制数组
+            Byte[] byteArray = this.Request.ReadToEnd();
+            if (byteArray == null || byteArray.Length <= 0)
+            {
+                return String.Empty;
+            }
+
+            // 转化为字符串
+            return Encoding.UTF8.GetString(byteArray);
+        }
+
+        /// <summary>
         /// 请求对象
         /// </summary>
         public HttpListenerRequest Request
@@ -72,26 +90,23 @@ namespace CallbackServer.Api
         }
 
         /// <summary>
-        /// 表达数据(没有进行UrlDecode操作)
+        /// 表单数据(没有进行UrlDecode操作)
         /// </summary>
         public NameValueCollection FormData
         {
             get
             {
-                if (this.formData == null)
+                if (formData == null)
                 {
-                    NameValueCollection data = new NameValueCollection();
-                    HttpListnerExtend.FillFromString(data, this.GetRequestString(), false, this.Request.ContentEncoding);
-
-                    this.formData = data;
+                    formData = RequestTool.ConverToNameValueCollection(GetRequestString(), false, Request.ContentEncoding);
                 }
 
-                return this.formData;
+                return formData;
             }
         }
 
         /// <summary>
-        /// 请求数据
+        /// 请求数据(通过url请求)
         /// </summary>
         public NameValueCollection QueryString
         {
@@ -116,32 +131,11 @@ namespace CallbackServer.Api
             {
                 if (this.requestData == null)
                 {
-                    var tmpData = new NameValueCollection();
-                    tmpData.Add(this.QueryString);
-                    tmpData.Add(this.FormData);
-
-                    this.requestData = tmpData;
+                    this.requestData = new NameValueCollection { QueryString, FormData };
                 }
 
                 return this.requestData;
             }
-        }
-
-        /// <summary>
-        /// 获取通过POST方式传递的请求数据
-        /// </summary>
-        /// <returns>请求的数据</returns>
-        protected String GetRequestString()
-        {
-            // 获取POST过来的二进制数组
-            Byte[] byteArray = this.Request.ReadToEnd();
-            if (byteArray == null || byteArray.Length <= 0)
-            {
-                return String.Empty;
-            }
-
-            // 转化为字符串
-            return Encoding.UTF8.GetString(byteArray);
         }
 
         #endregion
