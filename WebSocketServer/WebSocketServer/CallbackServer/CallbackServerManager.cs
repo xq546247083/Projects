@@ -128,11 +128,11 @@ namespace CallbackServer
                         // 请求处理
                         apiItem.Process();
                     }
-                    catch (Exception e1)
+                    catch (Exception ex)
                     {
                         context.Response.StatusCode = 500;
                         context.Response.Write("There have been some inner error!!");
-                        Log.Error("请求处理异常，错误信息：{0}", e1.ToString());
+                        Log.Error("请求处理异常，错误信息：{0}", ex.ToString());
                     }
                     finally
                     {
