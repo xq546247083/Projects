@@ -74,6 +74,12 @@ namespace WebSocketServer
         {
             try
             {
+                // 连接管理器初始化
+                ConnectionManager.Init();
+
+                // 启动websocket服务器
+                WebSocketServer.Start(SocketServerConfig.WebSocketServerUrl);
+
                 // 启动回调服务器
                 CallbackServerManager.Start(SocketServerConfig.CallbackServerUrl);
             }

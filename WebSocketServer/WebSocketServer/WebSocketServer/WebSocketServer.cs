@@ -1,5 +1,5 @@
 ﻿//***********************************************************************************
-// WebSocket管理对象
+// WebSocketServer服务器
 //***********************************************************************************
 using System;
 using System.Collections.Generic;
@@ -7,29 +7,19 @@ using System.Threading;
 
 namespace WebSocketServer
 {
-    using WebSocketSharp.Server;
+    using WebSocketSharpServer = WebSocketSharp.Server;
 
     /// <summary>
-    /// WebSocket管理对象
+    /// WebSocketServer服务器
     /// </summary>
-    public class WebSocketManager
+    public class WebSocketServer
     {
         #region 字段
 
         /// <summary>
-        /// 连接适配器对象
-        /// </summary>
-        private static Dictionary<Guid, WebSocketConnection> mConnectionAdapterData = new Dictionary<Guid, WebSocketConnection>();
-
-        /// <summary>
-        /// 锁对象
-        /// </summary>
-        private static ReaderWriterLockSlim mLockObj = new ReaderWriterLockSlim();
-
-        /// <summary>
         /// 服务实例对象
         /// </summary>
-        private static WebSocketServer mServerInstance = null;
+        private static WebSocketSharpServer.WebSocketServer mServerInstance = null;
 
         #endregion
 
@@ -40,7 +30,7 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="addr">监听地址</param>
         /// <returns>服务开启后的实例对象</returns>
-        public static WebSocketServer StartServer(String addr)
+        public static void Start(String addr)
         {
             if (mServerInstance != null)
             {
@@ -53,7 +43,7 @@ namespace WebSocketServer
                 addr = String.Format("ws://{0}", addr.TrimStart('/'));
             }
 
-            var server = new WebSocketServer(addr);
+            var server = new WebSocketSharpServer.WebSocketServer(addr);
 
             // 开启服务
             server.AddWebSocketService<WebSocketConnection>("/client");
@@ -61,14 +51,12 @@ namespace WebSocketServer
             server.Start();
 
             mServerInstance = server;
-
-            return server;
         }
 
         /// <summary>
         /// 停止服务
         /// </summary>
-        public static void StopServer()
+        public static void Stop()
         {
             if (mServerInstance == null)
             {
@@ -76,7 +64,6 @@ namespace WebSocketServer
             }
 
             mServerInstance.Stop();
-
             mServerInstance = null;
         }
 

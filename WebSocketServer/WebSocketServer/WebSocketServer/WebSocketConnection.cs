@@ -3,6 +3,7 @@
 //***********************************************************************************
 using System;
 using System.Net;
+using System.Text;
 
 namespace WebSocketServer
 {
@@ -53,13 +54,6 @@ namespace WebSocketServer
 
         #endregion
 
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        public WebSocketConnection()
-        {
-        }
-
         #region 私有方法
 
         /// <summary>
@@ -67,7 +61,7 @@ namespace WebSocketServer
         /// </summary>
         protected override void OnOpen()
         {
-            this.isOpen = true;
+            isOpen = true;
             Log.Debug("收到新连接：" + ClientIPEndPoint);
         }
 
@@ -77,8 +71,6 @@ namespace WebSocketServer
         /// <param name="e">事件参数信息</param>
         protected override void OnMessage(MessageEventArgs e)
         {
-            KeepAlive();
-
             // 约定len(message) == 0,为心跳请求
             if (e.RawData.Length <= 0)
             {
@@ -89,7 +81,7 @@ namespace WebSocketServer
 
             try
             {
-                var message = System.Text.Encoding.UTF8.GetString(e.RawData);
+                var message = Encoding.UTF8.GetString(e.RawData);
                 HandleMessage(message);
             }
             catch (Exception ex)
@@ -114,7 +106,7 @@ namespace WebSocketServer
         /// socket错误时
         /// </summary>
         /// <param name="e">事件参数</param>
-        protected override void OnError(WebSocketSharp.ErrorEventArgs e)
+        protected override void OnError(ErrorEventArgs e)
         {
             Log.Error($"Address:{ClientIPEndPoint} 出现未知异常：Message:{e.Message} Exception:{e.Exception}");
         }
@@ -125,7 +117,7 @@ namespace WebSocketServer
         /// <param name="message">消息</param>
         private void HandleMessage(String message)
         {
-
+            KeepAlive();
         }
 
         #endregion
@@ -156,7 +148,7 @@ namespace WebSocketServer
         }
 
         /// <summary>
-        /// 活跃时间
+        /// 保持活跃
         /// </summary>
         public void KeepAlive()
         {

@@ -56,6 +56,23 @@ namespace Tool.Common
         public static String CommonConnString => ConfigurationManager.ConnectionStrings["CommonConnection"] != null ? ConfigurationManager.ConnectionStrings["CommonConnection"].ConnectionString : "";
 
         /// <summary>
+        /// WebSocket服务器地址
+        /// </summary>
+        public static String WebSocketServerUrl
+        {
+            get
+            {
+                var temp = ConfigurationManager.AppSettings["WebSocketServerUrl"];
+                if (temp == null)
+                {
+                    throw new Exception("WebSocketServerUrl没有配置");
+                }
+
+                return temp;
+            }
+        }
+
+        /// <summary>
         /// 回调服务器地址
         /// </summary>
         public static String CallbackServerUrl

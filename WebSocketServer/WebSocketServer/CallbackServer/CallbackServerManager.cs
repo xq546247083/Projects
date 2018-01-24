@@ -123,7 +123,7 @@ namespace CallbackServer
 
                         // 创建请求处理对象
                         var apiItem = (BaseApi)Activator.CreateInstance(mApiData[url]);
-                        apiItem.context = tmpContext;
+                        apiItem.Context = tmpContext;
 
                         // 请求处理
                         apiItem.Process();

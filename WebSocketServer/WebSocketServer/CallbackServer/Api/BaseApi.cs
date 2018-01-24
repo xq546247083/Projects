@@ -35,7 +35,7 @@ namespace CallbackServer.Api
         /// <summary>
         /// 上下文对象
         /// </summary>
-        internal HttpListenerContext context;
+        public HttpListenerContext Context;
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace CallbackServer.Api
         /// </summary>
         public HttpListenerRequest Request
         {
-            get { return this.context.Request; }
+            get { return this.Context.Request; }
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace CallbackServer.Api
         /// </summary>
         public HttpListenerResponse Response
         {
-            get { return this.context.Response; }
+            get { return this.Context.Response; }
         }
 
         /// <summary>
