@@ -5,9 +5,10 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace WebSocketServer
+namespace SocketServer
 {
     using CallbackServer;
+    using WebSocketServer;
     using Tool.Common;
 
     /// <summary>
@@ -81,7 +82,7 @@ namespace WebSocketServer
                 WebSocketServer.Start(SocketServerConfig.WebSocketServerUrl);
 
                 // 启动回调服务器
-                CallbackServerManager.Start(SocketServerConfig.CallbackServerUrl);
+                CallbackServer.Start(SocketServerConfig.CallbackServerUrl);
             }
             catch (Exception ex)
             {

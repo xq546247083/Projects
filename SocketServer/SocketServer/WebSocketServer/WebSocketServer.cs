@@ -2,8 +2,6 @@
 // WebSocketServer服务器
 //***********************************************************************************
 using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace WebSocketServer
 {
@@ -46,7 +44,7 @@ namespace WebSocketServer
             var server = new WebSocketSharpServer.WebSocketServer(addr);
 
             // 开启服务
-            server.AddWebSocketService<WebSocketConnection>("/client");
+            server.AddWebSocketService<Connection>("/client");
             server.AllowForwardedRequest = true;
             server.Start();
 

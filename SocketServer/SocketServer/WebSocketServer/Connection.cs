@@ -14,7 +14,7 @@ namespace WebSocketServer
     /// <summary>
     /// websocket 连接处理类，每个新连接均会新建一个此对象
     /// </summary>
-    public class WebSocketConnection : WebSocketBehavior
+    public class Connection : WebSocketBehavior
     {
         #region 字段
 

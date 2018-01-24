@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace CallbackServer
 {
-    using CallbackServer.Api;
+    using Api;
     using Tool.Common;
 
     /// <summary>
     /// 回调服务处理
     /// </summary>
-    public class CallbackServerManager
+    public class CallbackServer
     {
         #region 属性
 

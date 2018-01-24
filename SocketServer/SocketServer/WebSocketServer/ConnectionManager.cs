@@ -19,7 +19,7 @@ namespace WebSocketServer
         /// <summary>
         /// 连接适配器对象
         /// </summary>
-        private static Dictionary<Guid, WebSocketConnection> mConnectionData = new Dictionary<Guid, WebSocketConnection>();
+        private static Dictionary<Guid, Connection> mConnectionData = new Dictionary<Guid, Connection>();
 
         /// <summary>
         /// 锁对象
@@ -86,9 +86,9 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="playerID">玩家Id</param>
         /// <returns>连接</returns>
-        public static WebSocketConnection GetConnection(Guid playerID)
+        public static Connection GetConnection(Guid playerID)
         {
-            WebSocketConnection result = null;
+            Connection result = null;
 
             mLockObj.EnterReadLock();
             try
@@ -108,7 +108,7 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="playerID">玩家Id</param>
-        public static void AddConnection(WebSocketConnection connection, Guid playerID)
+        public static void AddConnection(Connection connection, Guid playerID)
         {
             mLockObj.EnterWriteLock();
             try

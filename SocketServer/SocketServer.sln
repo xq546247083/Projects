@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTool", "..\CommonCore\CoreTool\CoreTool.csproj", "{34719808-E8A6-4598-AC2E-75DEC921084A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketServer", "WebSocketServer\WebSocketServer.csproj", "{9C966154-8F15-4BAA-A1AB-49056730C392}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketServer", "SocketServer\SocketServer.csproj", "{D2A98A29-C301-4CCB-B107-651315AAD734}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{34719808-E8A6-4598-AC2E-75DEC921084A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34719808-E8A6-4598-AC2E-75DEC921084A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34719808-E8A6-4598-AC2E-75DEC921084A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C966154-8F15-4BAA-A1AB-49056730C392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C966154-8F15-4BAA-A1AB-49056730C392}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C966154-8F15-4BAA-A1AB-49056730C392}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C966154-8F15-4BAA-A1AB-49056730C392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A98A29-C301-4CCB-B107-651315AAD734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A98A29-C301-4CCB-B107-651315AAD734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A98A29-C301-4CCB-B107-651315AAD734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A98A29-C301-4CCB-B107-651315AAD734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
