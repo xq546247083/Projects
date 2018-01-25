@@ -52,7 +52,7 @@ namespace SocketServer
         {
             try
             {
-                // 配置文件检测
+                // 初始化配置文件
                 SocketServerConfig.Init();
 
                 // 日志设置
@@ -64,7 +64,7 @@ namespace SocketServer
                 // 初始化内存数据
                 GlobalBLL.Start();
 
-                // 记载Api方法
+                // 加载Api方法
                 MethodManager.Load();
 
                 // 连接管理器初始化
