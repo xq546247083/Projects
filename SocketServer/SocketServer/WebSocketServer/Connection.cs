@@ -27,6 +27,11 @@ namespace WebSocketServer
         private Boolean isOpen = false;
 
         /// <summary>
+        /// 客户端地址
+        /// </summary>
+        private IPEndPoint clientIPEndPoint = null;
+
+        /// <summary>
         /// 存活最长时间（单位：秒）
         /// </summary>
         private const Int32 MAX_KEEP_ALIVE_TIME = 5 * 60;
@@ -50,11 +55,6 @@ namespace WebSocketServer
         /// </summary>
         public DateTime AliveTime { get; private set; }
 
-        /// <summary>
-        /// 客户端地址
-        /// </summary>
-        private IPEndPoint ClientIPEndPoint => new IPEndPoint(Context.UserEndPoint.Address, Context.UserEndPoint.Port);
-
         #endregion
 
         #region 私有方法
@@ -65,7 +65,7 @@ namespace WebSocketServer
         protected override void OnOpen()
         {
             isOpen = true;
-            Logg.Debug("收到新连接：" + ClientIPEndPoint);
+            Logg.Debug("收到新连接：" + GetClientAddr());
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace WebSocketServer
         protected override void OnClose(CloseEventArgs e)
         {
             this.isOpen = false;
-            Logg.Debug($"连接关闭：Addr:{ClientIPEndPoint} Reason:{e.Reason}");
+            Logg.Debug($"连接关闭：Addr:{GetClientAddr()} Reason:{e.Reason}");
 
             base.OnClose(e);
         }
@@ -103,7 +103,21 @@ namespace WebSocketServer
         /// <param name="e">事件参数</param>
         protected override void OnError(ErrorEventArgs e)
         {
-            Logg.Error($"Address:{ClientIPEndPoint} 出现未知异常：Message:{e.Message} Exception:{e.Exception}");
+            Logg.Error($"Address:{GetClientAddr()} 出现未知异常：Message:{e.Message} Exception:{e.Exception}");
+        }
+
+        /// <summary>
+        /// 获取客户端地址
+        /// </summary>
+        /// <returns></returns>
+        private IPEndPoint GetClientAddr()
+        {
+            if (clientIPEndPoint == null)
+            {
+                clientIPEndPoint = new IPEndPoint(Context.UserEndPoint.Address, Context.UserEndPoint.Port);
+            }
+
+            return clientIPEndPoint;
         }
 
         /// <summary>
@@ -198,7 +212,7 @@ namespace WebSocketServer
             // 管理器注册连接
             UserID = userID;
         }
-        
+
         #endregion
     }
 }
