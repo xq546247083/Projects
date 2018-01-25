@@ -18,7 +18,7 @@ namespace Client
 
             Console.WriteLine("点击任意键开始登陆");
             Console.ReadKey();
-            WebSocketClient.Send("Api=PlayerLogin&UserName=SysUser1&password=123456");
+            WebSocketClient.Send("Api=SysUserLogin&UserID=c3c3825c-b479-4b42-88db-352bab1b4380&Password=123456");
 
             Console.WriteLine("点击任意键结束...");
             Console.ReadKey();

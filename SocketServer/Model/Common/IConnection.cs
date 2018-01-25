@@ -1,6 +1,7 @@
 ﻿//***********************************************************************************
 // 连接接口
 //***********************************************************************************
+
 using System;
 
 namespace SocketServer.Model
@@ -15,5 +16,11 @@ namespace SocketServer.Model
         /// </summary>
         /// <param name="data">待发送的数据</param>
         void SendData<T>(T data);
+
+        /// <summary>
+        /// 当前连接注册用户
+        /// </summary>
+        /// <param name="userID"></param>
+        void Register(Guid userID);
     }
 }

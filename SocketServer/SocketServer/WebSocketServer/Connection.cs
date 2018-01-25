@@ -7,7 +7,6 @@ using System.Text;
 
 namespace WebSocketServer
 {
-    using Newtonsoft.Json;
     using SocketServer.BLL;
     using SocketServer.Model;
     using Tool.Common;
@@ -149,6 +148,18 @@ namespace WebSocketServer
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 当前连接注册其用户
+        /// </summary>
+        /// <param name="userID"></param>
+        public void Register(Guid userID)
+        {
+            UserID = userID;
+
+            // 更新连接管理器
+            ConnectionManager.Register(this, userID);
+        }
 
         /// <summary>
         /// 发送消息

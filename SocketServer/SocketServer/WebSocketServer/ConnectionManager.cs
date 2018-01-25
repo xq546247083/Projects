@@ -108,15 +108,12 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="playerID">玩家Id</param>
-        public static void AddConnection(Connection connection, Guid userID)
+        public static void Register(Connection connection, Guid userID)
         {
             mLockObj.EnterWriteLock();
             try
             {
-                if (!mConnectionData.ContainsKey(userID))
-                {
-                    mConnectionData[userID] = connection;
-                }
+                mConnectionData[userID] = connection;
             }
             finally
             {

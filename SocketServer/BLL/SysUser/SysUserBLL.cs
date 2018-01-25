@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace SocketServer.BLL
 {
-    using Tool.CustomAttribute;
     using SocketServer.Model;
+    using Tool.CustomAttribute;
 
     /// <summary>
     /// 玩家类
     /// </summary>
-    public partial class SysUserBLL
+    public partial class SysUserBLL : INeedInit
     {
         #region 属性
 
@@ -34,7 +34,7 @@ namespace SocketServer.BLL
         {
             var sysUser1 = new SysUser()
             {
-                UserID = Guid.NewGuid(),
+                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4380"),
                 UserName = "SysUser1",
                 Password = "123456"
             };
@@ -59,15 +59,21 @@ namespace SocketServer.BLL
         /// 获取某一个玩家
         /// </summary>
         /// <param name="sysUserId">玩家id</param>
+        /// <param name="ifCastExeption">是否跑出错误</param>
         /// <returns>玩家</returns>
-        public static SysUser GetItem(Guid sysUserId)
+        public static SysUser GetItem(Guid sysUserId, Boolean ifCastExeption = true)
         {
             if (GetData().ContainsKey(sysUserId))
             {
                 return mData[sysUserId];
             }
 
-            throw new Exception("用户不存在");
+            if (!ifCastExeption)
+            {
+                throw new Exception("用户不存在");
+            }
+
+            return null;
         }
 
         #endregion
@@ -78,12 +84,32 @@ namespace SocketServer.BLL
         /// 登录
         /// </summary>
         /// <param name="context">上下文</param>
-        /// <param name="userName">用户名</param>
+        /// <param name="userID">用户名</param>
         /// <param name="password">密码</param>
         [InvokeMethod]
-        public static void Login(Context context,String userName,String password)
+        public static ReturnObject C_Login(Context context, Guid userID, String password)
         {
+            var result = new ReturnObject() { Code = -1 };
 
+            var sysUser = GetItem(userID, false);
+            if (sysUser == null)
+            {
+                result.Message = "用户不存在";
+                return result;
+            }
+
+            if (sysUser.Password != password)
+            {
+                result.Message = "密码不正确";
+                return result;
+            }
+
+            // 登录成功，注册连接
+            context.Connection.Register(userID);
+
+            result.Code = 0;
+            result.Message = "登录成功";
+            return result;
         }
 
         #endregion

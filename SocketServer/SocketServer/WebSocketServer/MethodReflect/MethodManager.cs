@@ -149,6 +149,7 @@ namespace WebSocketServer
                     {
                         throw new Exception(String.Format("存在重复的Client API：{0}", methodFullName));
                     }
+
                     result[methodFullName] = new MethodReflectInfo(classType.Name, methodItem);
                 }
             }
@@ -201,11 +202,17 @@ namespace WebSocketServer
             paramObj[0] = context;
 
             // 循环组装参数
-            var i = 1;
-            foreach (var item in context.Request)
+            for (var i = 1; i < methodInfo.ParamTypes.Length; i++)
             {
-                paramObj[i] = Convert.ChangeType(item, methodInfo.ParamTypes[i]);
-                i++;
+                // guid特殊处理
+                if (methodInfo.ParamTypes[i].Name == "Guid")
+                {
+                    paramObj[i] = Guid.Parse(context.Request[i - 1]);
+                }
+                else
+                {
+                    paramObj[i] = Convert.ChangeType(context.Request[i - 1], methodInfo.ParamTypes[i]);
+                }
             }
 
             return (ReturnObject)methodInfo.TargetMethod.Invoke(null, paramObj);

@@ -8,6 +8,7 @@ using System.Threading;
 namespace SocketServer
 {
     using CallbackServer;
+    using SocketServer.BLL;
     using Tool.Common;
     using WebSocketServer;
 
@@ -59,6 +60,9 @@ namespace SocketServer
 
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
+
+                // 初始化bll数据
+                GlobalBLL.Start();
 
                 // 初始化Api方法
                 MethodManager.Load();
