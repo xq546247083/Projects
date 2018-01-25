@@ -13,7 +13,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            ClientConfig.Check();
+            ClientConfig.Init();
 
             Console.WriteLine("点击任意键开启连接服务器...");
             Console.ReadKey();

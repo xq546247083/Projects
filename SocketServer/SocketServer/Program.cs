@@ -53,7 +53,7 @@ namespace SocketServer
             try
             {
                 // 配置文件检测
-                SocketServerConfig.Check();
+                SocketServerConfig.Init();
 
                 // 日志设置
                 Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), SocketServerConfig.LogInfoFlag, SocketServerConfig.LogDebugFlag, SocketServerConfig.LogWarnFlag, SocketServerConfig.LogErrorFlag);
@@ -61,11 +61,14 @@ namespace SocketServer
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
 
-                // 初始化bll数据
+                // 初始化内存数据
                 GlobalBLL.Start();
 
-                // 初始化Api方法
+                // 记载Api方法
                 MethodManager.Load();
+
+                // 连接管理器初始化
+                ConnectionManager.Init();
 
                 Console.WriteLine("服务器初始化成功！");
                 Log.Info("服务器初始化成功！");
@@ -89,9 +92,6 @@ namespace SocketServer
         {
             try
             {
-                // 连接管理器初始化
-                ConnectionManager.Init();
-
                 // 启动websocket服务器
                 WebSocketServer.Start(SocketServerConfig.WebSocketServerUrl);
 

@@ -18,64 +18,40 @@ namespace Tool.Common
         /// <summary>
         /// WebSocket服务器地址
         /// </summary>
-        public static String WebSocketServerUrl
-        {
-            get
-            {
-                var temp = ConfigurationManager.AppSettings["WebSocketServerUrl"];
-                if (temp == null)
-                {
-                    throw new Exception("WebSocketServerUrl没有配置");
-                }
-
-                return temp;
-            }
-        }
+        public static String WebSocketServerUrl;
 
         /// <summary>
         /// UserID
         /// </summary>
-        public static String UserID
-        {
-            get
-            {
-                var temp = ConfigurationManager.AppSettings["UserID"];
-                if (temp == null)
-                {
-                    throw new Exception("UserID没有配置");
-                }
-
-                return temp;
-            }
-        }
+        public static String UserID;
 
         /// <summary>
         /// Password
         /// </summary>
-        public static String Password
-        {
-            get
-            {
-                var temp = ConfigurationManager.AppSettings["Password"];
-                if (temp == null)
-                {
-                    throw new Exception("Password没有配置");
-                }
-
-                return temp;
-            }
-        }
-
+        public static String Password;
 
         /// <summary>
         /// check方法
         /// </summary>
-        public static void Check()
+        public static void Init()
         {
-            object temp;
-            temp = WebSocketServerUrl;
-            temp = UserID;
-            temp = Password;
+            WebSocketServerUrl = ConfigurationManager.AppSettings["WebSocketServerUrl"];
+            if (WebSocketServerUrl == null)
+            {
+                throw new Exception("WebSocketServerUrl没有配置");
+            }
+
+            UserID = ConfigurationManager.AppSettings["UserID"];
+            if (UserID == null)
+            {
+                throw new Exception("UserID没有配置");
+            }
+
+            Password = ConfigurationManager.AppSettings["Password"];
+            if (Password == null)
+            {
+                throw new Exception("Password没有配置");
+            }
         }
     }
 }
