@@ -3,6 +3,7 @@
 //***********************************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,15 +47,14 @@ namespace SocketServer.BLL
                 Thread.Sleep(1000 * 60 * 5);
 
                 // 循环所有适配器对象，移除过期的项
+                mLockObj.EnterWriteLock();
                 try
                 {
-                    mLockObj.EnterWriteLock();
-
-                    foreach (var item in mConnectionData)
+                    foreach (var userID in mConnectionData.Keys.ToList())
                     {
-                        if (item.Value.CheckIfTimeout())
+                        if (mConnectionData[userID].CheckIfTimeout())
                         {
-                            mConnectionData.Remove(item.Key);
+                            mConnectionData.Remove(userID);
                         }
                     }
                 }
@@ -106,7 +106,7 @@ namespace SocketServer.BLL
         }
 
         /// <summary>
-        /// 增加连接
+        /// 注册连接
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="userID">玩家Id</param>
@@ -139,6 +139,29 @@ namespace SocketServer.BLL
 
             // 连接注册其用户
             connection.Register(userID);
+        }
+
+        /// <summary>
+        /// 注销连接
+        /// </summary>
+        /// <param name="connection">连接</param>
+        /// <param name="userID">玩家Id</param>
+        public static void UnRegister(IConnection connection, Guid userID)
+        {
+            // 注销用户
+            mLockObj.EnterWriteLock();
+            try
+            {
+                if (mConnectionData.ContainsKey(userID))
+                {
+                    mConnectionData[userID].UnRegister();
+                    mConnectionData.Remove(userID);
+                }
+            }
+            finally
+            {
+                mLockObj.ExitWriteLock();
+            }
         }
 
         #endregion
