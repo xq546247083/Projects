@@ -161,7 +161,7 @@ namespace WebSocketServer
         /// <summary>
         /// 进行函数调用
         /// </summary>
-        /// <param name="context">上下文对象</param>>
+        /// <param name="context">上下文对象</param>
         /// <returns>结果实体对象</returns>
         public static ReturnObject Call(Context context)
         {
@@ -180,6 +180,13 @@ namespace WebSocketServer
             if (methodInfo == null)
             {
                 result.Message = "找不到Api方法!";
+                return result;
+            }
+
+            // 如果没登录，不能调用其他方法
+            if (context.SysUser == null && apiFullName != "SysUserLogin")
+            {
+                result.Message = "请登录!";
                 return result;
             }
 
