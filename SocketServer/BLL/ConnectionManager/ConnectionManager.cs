@@ -3,12 +3,13 @@
 //***********************************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebSocketServer
+namespace SocketServer.BLL
 {
+    using SocketServer.Model;
+
     /// <summary>
     /// WebSocket管理对象
     /// </summary>
@@ -19,7 +20,7 @@ namespace WebSocketServer
         /// <summary>
         /// 连接适配器对象
         /// </summary>
-        private static Dictionary<Guid, Connection> mConnectionData = new Dictionary<Guid, Connection>();
+        private static Dictionary<Guid, IConnection> mConnectionData = new Dictionary<Guid, IConnection>();
 
         /// <summary>
         /// 锁对象
@@ -75,10 +76,10 @@ namespace WebSocketServer
         {
             if (mainTask != null)
             {
-                throw  new Exception("不能重复创建处理线程");
+                throw new Exception("不能重复创建处理线程");
             }
 
-            mainTask= Task.Factory.StartNew(HandleConnect);
+            mainTask = Task.Factory.StartNew(HandleConnect);
         }
 
         /// <summary>
@@ -86,30 +87,32 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="userID">玩家Id</param>
         /// <returns>连接</returns>
-        public static Connection GetConnection(Guid userID)
+        public static IConnection GetConnection(Guid userID)
         {
-            Connection result = null;
-
             mLockObj.EnterReadLock();
             try
             {
-                mConnectionData.TryGetValue(userID, out result);
+                if (mConnectionData.ContainsKey(userID))
+                {
+                    return mConnectionData[userID];
+                }
             }
             finally
             {
                 mLockObj.ExitReadLock();
             }
 
-            return result;
+            return null;
         }
 
         /// <summary>
         /// 增加连接
         /// </summary>
         /// <param name="connection">连接</param>
-        /// <param name="playerID">玩家Id</param>
-        public static void Register(Connection connection, Guid userID)
+        /// <param name="userID">玩家Id</param>
+        public static void Register(IConnection connection, Guid userID)
         {
+            // 注册连接
             mLockObj.EnterWriteLock();
             try
             {
@@ -119,6 +122,9 @@ namespace WebSocketServer
             {
                 mLockObj.ExitWriteLock();
             }
+
+            // 连接注册其用户
+            connection.Register(userID);
         }
 
         #endregion

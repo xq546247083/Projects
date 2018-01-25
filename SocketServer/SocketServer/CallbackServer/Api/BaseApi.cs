@@ -2,6 +2,7 @@
 * 描述:回调处理基类
 *************************************************************************/
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 

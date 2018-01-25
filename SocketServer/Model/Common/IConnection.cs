@@ -18,7 +18,13 @@ namespace SocketServer.Model
         void SendData<T>(T data);
 
         /// <summary>
-        /// 当前连接注册用户
+        /// 检查是否超时
+        /// </summary>
+        /// <returns>是否超时</returns>
+        Boolean CheckIfTimeout();
+
+        /// <summary>
+        /// 当前连接注册其用户
         /// </summary>
         /// <param name="userID"></param>
         void Register(Guid userID);

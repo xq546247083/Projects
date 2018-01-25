@@ -34,12 +34,28 @@ namespace SocketServer.BLL
         {
             var sysUser1 = new SysUser()
             {
-                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4380"),
+                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4381"),
                 UserName = "SysUser1",
                 Password = "123456"
             };
 
+            var sysUser2 = new SysUser()
+            {
+                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4382"),
+                UserName = "SysUser2",
+                Password = "123456"
+            };
+
+            var sysUser3 = new SysUser()
+            {
+                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4383"),
+                UserName = "SysUser3",
+                Password = "123456"
+            };
+
             mData[sysUser1.UserID] = sysUser1;
+            mData[sysUser2.UserID] = sysUser2;
+            mData[sysUser3.UserID] = sysUser3;
         }
 
         #endregion
@@ -68,7 +84,7 @@ namespace SocketServer.BLL
                 return mData[sysUserId];
             }
 
-            if (!ifCastExeption)
+            if (ifCastExeption)
             {
                 throw new Exception("用户不存在");
             }
@@ -105,10 +121,32 @@ namespace SocketServer.BLL
             }
 
             // 登录成功，注册连接
-            context.Connection.Register(userID);
+            ConnectionManager.Register(context.Connection, userID);
 
             result.Code = 0;
             result.Message = "登录成功";
+            return result;
+        }
+
+        /// <summary>
+        /// 广播消息
+        /// </summary>
+        /// <param name="context">上下文</param>
+        /// <param name="message">消息</param>
+        [InvokeMethod]
+        public static ReturnObject C_Broadcast(Context context, String message)
+        {
+            var result = new ReturnObject() { Code = -1 };
+
+            // 循环用户广播
+            var users = GetData();
+            foreach (var item in users.Values)
+            {
+                PushTool.Send(item.UserID, message);
+            }
+
+            result.Code = 0;
+            result.Message = "广播成功";
             return result;
         }
 

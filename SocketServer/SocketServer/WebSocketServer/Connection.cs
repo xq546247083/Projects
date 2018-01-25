@@ -107,6 +107,14 @@ namespace WebSocketServer
         }
 
         /// <summary>
+        /// 保持活跃
+        /// </summary>
+        private void KeepAlive()
+        {
+            this.AliveTime = DateTime.Now;
+        }
+
+        /// <summary>
         /// 处理消息
         /// </summary>
         /// <param name="message">数据</param>
@@ -150,18 +158,6 @@ namespace WebSocketServer
         #region 方法
 
         /// <summary>
-        /// 当前连接注册其用户
-        /// </summary>
-        /// <param name="userID"></param>
-        public void Register(Guid userID)
-        {
-            UserID = userID;
-
-            // 更新连接管理器
-            ConnectionManager.Register(this, userID);
-        }
-
-        /// <summary>
         /// 发送消息
         /// </summary>
         /// <param name="data">待发送的数据</param>
@@ -185,14 +181,6 @@ namespace WebSocketServer
         }
 
         /// <summary>
-        /// 保持活跃
-        /// </summary>
-        public void KeepAlive()
-        {
-            this.AliveTime = DateTime.Now;
-        }
-
-        /// <summary>
         /// 检查是否超时
         /// </summary>
         /// <returns>是否超时</returns>
@@ -201,6 +189,16 @@ namespace WebSocketServer
             return DateTime.Now.AddSeconds(-1 * MAX_KEEP_ALIVE_TIME) > this.AliveTime;
         }
 
+        /// <summary>
+        /// 当前连接注册其用户
+        /// </summary>
+        /// <param name="userID"></param>
+        public void Register(Guid userID)
+        {
+            // 管理器注册连接
+            UserID = userID;
+        }
+        
         #endregion
     }
 }
