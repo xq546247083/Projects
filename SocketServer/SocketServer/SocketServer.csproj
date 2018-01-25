@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\CommonCore\CoreTool\ReferenceFiles\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="websocket-sharp">
       <HintPath>..\..\CommonCore\CoreTool\ReferenceFiles\websocket-sharp.dll</HintPath>
     </Reference>

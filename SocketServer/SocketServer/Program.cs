@@ -60,6 +60,9 @@ namespace SocketServer
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
 
+                // 初始化Api方法
+                MethodManager.Load();
+
                 Console.WriteLine("服务器初始化成功！");
                 Log.Info("服务器初始化成功！");
 

@@ -27,7 +27,6 @@ namespace WebSocketServer
         /// 开启服务
         /// </summary>
         /// <param name="addr">监听地址</param>
-        /// <returns>服务开启后的实例对象</returns>
         public static void Start(String addr)
         {
             if (mServerInstance != null)

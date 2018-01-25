@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace WebSocketServer
 {
+    using SocketServer.BLL;
     using SocketServer.Model;
     using Tool.CustomAttribute;
 
@@ -37,31 +38,12 @@ namespace WebSocketServer
         #region 私有方法
 
         /// <summary>
-        /// 获取目标程序集
-        /// </summary>
-        /// <param name="assemblyName">程序集名称</param>
-        /// <returns>对应的程序集对象</returns>
-        private static Assembly GetTargetAssembly(String assemblyName)
-        {
-            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assemblyItem in allAssemblies)
-            {
-                if (assemblyItem.FullName.Contains(assemblyName))
-                {
-                    return assemblyItem;
-                }
-            }
-
-            throw new Exception(String.Format("未找到BLL对应的DLL：{0}", assemblyName));
-        }
-
-        /// <summary>
         /// 获取API的全名
         /// </summary>
         /// <param name="className">类名</param>
         /// <param name="methodName">方法名</param>
         /// <returns></returns>
-        private static String GetClientApiFullName(String className, String methodName)
+        private static String GetApiFullName(String className, String methodName)
         {
             return String.Format("{0}{1}", className, methodName);
         }
@@ -115,10 +97,10 @@ namespace WebSocketServer
         /// 加载所有需要的函数
         /// </summary>
         /// <param name="assemblyName">程序集名称</param>
-        public static void Load(String assemblyName)
+        public static void Load()
         {
             var result = new Dictionary<String, MethodReflectInfo>();
-            var assemblyItem = GetTargetAssembly(assemblyName);
+            var assemblyItem = Assembly.GetAssembly(typeof(SysUserBLL));
             var attrType = typeof(InvokeMethodAttribute);
 
             // 遍历所有class
@@ -158,7 +140,7 @@ namespace WebSocketServer
 
                     // 获取方法名
                     var methodName = methodItem.Name.Substring(MethodPrefix.Length, methodItem.Name.Length - MethodPrefix.Length);
-                    var methodFullName = GetClientApiFullName(className, methodName);
+                    var methodFullName = GetApiFullName(className, methodName);
 
                     // 检查方法
                     CheckMethod(classType, methodItem);
