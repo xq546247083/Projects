@@ -205,8 +205,15 @@ namespace WebSocketServer
         /// <param name="userID"></param>
         public void Register(Guid userID)
         {
-            // 管理器注册连接
             UserID = userID;
+        }
+
+        /// <summary>
+        /// 注销
+        /// </summary>
+        public void UnRegister()
+        {
+            UserID = Guid.Empty;
         }
 
         #endregion

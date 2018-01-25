@@ -112,7 +112,21 @@ namespace SocketServer.BLL
         /// <param name="userID">玩家Id</param>
         public static void Register(IConnection connection, Guid userID)
         {
-            // 注册连接
+            // 如果之前的登录过，注销用户
+            mLockObj.EnterReadLock();
+            try
+            {
+                if (mConnectionData.ContainsKey(userID))
+                {
+                    mConnectionData[userID].UnRegister();
+                }
+            }
+            finally
+            {
+                mLockObj.ExitReadLock();
+            }
+
+            // 注册连接到登录用户
             mLockObj.EnterWriteLock();
             try
             {

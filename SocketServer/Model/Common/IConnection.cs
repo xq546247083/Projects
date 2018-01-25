@@ -28,5 +28,10 @@ namespace SocketServer.Model
         /// </summary>
         /// <param name="userID"></param>
         void Register(Guid userID);
+
+        /// <summary>
+        /// 注销
+        /// </summary>
+        void UnRegister();
     }
 }
