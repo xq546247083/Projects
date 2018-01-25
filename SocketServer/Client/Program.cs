@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Client
 {
@@ -20,11 +21,13 @@ namespace Client
             Console.ReadKey();
             WebSocketClient.Send("Api=SysUserLogin&UserID=c3c3825c-b479-4b42-88db-352bab1b4381&Password=123456");
 
+            Thread.Sleep(1000);
             while (true)
             {
                 Console.WriteLine("输入要广播的消息");
                 var message = Console.ReadLine();
                 WebSocketClient.Send($"Api=SysUserBroadcast&Message={message}");
+                Thread.Sleep(1000);
             }
         }
     }

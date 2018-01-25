@@ -127,7 +127,10 @@ namespace WebSocketClient
         private static void Client_OnMessage(object sender, MessageEventArgs e)
         {
             var message = Encoding.UTF8.GetString(e.RawData);
-            Console.WriteLine(message);
+            if (!String.IsNullOrEmpty(message))
+            {
+                Console.WriteLine("收到来自服务器的消息：" + message);
+            }
         }
 
         /// <summary>
