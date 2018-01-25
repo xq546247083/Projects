@@ -13,13 +13,15 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            ClientConfig.Check();
+
             Console.WriteLine("点击任意键开启连接服务器...");
             Console.ReadKey();
-            WebSocketClient.Start(SocketServerConfig.WebSocketServerUrl);
+            WebSocketClient.Start(ClientConfig.WebSocketServerUrl);
 
             Console.WriteLine("点击任意键开始登陆");
             Console.ReadKey();
-            WebSocketClient.Send("Api=SysUserLogin&UserID=c3c3825c-b479-4b42-88db-352bab1b4381&Password=123456");
+            WebSocketClient.Send($"Api=SysUserLogin&UserID={ClientConfig.UserID}&Password={ClientConfig.Password}");
 
             Thread.Sleep(1000);
             while (true)
