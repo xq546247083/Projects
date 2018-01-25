@@ -54,6 +54,7 @@ namespace SocketServer.BLL
                     {
                         if (mConnectionData[userID].CheckIfTimeout())
                         {
+                            mConnectionData[userID].UnRegister();
                             mConnectionData.Remove(userID);
                         }
                     }
