@@ -22,6 +22,16 @@ namespace WebSocketServer
         #region 字段
 
         /// <summary>
+        /// 存活最长时间（单位：秒）
+        /// </summary>
+        private const Int32 MAX_KEEP_ALIVE_TIME = 5 * 60;
+
+        /// <summary>
+        /// 锁对象
+        /// </summary>
+        private Object lockObj = new Object();
+
+        /// <summary>
         /// 链接是否打开
         /// </summary>
         private Boolean isOpen = false;
@@ -32,28 +42,14 @@ namespace WebSocketServer
         private IPEndPoint clientIPEndPoint = null;
 
         /// <summary>
-        /// 存活最长时间（单位：秒）
-        /// </summary>
-        private const Int32 MAX_KEEP_ALIVE_TIME = 5 * 60;
-
-        /// <summary>
-        /// 锁对象
-        /// </summary>
-        private Object lockObj = new Object();
-
-        #endregion
-
-        #region 属性
-
-        /// <summary>
         /// 玩家Id
         /// </summary>
-        public Guid UserID { get; private set; }
+        private Guid UserID { get; set; }
 
         /// <summary>
         /// 活跃时间
         /// </summary>
-        public DateTime AliveTime { get; private set; }
+        private DateTime AliveTime { get; set; }
 
         #endregion
 
@@ -143,14 +139,14 @@ namespace WebSocketServer
                 // 处理获得的数据
                 var request = RequestTool.ConverToNameValueCollection(Encoding.UTF8.GetString(message), false, Encoding.UTF8);
 
-                // 获取用户
+                // 获取用户,如果没登录，用户为null
                 SysUser sysUser = null;
                 if (UserID != Guid.Empty)
                 {
                     sysUser = SysUserBLL.GetItem(UserID);
                 }
 
-                // 如果没登录，user为空，其他调用，user存在
+                // 组装上下文
                 var context = new Context(request, this, sysUser);
 
                 // 调用方法返回
