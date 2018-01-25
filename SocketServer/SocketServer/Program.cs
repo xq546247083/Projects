@@ -8,8 +8,8 @@ using System.Threading;
 namespace SocketServer
 {
     using CallbackServer;
-    using WebSocketServer;
     using Tool.Common;
+    using WebSocketServer;
 
     /// <summary>
     /// 启动
@@ -33,11 +33,11 @@ namespace SocketServer
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            Init();
-            StartServer();
-
-            Console.WriteLine("服务器启动成功！");
-            Log.Info("服务器启动成功！");
+            // 初始化成功则开启服务器！
+            if (Init())
+            {
+                StartServer();
+            }
 
             mStopSemaphore.WaitOne();
         }
@@ -47,7 +47,7 @@ namespace SocketServer
         /// <summary>
         /// 服务器初始化
         /// </summary>
-        static void Init()
+        static Boolean Init()
         {
             try
             {
@@ -59,12 +59,19 @@ namespace SocketServer
 
                 // 设置邮件信息
                 EmailTool.SetSenderInfo(SocketServerConfig.EmailHost, SocketServerConfig.EmailAddress, SocketServerConfig.EmailPass);
+
+                Console.WriteLine("服务器初始化成功！");
+                Log.Info("服务器初始化成功！");
+
+                return true;
             }
             catch (Exception ex)
             {
                 var exStr = $"服务器初始化失败。错误信息：{ex}";
                 Console.WriteLine(exStr);
                 Log.Error(exStr);
+
+                return false;
             }
         }
 
@@ -83,6 +90,9 @@ namespace SocketServer
 
                 // 启动回调服务器
                 CallbackServer.Start(SocketServerConfig.CallbackServerUrl);
+
+                Console.WriteLine("服务器启动成功！");
+                Log.Info("服务器启动成功！");
             }
             catch (Exception ex)
             {

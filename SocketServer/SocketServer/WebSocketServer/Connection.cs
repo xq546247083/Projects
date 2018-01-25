@@ -1,12 +1,15 @@
 ﻿//***********************************************************************************
 // socket连接处理类
 //***********************************************************************************
+using SocketServer.BLL;
 using System;
+using System.Collections.Specialized;
 using System.Net;
 using System.Text;
 
 namespace WebSocketServer
 {
+    using SocketServer.Model;
     using Tool.Common;
     using WebSocketSharp;
     using WebSocketSharp.Server;
@@ -14,7 +17,7 @@ namespace WebSocketServer
     /// <summary>
     /// websocket 连接处理类，每个新连接均会新建一个此对象
     /// </summary>
-    public class Connection : WebSocketBehavior
+    public class Connection : WebSocketBehavior, IConnection
     {
         #region 字段
 
@@ -40,7 +43,7 @@ namespace WebSocketServer
         /// <summary>
         /// 玩家Id
         /// </summary>
-        public Guid PlayerID { get; private set; }
+        public Guid UserID { get; private set; }
 
         /// <summary>
         /// 活跃时间
@@ -81,8 +84,11 @@ namespace WebSocketServer
 
             try
             {
+                // 处理获得的数据
                 var message = Encoding.UTF8.GetString(e.RawData);
-                HandleMessage(message);
+                var requestMessage = RequestTool.ConverToNameValueCollection(message, false, Encoding.UTF8);
+
+                HandleMessage(requestMessage);
             }
             catch (Exception ex)
             {
@@ -114,10 +120,25 @@ namespace WebSocketServer
         /// <summary>
         /// 处理消息
         /// </summary>
-        /// <param name="message">消息</param>
-        private void HandleMessage(String message)
+        /// <param name="request">请求</param>
+        private void HandleMessage(NameValueCollection request)
         {
             KeepAlive();
+
+            // 获取用户
+            SysUser sysUser = null;
+            if (UserID != Guid.Empty)
+            {
+                sysUser = SysUserBLL.GetItem(UserID);
+            }
+
+            // 如果没登录，user为空，其他调用，user存在
+            var context = new Context(request, this, sysUser);
+
+            // 调用方法返回
+            var returnObject = MethodManager.Call(context);
+
+            SendData(returnObject);
         }
 
         #endregion
@@ -138,7 +159,7 @@ namespace WebSocketServer
 
             // 反序列化数据
             var jsonStr = JsonTool.Serialize(data);
-            byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonStr);
+            byte[] byteData = Encoding.UTF8.GetBytes(jsonStr);
 
             // 锁住等待发送完成
             lock (lockObj)

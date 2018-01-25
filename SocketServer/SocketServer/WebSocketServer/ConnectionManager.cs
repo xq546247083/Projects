@@ -84,16 +84,16 @@ namespace WebSocketServer
         /// <summary>
         /// 获取连接
         /// </summary>
-        /// <param name="playerID">玩家Id</param>
+        /// <param name="userID">玩家Id</param>
         /// <returns>连接</returns>
-        public static Connection GetConnection(Guid playerID)
+        public static Connection GetConnection(Guid userID)
         {
             Connection result = null;
 
             mLockObj.EnterReadLock();
             try
             {
-                mConnectionData.TryGetValue(playerID, out result);
+                mConnectionData.TryGetValue(userID, out result);
             }
             finally
             {
@@ -108,14 +108,14 @@ namespace WebSocketServer
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="playerID">玩家Id</param>
-        public static void AddConnection(Connection connection, Guid playerID)
+        public static void AddConnection(Connection connection, Guid userID)
         {
             mLockObj.EnterWriteLock();
             try
             {
-                if (!mConnectionData.ContainsKey(playerID))
+                if (!mConnectionData.ContainsKey(userID))
                 {
-                    mConnectionData[playerID] = connection;
+                    mConnectionData[userID] = connection;
                 }
             }
             finally
