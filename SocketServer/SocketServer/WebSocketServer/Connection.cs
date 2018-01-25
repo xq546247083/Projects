@@ -163,7 +163,7 @@ namespace WebSocketServer
             }
 
             // 反序列化数据
-            var jsonStr = JsonConvert.SerializeObject(data); ;
+            var jsonStr = JsonTool.Serialize(data); ;
             byte[] byteData = Encoding.UTF8.GetBytes(jsonStr);
 
             // 锁住等待发送完成
