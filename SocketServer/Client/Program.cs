@@ -21,7 +21,7 @@ namespace Client
 
             Console.WriteLine("点击任意键开始登陆");
             Console.ReadKey();
-            WebSocketClient.Send($"Api=SysUserLogin&UserID={ClientConfig.UserID}&Password={ClientConfig.Password}");
+            WebSocketClient.Send($"Api=SysUserLogin&UserID={ClientConfig.UserID}&NickName={ClientConfig.NickName}");
 
             Thread.Sleep(1000);
             while (true)

@@ -158,11 +158,11 @@ namespace SocketServer.BLL
             ConnectionManager.Register(context.Connection, userID);
 
             // 广播给其他用户自己登录了
-            PushToAll(context.SysUser, ClientCmdEnum.Push_Login, sysUser);
+            PushToAll(sysUser, ClientCmdEnum.Push_Login, sysUser);
 
             result.Code = 0;
             result.Message = "登录成功";
-            result.Data = GetOnlineUser().Where(r => r.UserID != context.SysUser.UserID).ToList();
+            result.Data = GetOnlineUser().Where(r => r.UserID != sysUser.UserID).ToList();
             return result;
         }
 

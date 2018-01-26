@@ -26,9 +26,9 @@ namespace Tool.Common
         public static String UserID;
 
         /// <summary>
-        /// Password
+        /// NickName
         /// </summary>
-        public static String Password;
+        public static String NickName;
 
         /// <summary>
         /// check方法
@@ -47,10 +47,10 @@ namespace Tool.Common
                 throw new Exception("UserID没有配置");
             }
 
-            Password = ConfigurationManager.AppSettings["Password"];
-            if (Password == null)
+            NickName = ConfigurationManager.AppSettings["NickName"];
+            if (NickName == null)
             {
-                throw new Exception("Password没有配置");
+                throw new Exception("NickName没有配置");
             }
         }
     }
