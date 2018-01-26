@@ -148,7 +148,7 @@ namespace SocketServer.BLL
         [InvokeMethod]
         public static ReturnObject C_Login(Context context, String userID, String nickName)
         {
-            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUser_Login };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUserLogin };
 
             if (String.IsNullOrEmpty(userID))
             {
@@ -185,7 +185,7 @@ namespace SocketServer.BLL
         [InvokeMethod]
         public static ReturnObject C_Logout(Context context)
         {
-            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUser_Logout };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUserLogout };
 
             // 更新登录状态
             context.SysUser.Status = false;
@@ -207,7 +207,7 @@ namespace SocketServer.BLL
         [InvokeMethod]
         public static ReturnObject C_Broadcast(Context context, String message)
         {
-            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUser_Broadcast };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUserBroadcast };
 
             var resultValue = new Dictionary<String, Object>
             {
@@ -232,7 +232,7 @@ namespace SocketServer.BLL
         [InvokeMethod]
         public static ReturnObject C_Chat(Context context, String toUserID, String message)
         {
-            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUser_Chat };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUserChat };
 
             var toUser = GetItem(toUserID, false);
             if (toUser == null)

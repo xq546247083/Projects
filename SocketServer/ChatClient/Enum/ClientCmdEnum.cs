@@ -12,22 +12,22 @@ namespace ChatClient
         /// <summary>
         /// 登录
         /// </summary>
-        SysUser_Login = 1,
+        SysUserLogin = 1,
 
         /// <summary>
         /// 广播消息
         /// </summary>
-        SysUser_Broadcast = 2,
+        SysUserBroadcast = 2,
 
         /// <summary>
         /// 个人消息
         /// </summary>
-        SysUser_Chat = 3,
+        SysUserChat = 3,
 
         /// <summary>
         /// 退出
         /// </summary>
-        SysUser_Logout=4,
+        SysUserLogout=4,
 
         /// <summary>
         /// 推送登录了
