@@ -4,7 +4,6 @@ using System.Threading;
 namespace Client
 {
     using Tool.Common;
-    using WebSocketClient;
 
     /// <summary>
     /// 测试客户端

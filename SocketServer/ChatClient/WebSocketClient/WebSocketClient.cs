@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Client
+namespace ChatClient
 {
     using WebSocketSharp;
     using Logg = Tool.Common.Log;
