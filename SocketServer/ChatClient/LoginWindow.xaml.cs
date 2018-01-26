@@ -29,8 +29,6 @@ namespace ChatClient
         {
             // 初始化配置
             ChatClientConfig.Init();
-            // 开启客户端连接
-            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
         }
 
         /// <summary>
@@ -75,7 +73,9 @@ namespace ChatClient
             request["UserID"] = userID;
             request["NickName"] = nickName;
 
-            WebSocketClient.Send(ClientCmdEnum.SysUser_Login, request);
+            // 登录之前开启连接
+            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
+            WebSocketClient.Send(ClientCmdEnum.SysUserLogin, request);
         }
     }
 }

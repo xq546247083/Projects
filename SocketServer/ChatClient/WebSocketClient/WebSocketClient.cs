@@ -42,7 +42,7 @@ namespace ChatClient
         {
             if (mClientInstance != null)
             {
-                throw new Exception("客户端连接已开启");
+                return;
             }
 
             // websocket 协议控制
