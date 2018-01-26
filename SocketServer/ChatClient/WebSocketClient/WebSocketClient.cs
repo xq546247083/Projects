@@ -11,7 +11,6 @@ namespace ChatClient
 {
     using Tool.Common;
     using WebSocketSharp;
-    using Logg = Tool.Common.Log;
 
     /// <summary>
     /// WebSocketClient客户端
@@ -29,6 +28,11 @@ namespace ChatClient
         /// 是否开启
         /// </summary>
         private static Boolean isOpen = false;
+
+        /// <summary>
+        /// 处理消息事件
+        /// </summary>
+        public static Action<ReturnObject> HandleMessage = null;
 
         #endregion
 
@@ -48,14 +52,14 @@ namespace ChatClient
             // websocket 协议控制
             if (addr.ToLower().StartsWith("ws:") == false)
             {
-                addr = String.Format("ws://{0}/client", addr.TrimStart('/'));
+                addr = $"ws://{addr.TrimStart('/')}/client";
             }
 
             var client = new WebSocket(addr);
-            client.OnOpen += Client_OnOpen; ;
-            client.OnMessage += Client_OnMessage; ;
-            client.OnClose += Client_OnClose; ;
-            client.OnError += Client_OnError; ;
+            client.OnOpen += Client_OnOpen;
+            client.OnMessage += Client_OnMessage;
+            client.OnClose += Client_OnClose;
+            client.OnError += Client_OnError;
             client.Connect();
 
             mClientInstance = client;
@@ -83,14 +87,7 @@ namespace ChatClient
         /// </summary>
         public static void Stop()
         {
-            if (mClientInstance == null)
-            {
-                return;
-            }
-
-            isOpen = false;
-            mClientInstance.Close();
-            mClientInstance = null;
+            mClientInstance?.Close();
         }
 
         #endregion
@@ -130,9 +127,14 @@ namespace ChatClient
         private static void Client_OnMessage(object sender, MessageEventArgs e)
         {
             var message = Encoding.UTF8.GetString(e.RawData);
-            if (!String.IsNullOrEmpty(message))
+
+            try
             {
-                Console.WriteLine("收到来自服务器的消息：" + message);
+                HandleMessage?.Invoke(JsonTool.Deserialize<ReturnObject>(message));
+            }
+            catch (Exception ex)
+            {
+                Log.Debug($"收到消息处理错误:{ex}");
             }
         }
 
@@ -143,7 +145,7 @@ namespace ChatClient
         /// <param name="e">e</param>
         private static void Client_OnError(object sender, ErrorEventArgs e)
         {
-            Logg.Error(e.ToString());
+            Log.Error(e.ToString());
         }
 
         /// <summary>
@@ -154,6 +156,7 @@ namespace ChatClient
         private static void Client_OnClose(object sender, CloseEventArgs e)
         {
             isOpen = false;
+            mClientInstance = null;
         }
 
         #endregion  

@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ReturnObject.cs" />
     <Compile Include="Enum\ClientCmdEnum.cs" />
     <Compile Include="WebSocketClient\WebSocketClient.cs" />
     <Page Include="LoginWindow.xaml">
@@ -116,5 +117,6 @@
       <Name>Tool</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

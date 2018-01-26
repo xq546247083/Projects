@@ -29,6 +29,12 @@ namespace ChatClient
         {
             // 初始化配置
             ChatClientConfig.Init();
+
+            // 开始链接
+            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
+
+            // 注册消息接受事件
+            WebSocketClient.HandleMessage += WebSocketClient_HandleMessage;
         }
 
         /// <summary>
@@ -73,9 +79,26 @@ namespace ChatClient
             request["UserID"] = userID;
             request["NickName"] = nickName;
 
-            // 登录之前开启连接
-            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
-            WebSocketClient.Send(ClientCmdEnum.SysUserLogin, request);
+            try
+            {
+                WebSocketClient.Send(ClientCmdEnum.SysUserLogin, request);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 处理接受到的消息
+        /// </summary>
+        /// <param name="returnObject">返回的结果</param>
+        void WebSocketClient_HandleMessage(ReturnObject returnObject)
+        {
+            if (returnObject.Code != 0)
+            {
+                MessageBox.Show(returnObject.Message);
+            }
         }
     }
 }

@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ReferenceFiles\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="newtonsoft.json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceFiles\newtonsoft.json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\JsonTool.cs" />
     <Compile Include="Common\RequestTool.cs" />
     <Compile Include="Common\StringTool.cs" />
     <Compile Include="Common\RandomTool.cs" />
