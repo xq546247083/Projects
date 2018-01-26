@@ -182,6 +182,7 @@ namespace WebSocketServer
 
             // 反序列化数据
             var jsonStr = JsonTool.Serialize(data); ;
+            Logg.Debug($"给【{GetClientAddr()}】发送消息:{jsonStr}");
             byte[] byteData = Encoding.UTF8.GetBytes(jsonStr);
 
             // 锁住等待发送完成

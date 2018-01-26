@@ -75,7 +75,7 @@ namespace ChatClient
             request["UserID"] = userID;
             request["NickName"] = nickName;
 
-            WebSocketClient.Send(ClientCmdEnum.Login, request);
+            WebSocketClient.Send(ClientCmdEnum.SysUser_Login, request);
         }
     }
 }
