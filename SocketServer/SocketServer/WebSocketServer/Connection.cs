@@ -44,7 +44,7 @@ namespace WebSocketServer
         /// <summary>
         /// 玩家Id
         /// </summary>
-        private Guid UserID { get; set; }
+        private String UserID { get; set; }
 
         /// <summary>
         /// 活跃时间
@@ -141,7 +141,7 @@ namespace WebSocketServer
 
                 // 获取用户,如果没登录，用户为null
                 SysUser sysUser = null;
-                if (UserID != Guid.Empty)
+                if (!String.IsNullOrEmpty(UserID))
                 {
                     sysUser = SysUserBLL.GetItem(UserID);
                 }
@@ -171,7 +171,7 @@ namespace WebSocketServer
         /// 发送消息
         /// </summary>
         /// <param name="data">待发送的数据</param>
-        public void SendData<T>(T data)
+        public void SendData(ReturnObject data)
         {
             // 如果链接关闭，则直接丢掉数据
             if (isOpen == false)
@@ -203,7 +203,7 @@ namespace WebSocketServer
         /// 当前连接注册其用户
         /// </summary>
         /// <param name="userID"></param>
-        public void Register(Guid userID)
+        public void Register(String userID)
         {
             UserID = userID;
         }
@@ -213,7 +213,7 @@ namespace WebSocketServer
         /// </summary>
         public void UnRegister()
         {
-            UserID = Guid.Empty;
+            UserID = String.Empty;
         }
 
         #endregion

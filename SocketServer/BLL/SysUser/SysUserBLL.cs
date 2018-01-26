@@ -3,10 +3,13 @@
 *************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SocketServer.BLL
 {
+    using SocketServer.Enum;
     using SocketServer.Model;
+    using System.Threading;
     using Tool.CustomAttribute;
 
     /// <summary>
@@ -17,11 +20,16 @@ namespace SocketServer.BLL
         #region 属性
 
         /// <summary>
+        /// 锁对象
+        /// </summary>
+        private static ReaderWriterLockSlim mLockObj = new ReaderWriterLockSlim();
+
+        /// <summary>
         /// 玩家数据集合
         /// key:玩家id
         /// value:玩家对象
         /// </summary>
-        private static Dictionary<Guid, SysUser> mData = new Dictionary<Guid, SysUser>();
+        private static Dictionary<String, SysUser> mData = new Dictionary<String, SysUser>();
 
         #endregion
 
@@ -32,30 +40,7 @@ namespace SocketServer.BLL
         /// </summary>
         public void Init()
         {
-            var sysUser1 = new SysUser()
-            {
-                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4381"),
-                UserName = "SysUser1",
-                Password = "123456"
-            };
 
-            var sysUser2 = new SysUser()
-            {
-                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4382"),
-                UserName = "SysUser2",
-                Password = "123456"
-            };
-
-            var sysUser3 = new SysUser()
-            {
-                UserID = Guid.Parse("c3c3825c-b479-4b42-88db-352bab1b4383"),
-                UserName = "SysUser3",
-                Password = "123456"
-            };
-
-            mData[sysUser1.UserID] = sysUser1;
-            mData[sysUser2.UserID] = sysUser2;
-            mData[sysUser3.UserID] = sysUser3;
         }
 
         #endregion
@@ -66,9 +51,18 @@ namespace SocketServer.BLL
         /// 获取数据
         /// </summary>
         /// <returns>数据</returns>
-        public static Dictionary<Guid, SysUser> GetData()
+        public static Dictionary<String, SysUser> GetDataForCopy()
         {
-            return mData;
+            return new Dictionary<String, SysUser>(mData);
+        }
+
+        /// <summary>
+        /// 获取在线用户列表
+        /// </summary>
+        /// <returns>数据</returns>
+        public static List<SysUser> GetOnlineUser()
+        {
+            return GetDataForCopy().Values.Where(r => r.Status).ToList();
         }
 
         /// <summary>
@@ -77,11 +71,19 @@ namespace SocketServer.BLL
         /// <param name="sysUserId">玩家id</param>
         /// <param name="ifCastExeption">是否跑出错误</param>
         /// <returns>玩家</returns>
-        public static SysUser GetItem(Guid sysUserId, Boolean ifCastExeption = true)
+        public static SysUser GetItem(String sysUserId, Boolean ifCastExeption = true)
         {
-            if (GetData().ContainsKey(sysUserId))
+            mLockObj.EnterReadLock();
+            try
             {
-                return mData[sysUserId];
+                if (mData.ContainsKey(sysUserId))
+                {
+                    return mData[sysUserId];
+                }
+            }
+            finally
+            {
+                mLockObj.ExitReadLock();
             }
 
             if (ifCastExeption)
@@ -90,6 +92,47 @@ namespace SocketServer.BLL
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="sysUser">用户</param>
+        /// <returns>添加</returns>
+        public static void UpdateUser(SysUser sysUser)
+        {
+            mLockObj.EnterWriteLock();
+            try
+            {
+                mData[sysUser.UserID] = sysUser;
+            }
+            finally
+            {
+                mLockObj.ExitWriteLock();
+            }
+        }
+
+        #endregion
+
+        #region 推送方法
+
+        /// <summary>
+        /// 给所有人推送消息（不包括自己）
+        /// </summary>
+        /// <param name="sysUser">自己</param>
+        /// <param name="clientCmdEnum">消息</param>
+        /// <param name="data">数据</param>
+        public static void PushToAll(SysUser sysUser, ClientCmdEnum clientCmdEnum, Object data)
+        {
+            // 推送数据
+            var users = GetDataForCopy();
+            foreach (var item in users.Values)
+            {
+                if (item.UserID != sysUser.UserID && item.Status)
+                {
+                    PushTool.Send(item.UserID, clientCmdEnum, 0, data);
+                }
+            }
         }
 
         #endregion
@@ -101,30 +144,25 @@ namespace SocketServer.BLL
         /// </summary>
         /// <param name="context">上下文</param>
         /// <param name="userID">用户名</param>
-        /// <param name="password">密码</param>
+        /// <param name="nickName">昵称</param>
         [InvokeMethod]
-        public static ReturnObject C_Login(Context context, Guid userID, String password)
+        public static ReturnObject C_Login(Context context, String userID, String nickName)
         {
-            var result = new ReturnObject() { Code = -1 };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Login };
 
-            var sysUser = GetItem(userID, false);
-            if (sysUser == null)
-            {
-                result.Message = "用户不存在";
-                return result;
-            }
-
-            if (sysUser.Password != password)
-            {
-                result.Message = "密码不正确";
-                return result;
-            }
+            // 更新用户
+            var sysUser = new SysUser { UserID = userID, NickName = nickName, Status = true };
+            UpdateUser(sysUser);
 
             // 登录成功，注册连接
             ConnectionManager.Register(context.Connection, userID);
 
+            // 广播给其他用户自己登录了
+            PushToAll(context.SysUser, ClientCmdEnum.Push_Login, sysUser);
+
             result.Code = 0;
             result.Message = "登录成功";
+            result.Data = GetOnlineUser().Where(r => r.UserID != context.SysUser.UserID).ToList();
             return result;
         }
 
@@ -136,17 +174,76 @@ namespace SocketServer.BLL
         [InvokeMethod]
         public static ReturnObject C_Broadcast(Context context, String message)
         {
-            var result = new ReturnObject() { Code = -1 };
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Broadcast };
 
-            // 循环用户广播
-            var users = GetData();
-            foreach (var item in users.Values)
+            var resultValue = new Dictionary<String, Object>
             {
-                PushTool.Send(item.UserID, message);
-            }
+                ["FromUserID"] = context.SysUser.UserID,
+                ["Message"] = message
+            };
+
+            // 广播消息
+            PushToAll(context.SysUser, ClientCmdEnum.Push_Broadcast, resultValue);
 
             result.Code = 0;
-            result.Message = "广播成功";
+            result.Message = "发送成功";
+            return result;
+        }
+
+        /// <summary>
+        /// 私聊消息
+        /// </summary>
+        /// <param name="context">上下文</param>
+        /// <param name="toUserID">目标用户Id</param>
+        /// <param name="message">消息</param>
+        [InvokeMethod]
+        public static ReturnObject C_Chat(Context context, String toUserID, String message)
+        {
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Chat };
+
+            var toUser = GetItem(toUserID, false);
+            if (toUser == null)
+            {
+                result.Message = "目标玩家不存在!";
+                return result;
+            }
+
+            if (!toUser.Status)
+            {
+                result.Message = "目标玩家不在线!";
+                return result;
+            }
+
+            var resultValue = new Dictionary<String, Object>
+            {
+                ["FromUserID"] = context.SysUser.UserID,
+                ["Message"] = message
+            };
+            PushTool.Send(toUserID, ClientCmdEnum.Push_Chat, 0, resultValue);
+
+            result.Code = 0;
+            result.Message = "发送成功";
+            return result;
+        }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        /// <param name="context">上下文</param>
+        [InvokeMethod]
+        public static ReturnObject C_Logout(Context context)
+        {
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Logout };
+
+            // 更新登录状态
+            context.SysUser.Status = false;
+            ConnectionManager.UnRegister(context.Connection, context.SysUser.UserID);
+
+            // 广播给其他用户自己退出了
+            PushToAll(context.SysUser, ClientCmdEnum.Push_Logout, context.SysUser.UserID);
+
+            result.Code = 0;
+            result.Message = "退出成功";
             return result;
         }
 

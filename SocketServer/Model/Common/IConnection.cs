@@ -15,7 +15,7 @@ namespace SocketServer.Model
         /// 发送数据
         /// </summary>
         /// <param name="data">待发送的数据</param>
-        void SendData<T>(T data);
+        void SendData(ReturnObject data);
 
         /// <summary>
         /// 检查是否超时
@@ -27,7 +27,7 @@ namespace SocketServer.Model
         /// 当前连接注册其用户
         /// </summary>
         /// <param name="userID"></param>
-        void Register(Guid userID);
+        void Register(String userID);
 
         /// <summary>
         /// 注销

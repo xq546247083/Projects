@@ -21,7 +21,7 @@ namespace SocketServer.BLL
         /// <summary>
         /// 连接适配器对象
         /// </summary>
-        private static Dictionary<Guid, IConnection> mConnectionData = new Dictionary<Guid, IConnection>();
+        private static Dictionary<String, IConnection> mConnectionData = new Dictionary<String, IConnection>();
 
         /// <summary>
         /// 锁对象
@@ -88,7 +88,7 @@ namespace SocketServer.BLL
         /// </summary>
         /// <param name="userID">玩家Id</param>
         /// <returns>连接</returns>
-        public static IConnection GetConnection(Guid userID)
+        public static IConnection GetConnection(String userID)
         {
             mLockObj.EnterReadLock();
             try
@@ -111,7 +111,7 @@ namespace SocketServer.BLL
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="userID">玩家Id</param>
-        public static void Register(IConnection connection, Guid userID)
+        public static void Register(IConnection connection, String userID)
         {
             // 如果之前的登录过，注销用户
             mLockObj.EnterReadLock();
@@ -147,7 +147,7 @@ namespace SocketServer.BLL
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="userID">玩家Id</param>
-        public static void UnRegister(IConnection connection, Guid userID)
+        public static void UnRegister(IConnection connection, String userID)
         {
             // 注销用户
             mLockObj.EnterWriteLock();

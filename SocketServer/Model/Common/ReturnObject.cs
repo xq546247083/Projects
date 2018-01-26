@@ -2,6 +2,7 @@
 // 返回对象
 //***********************************************************************************
 using System;
+using SocketServer.Enum;
 
 namespace SocketServer.Model
 {
@@ -14,6 +15,11 @@ namespace SocketServer.Model
         /// 返回的状态值；0：成功；非0：失败
         /// </summary>
         public Int32 Code { get; set; }
+
+        /// <summary>
+        /// 客户端命令枚举
+        /// </summary>
+        public ClientCmdEnum Cmd { get; set; }
 
         /// <summary>
         /// 返回的描述信息

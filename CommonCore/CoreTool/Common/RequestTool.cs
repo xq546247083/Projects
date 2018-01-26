@@ -6,6 +6,7 @@
 * 版本：V1
 *************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
 using System.Web;
