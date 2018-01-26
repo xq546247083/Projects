@@ -2,12 +2,14 @@
 // WebSocketClient客户端
 //***********************************************************************************
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChatClient
 {
+    using Tool.Common;
     using WebSocketSharp;
     using Logg = Tool.Common.Log;
 
@@ -64,15 +66,16 @@ namespace ChatClient
         /// <summary>
         /// 发送消息
         /// </summary>
-        /// <param name="message">消息</param>
-        public static void Send(String message)
+        /// <param name="cmd">命令</param>
+        /// <param name="request">请求数据</param>
+        public static void Send(ClientCmdEnum cmd, Dictionary<String, Object> request)
         {
             if (!isOpen)
             {
                 throw new Exception("链接未开启");
             }
 
-            mClientInstance.Send(message);
+            mClientInstance.Send($"Api={cmd}&{RequestTool.DicToString(request)}");
         }
 
         /// <summary>
@@ -102,7 +105,7 @@ namespace ChatClient
             var message = Encoding.UTF8.GetString(new Byte[0]);
             while (isOpen)
             {
-                Send(message);
+                mClientInstance.Send(message);
 
                 Thread.Sleep(5000);
             }

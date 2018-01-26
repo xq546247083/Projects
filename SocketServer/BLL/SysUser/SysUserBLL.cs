@@ -150,6 +150,18 @@ namespace SocketServer.BLL
         {
             var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Login };
 
+            if (String.IsNullOrEmpty(userID))
+            {
+                result.Message = "用户ID不能为空";
+                return result;
+            }
+
+            if (String.IsNullOrEmpty(nickName))
+            {
+                result.Message = "昵称不能为空";
+                return result;
+            }
+
             // 更新用户
             var sysUser = new SysUser { UserID = userID, NickName = nickName, Status = true };
             UpdateUser(sysUser);

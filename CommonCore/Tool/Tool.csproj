@@ -39,6 +39,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,12 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\RequestTool.cs" />
     <Compile Include="Common\StringTool.cs" />
     <Compile Include="Common\RandomTool.cs" />
     <Compile Include="Common\DateTimeTool.cs" />
     <Compile Include="Common\EmailTool.cs" />
     <Compile Include="Common\EncrpytTool.cs" />
     <Compile Include="Common\ParseTool.cs" />
+    <Compile Include="Config\ChatClientConfig.cs" />
     <Compile Include="Config\CommonWebSiteConfig.cs" />
     <Compile Include="Extension\ExExtention.cs" />
     <Compile Include="Common\ReaderWriterLockTool.cs" />

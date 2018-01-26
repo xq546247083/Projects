@@ -1,4 +1,7 @@
-﻿using System;
+﻿/************************************************************************
+* 测试客户端
+*************************************************************************/
+using System;
 using System.Threading;
 
 namespace Client
@@ -10,6 +13,10 @@ namespace Client
     /// </summary>
     class Program
     {
+        /// <summary>
+        /// 入口
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             ClientConfig.Init();
