@@ -1,5 +1,5 @@
 ﻿//***********************************************************************************
-// WebSocketServer客户端
+// WebSocketClient客户端
 //***********************************************************************************
 using System;
 using System.Text;
@@ -12,7 +12,7 @@ namespace Client
     using Logg = Tool.Common.Log;
 
     /// <summary>
-    /// WebSocketServer客户端
+    /// WebSocketClient客户端
     /// </summary>
     public class WebSocketClient
     {
