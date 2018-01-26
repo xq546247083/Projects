@@ -16,13 +16,21 @@ namespace ChatClient
     {
         public LoginWindow()
         {
-            // 开启服务器
-            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
-
             InitializeComponent();
 
-            // 初始化界面数据
+            Init();
             InitData();
+        }
+
+        /// <summary>
+        /// 程序启动初始化
+        /// </summary>
+        private void Init()
+        {
+            // 初始化配置
+            ChatClientConfig.Init();
+            // 开启客户端连接
+            WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);
         }
 
         /// <summary>

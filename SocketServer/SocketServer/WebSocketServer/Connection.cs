@@ -78,6 +78,7 @@ namespace WebSocketServer
                 return;
             }
 
+            Logg.Debug($"收到来自【{GetClientAddr()}】的消息:{Encoding.UTF8.GetString(e.RawData)}");
             HandleMessage(e.RawData);
         }
 
