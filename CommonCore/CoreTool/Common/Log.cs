@@ -228,7 +228,7 @@ namespace Tool.Common
             String fileName = String.Format("{0}-{1}.{2}.{3}", new object[] { DateTimeTool.GetShortGreenWichTime(now), now.Hour.ToString(), Enum.GetName(typeof(LogType), logType), "txt" });
             try
             {
-                content = String.Format("{0}{1} {2}", "#", DateTimeTool.GetGreenWichTime(now), content);
+                content = String.Format("{0}{1}{2}{3}", "#", DateTimeTool.GetGreenWichTime(now), Environment.NewLine, content);
                 FileTool.WriteFile(filePath, fileName, true, new String[]
                 {
                     content,
