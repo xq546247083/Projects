@@ -3,6 +3,7 @@
 *************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 namespace ChatClient
@@ -29,6 +30,9 @@ namespace ChatClient
         {
             // 初始化配置
             ChatClientConfig.Init();
+
+            // 设置日志位置
+            Log.Set(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log"), true, true, true, true);
 
             // 开始链接
             WebSocketClient.Start(ChatClientConfig.WebSocketServerUrl);

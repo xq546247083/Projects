@@ -116,7 +116,7 @@ namespace ChatClient
         private static void Client_OnOpen(object sender, EventArgs e)
         {
             isOpen = true;
-            Console.WriteLine("客户端连接成功！");
+            Log.Info("连接成功！");
         }
 
         /// <summary>
@@ -127,14 +127,20 @@ namespace ChatClient
         private static void Client_OnMessage(object sender, MessageEventArgs e)
         {
             var message = Encoding.UTF8.GetString(e.RawData);
+            if (String.IsNullOrEmpty(message))
+            {
+                return;
+            }
 
+            // 处理消息
+            Log.Info($"收到服务器消息：{message}");
             try
             {
                 HandleMessage?.Invoke(JsonTool.Deserialize<ReturnObject>(message));
             }
             catch (Exception ex)
             {
-                Log.Debug($"收到消息处理错误:{ex}");
+                Log.Error($"消息处理错误:{ex}");
             }
         }
 
@@ -155,6 +161,8 @@ namespace ChatClient
         /// <param name="e">e</param>
         private static void Client_OnClose(object sender, CloseEventArgs e)
         {
+            Log.Info("连接关闭！");
+
             isOpen = false;
             mClientInstance = null;
         }
