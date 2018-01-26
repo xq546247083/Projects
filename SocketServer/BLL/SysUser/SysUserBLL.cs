@@ -167,6 +167,27 @@ namespace SocketServer.BLL
         }
 
         /// <summary>
+        /// 退出
+        /// </summary>
+        /// <param name="context">上下文</param>
+        [InvokeMethod]
+        public static ReturnObject C_Logout(Context context)
+        {
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Logout };
+
+            // 更新登录状态
+            context.SysUser.Status = false;
+            ConnectionManager.UnRegister(context.Connection, context.SysUser.UserID);
+
+            // 广播给其他用户自己退出了
+            PushToAll(context.SysUser, ClientCmdEnum.Push_Logout, context.SysUser.UserID);
+
+            result.Code = 0;
+            result.Message = "退出成功";
+            return result;
+        }
+
+        /// <summary>
         /// 广播消息
         /// </summary>
         /// <param name="context">上下文</param>
@@ -223,27 +244,6 @@ namespace SocketServer.BLL
 
             result.Code = 0;
             result.Message = "发送成功";
-            return result;
-        }
-
-        /// <summary>
-        /// 退出
-        /// </summary>
-        /// <param name="context">上下文</param>
-        [InvokeMethod]
-        public static ReturnObject C_Logout(Context context)
-        {
-            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Logout };
-
-            // 更新登录状态
-            context.SysUser.Status = false;
-            ConnectionManager.UnRegister(context.Connection, context.SysUser.UserID);
-
-            // 广播给其他用户自己退出了
-            PushToAll(context.SysUser, ClientCmdEnum.Push_Logout, context.SysUser.UserID);
-
-            result.Code = 0;
-            result.Message = "退出成功";
             return result;
         }
 
