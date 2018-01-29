@@ -59,14 +59,6 @@ namespace ChatClient
         }
 
         /// <summary>
-        /// 加载之后
-        /// </summary>
-        private new void Loaded()
-        {
-            this.DialogResult = false;
-        }
-
-        /// <summary>
         /// 点击登录
         /// </summary>
         /// <param name="sender">sender</param>
