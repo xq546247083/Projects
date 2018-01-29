@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace WebSocketServer
+namespace SocketServer.BLL
 {
     using SocketServer.BLL;
     using SocketServer.Model;

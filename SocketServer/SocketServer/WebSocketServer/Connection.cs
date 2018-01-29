@@ -44,7 +44,7 @@ namespace WebSocketServer
         /// <summary>
         /// 玩家Id
         /// </summary>
-        private String UserID { get; set; }
+        public String UserID { get; set; }
 
         /// <summary>
         /// 活跃时间
@@ -79,7 +79,7 @@ namespace WebSocketServer
             }
 
             Logg.Debug($"收到来自【{GetClientAddr()}】的消息:{Encoding.UTF8.GetString(e.RawData)}");
-            HandleMessage(e.RawData);
+            ConnectionManager.HandleMessage(this, e.RawData);
         }
 
         /// <summary>
@@ -117,53 +117,6 @@ namespace WebSocketServer
             return clientIPEndPoint;
         }
 
-        /// <summary>
-        /// 保持活跃
-        /// </summary>
-        private void KeepAlive()
-        {
-            this.AliveTime = DateTime.Now;
-        }
-
-        /// <summary>
-        /// 处理消息
-        /// </summary>
-        /// <param name="message">数据</param>
-        private void HandleMessage(byte[] message)
-        {
-            var result = new ReturnObject() { Code = -1 };
-
-            try
-            {
-                KeepAlive();
-
-                // 处理获得的数据
-                var request = RequestTool.ConverToNameValueCollection(Encoding.UTF8.GetString(message), false, Encoding.UTF8);
-
-                // 获取用户,如果没登录，用户为null
-                SysUser sysUser = null;
-                if (!String.IsNullOrEmpty(UserID))
-                {
-                    sysUser = SysUserBLL.GetItem(UserID);
-                }
-
-                // 组装上下文
-                var context = new Context(request, this, sysUser);
-
-                // 调用方法返回
-                result = MethodManager.Call(context);
-            }
-            catch (Exception ex)
-            {
-                Logg.Error($"处理数据异常:{ex}");
-                result.Message = ex.Message;
-            }
-            finally
-            {
-                SendData(result);
-            }
-        }
-
         #endregion
 
         #region 方法
@@ -190,6 +143,14 @@ namespace WebSocketServer
             {
                 Send(byteData);
             }
+        }
+
+        /// <summary>
+        /// 保持活跃
+        /// </summary>
+        public void KeepAlive()
+        {
+            this.AliveTime = DateTime.Now;
         }
 
         /// <summary>

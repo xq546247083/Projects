@@ -18,10 +18,20 @@ namespace SocketServer.Model
         void SendData(ReturnObject data);
 
         /// <summary>
+        /// 保持连接活跃
+        /// </summary>
+        void KeepAlive();
+
+        /// <summary>
         /// 检查是否超时
         /// </summary>
         /// <returns>是否超时</returns>
         Boolean CheckIfTimeout();
+
+        /// <summary>
+        /// 用户id
+        /// </summary>
+        String UserID { get; set; }
 
         /// <summary>
         /// 当前连接注册其用户

@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SocketServer.BLL
 {
     using SocketServer.Model;
+    using Tool.Common;
 
     /// <summary>
     /// WebSocket管理对象
@@ -81,6 +83,45 @@ namespace SocketServer.BLL
             }
 
             mainTask = Task.Factory.StartNew(HandleConnect);
+        }
+
+        /// <summary>
+        /// 处理消息
+        /// </summary>
+        /// <param name="connection">连接</param>
+        /// <param name="message">数据</param>
+        public static void HandleMessage(IConnection connection, byte[] message)
+        {
+            var result = new ReturnObject() { Code = -1 };
+
+            try
+            {
+                connection.KeepAlive();
+                // 处理获得的数据
+                var request = RequestTool.ConverToNameValueCollection(Encoding.UTF8.GetString(message), false, Encoding.UTF8);
+
+                // 获取用户,如果没登录，用户为null
+                SysUser sysUser = null;
+                if (!String.IsNullOrEmpty(connection.UserID))
+                {
+                    sysUser = SysUserBLL.GetItem(connection.UserID);
+                }
+
+                // 组装上下文
+                var context = new Context(request, connection, sysUser);
+
+                // 调用方法返回
+                result = MethodManager.Call(context);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"处理数据异常:{ex}");
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                connection.SendData(result);
+            }
         }
 
         /// <summary>
