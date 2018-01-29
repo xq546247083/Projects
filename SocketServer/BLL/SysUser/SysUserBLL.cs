@@ -259,6 +259,24 @@ namespace SocketServer.BLL
             return result;
         }
 
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="context">上下文</param>
+        [InvokeMethod]
+        public static ReturnObject C_GetList(Context context)
+        {
+            var result = new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.SysUserGetList };
+
+            // 推送数据
+            var users = GetDataForCopy().Values.Where(r => r.UserID != context.SysUser.UserID).ToList();
+
+            result.Code = 0;
+            result.Data = users;
+            result.Message = "获取成功！";
+            return result;
+        }
+
         #endregion
     }
 }

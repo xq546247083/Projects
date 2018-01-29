@@ -71,15 +71,22 @@ namespace ChatClient
         /// 发送消息
         /// </summary>
         /// <param name="cmd">命令</param>
-        /// <param name="request">请求数据</param>
-        public static void Send(ClientCmdEnum cmd, Dictionary<String, Object> request)
+        /// <param name="paramDic">请求参数</param>
+        public static void Send(ClientCmdEnum cmd, Dictionary<String, Object> paramDic = null)
         {
             if (!isOpen)
             {
                 throw new Exception("链接未开启");
             }
 
-            mClientInstance.Send($"Api={cmd}&{RequestTool.DicToString(request)}");
+            // 如果参数为空，直接请求
+            if (paramDic == null)
+            {
+                mClientInstance.Send($"Api={cmd}");
+                return;
+            }
+
+            mClientInstance.Send($"Api={cmd}&{RequestTool.DicToString(paramDic)}");
         }
 
         /// <summary>

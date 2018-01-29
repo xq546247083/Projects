@@ -14,7 +14,7 @@ namespace ChatClient
         {
             var loginWindow = new LoginWindow();
             var result = loginWindow.ShowDialog();
-
+            
             if (result != null && result.Value)
             {
                 var app = new Application();

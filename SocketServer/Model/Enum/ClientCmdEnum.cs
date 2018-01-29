@@ -30,6 +30,11 @@ namespace SocketServer.Enum
         SysUserLogout = 4,
 
         /// <summary>
+        /// 获取用户列表 
+        /// </summary>
+        SysUserGetList = 5,
+
+        /// <summary>
         /// 推送登录了
         /// </summary>
         Push_Login = 10001,

@@ -30,6 +30,11 @@ namespace ChatClient
         SysUserLogout = 4,
 
         /// <summary>
+        /// 获取用户列表 
+        /// </summary>
+        SysUserGetList = 5,
+
+        /// <summary>
         /// 推送登录了
         /// </summary>
         Push_Login = 10001,
@@ -52,6 +57,6 @@ namespace ChatClient
         /// <summary>
         /// 客户端连接
         /// </summary>
-        Connect = 5,
+        Connect = 9999,
     }
 }

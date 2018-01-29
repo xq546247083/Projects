@@ -59,6 +59,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\SysUser.cs" />
     <Compile Include="Common\ReturnObject.cs" />
     <Compile Include="Enum\ClientCmdEnum.cs" />
     <Compile Include="MainWindow.xaml.cs">
