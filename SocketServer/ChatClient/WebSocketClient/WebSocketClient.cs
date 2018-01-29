@@ -116,6 +116,7 @@ namespace ChatClient
         private static void Client_OnOpen(object sender, EventArgs e)
         {
             isOpen = true;
+            HandleMessage?.Invoke(new ReturnObject() { Code = 0, Cmd = ClientCmdEnum.Connect, });
             Log.Info("连接成功！");
         }
 
@@ -151,6 +152,7 @@ namespace ChatClient
         /// <param name="e">e</param>
         private static void Client_OnError(object sender, ErrorEventArgs e)
         {
+            isOpen = false;
             Log.Error(e.ToString());
         }
 
@@ -163,6 +165,7 @@ namespace ChatClient
         {
             Log.Info("连接关闭！");
 
+            HandleMessage?.Invoke(new ReturnObject() { Code = -1, Cmd = ClientCmdEnum.Connect, Message = "连接服务器失败！" });
             isOpen = false;
             mClientInstance = null;
         }

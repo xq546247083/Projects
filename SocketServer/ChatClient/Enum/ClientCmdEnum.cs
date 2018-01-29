@@ -27,7 +27,7 @@ namespace ChatClient
         /// <summary>
         /// 退出
         /// </summary>
-        SysUserLogout=4,
+        SysUserLogout = 4,
 
         /// <summary>
         /// 推送登录了
@@ -48,5 +48,10 @@ namespace ChatClient
         /// 推送退出
         /// </summary>
         Push_Logout = 10004,
+
+        /// <summary>
+        /// 客户端连接
+        /// </summary>
+        Connect = 5,
     }
 }
