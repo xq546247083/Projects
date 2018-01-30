@@ -5,6 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
-    <Grid/>
+        Title="主界面" Height="600" Width="900">
+    <Grid>
+        <ListBox x:Name="ListBoxSysUser">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100px"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label  Grid.Column="0"  Background="{Binding Path=Color,Mode=OneWay}"  Content="{Binding Path=NickName,Mode=OneWay}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </Window>

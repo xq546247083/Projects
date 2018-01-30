@@ -112,6 +112,23 @@ namespace SocketServer.BLL
             }
         }
 
+        /// <summary>
+        /// 更新用户状态
+        /// </summary>
+        /// <param name="userID">玩家id</param>
+        /// <param name="status">状态</param>
+        public static void UpdateUserStatus(String userID, Boolean status)
+        {
+            var sysUser = GetItem(userID);
+            sysUser.Status = status;
+
+            // 如果是更新了玩家为不在线状态，推送
+            if (status == false)
+            {
+                PushToAll(sysUser, ClientCmdEnum.Push_SysUserInfo, sysUser);
+            }
+        }
+
         #endregion
 
         #region 推送方法
@@ -170,7 +187,7 @@ namespace SocketServer.BLL
             ConnectionManager.Register(context.Connection, userID);
 
             // 广播给其他用户自己登录了
-            PushToAll(sysUser, ClientCmdEnum.Push_Login, sysUser);
+            PushToAll(sysUser, ClientCmdEnum.Push_SysUserInfo, sysUser);
 
             result.Code = 0;
             result.Message = "登录成功";
@@ -192,7 +209,7 @@ namespace SocketServer.BLL
             ConnectionManager.UnRegister(context.Connection, context.SysUser.UserID);
 
             // 广播给其他用户自己退出了
-            PushToAll(context.SysUser, ClientCmdEnum.Push_Logout, context.SysUser.UserID);
+            PushToAll(context.SysUser, ClientCmdEnum.Push_SysUserInfo, context.SysUser);
 
             result.Code = 0;
             result.Message = "退出成功";

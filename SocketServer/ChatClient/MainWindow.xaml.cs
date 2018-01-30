@@ -2,8 +2,11 @@
 * 主窗体
 *************************************************************************/
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows;
+using Tool.Common;
 
 namespace ChatClient
 {
@@ -12,6 +15,11 @@ namespace ChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 缓存用户列表
+        /// </summary>
+        private List<SysUser> sysUserList = new List<SysUser>();
+
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -88,6 +96,46 @@ namespace ChatClient
                 }
 
                 // 加载列表
+                if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
+                {
+                    sysUserList = JsonTool.Deserialize<List<SysUser>>(returnObject.Data.ToString());
+                }
+
+                sysUserList.ForEach((r) => { r.Color = r.Status ? "LightBlue" : "Gray"; });
+
+                ListBoxSysUser.ItemsSource = sysUserList;
+            }
+
+            // 处理登录命令
+            if (returnObject.Cmd == ClientCmdEnum.Push_SysUserInfo)
+            {
+                var sysUser = new SysUser();
+                // 加载列表
+                if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
+                {
+                    sysUser = JsonTool.Deserialize<SysUser>(returnObject.Data.ToString());
+                }
+
+                if (String.IsNullOrEmpty(sysUser.UserID))
+                {
+                    return;
+                }
+
+                // 处理颜色
+                sysUser.Color = sysUser.Status ? "LightBlue" : "Gray";
+
+                // 更新数据
+                var sysUserTemp = sysUserList.FirstOrDefault(r => r.UserID == sysUser.UserID);
+                if (sysUserTemp == null)
+                {
+                    sysUserList.Add(sysUser);
+                }
+                else
+                {
+                    sysUserTemp.Copy(sysUser);
+                }
+
+                ListBoxSysUser.ItemsSource = sysUserList;
             }
         }
     }

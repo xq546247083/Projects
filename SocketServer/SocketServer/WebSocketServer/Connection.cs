@@ -89,6 +89,7 @@ namespace WebSocketServer
         protected override void OnClose(CloseEventArgs e)
         {
             this.isOpen = false;
+            SysUserBLL.UpdateUserStatus(this.UserID, false);
             Logg.Debug($"连接关闭：Addr:{GetClientAddr()} Reason:{e.Reason}");
 
             base.OnClose(e);

@@ -3,6 +3,7 @@
 *************************************************************************/
 
 using System;
+using Newtonsoft.Json;
 
 namespace ChatClient
 {
@@ -14,12 +15,12 @@ namespace ChatClient
         #region 属性
 
         /// <summary>
-        /// 主键
+        /// 登录ID
         /// </summary>
         public String UserID { set; get; }
 
         /// <summary>
-        /// 登录ID
+        /// 昵称
         /// </summary>
         public String NickName { set; get; }
 
@@ -28,6 +29,24 @@ namespace ChatClient
         /// </summary>
         public Boolean Status { set; get; }
 
+        /// <summary>
+        /// 颜色
+        /// </summary>
+        [JsonIgnore]
+        public String Color { set; get; }
+
         #endregion
+
+        /// <summary>
+        /// 复制对象
+        /// </summary>
+        /// <param name="sysUser">对象</param>
+        public void Copy(SysUser sysUser)
+        {
+            this.UserID = sysUser.UserID;
+            this.NickName = sysUser.NickName;
+            this.Status = sysUser.Status;
+            this.Color = sysUser.Color;
+        }
     }
 }
