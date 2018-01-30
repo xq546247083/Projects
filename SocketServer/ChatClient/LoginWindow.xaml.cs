@@ -136,6 +136,8 @@ namespace ChatClient
                     MessageBox.Show(returnObject.Message);
                 }
 
+                ChatClientConfig.ModifyItem("UserID", txtUserID.Text);
+                ChatClientConfig.ModifyItem("NickName", txtNickName.Text);
                 this.DialogResult = true;
                 this.Close();
             }

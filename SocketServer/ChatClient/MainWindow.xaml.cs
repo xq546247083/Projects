@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using Tool.Common;
 
 namespace ChatClient
 {
+    using Tool.Common;
+
     /// <summary>
     /// MainWindow1.xaml 的交互逻辑
     /// </summary>
@@ -45,6 +46,7 @@ namespace ChatClient
         /// </summary>
         private void InitData()
         {
+            this.Title = $"{ChatClientConfig.NickName}-{ChatClientConfig.UserID}";
             try
             {
                 WebSocketClient.Send(ClientCmdEnum.SysUserGetList);
@@ -135,6 +137,7 @@ namespace ChatClient
                     sysUserTemp.Copy(sysUser);
                 }
 
+                ListBoxSysUser.ItemsSource = null;
                 ListBoxSysUser.ItemsSource = sysUserList;
             }
         }
