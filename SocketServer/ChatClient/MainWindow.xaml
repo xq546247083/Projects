@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="主界面" Height="600" Width="900">
-    <Grid>
-        <ListBox x:Name="ListBoxSysUser">
+        Title="主界面" Height="600" Width="900" ResizeMode="CanMinimize">
+    <DockPanel>
+        <ListBox x:Name="ListBoxSysUser" DockPanel.Dock="Left" MinWidth="100px">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -19,5 +19,17 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+        <DockPanel DockPanel.Dock="Right">
+            <RichTextBox DockPanel.Dock="Top"  MinHeight="400">
+            </RichTextBox>
+            <RichTextBox DockPanel.Dock="Top"  MinHeight="130">
+            </RichTextBox>
+            <DockPanel DockPanel.Dock="Bottom">
+                <Button DockPanel.Dock="Right">
+                </Button>
+                <Button DockPanel.Dock="Right">
+                </Button>
+            </DockPanel>
+        </DockPanel>
+    </DockPanel>
 </Window>
