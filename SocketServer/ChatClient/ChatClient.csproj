@@ -63,6 +63,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Msg.cs" />
     <Compile Include="Business\SysUser.cs" />
     <Compile Include="Common\ReturnObject.cs" />
     <Compile Include="Enum\ClientCmdEnum.cs" />
@@ -70,6 +71,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="MsgManager.cs" />
+    <Compile Include="SysUserManager.cs" />
     <Compile Include="WebSocketClient\WebSocketClient.cs" />
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

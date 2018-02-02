@@ -1,35 +1,32 @@
 ﻿<Window x:Class="ChatClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
         Title="主界面" Height="600" Width="900" ResizeMode="CanMinimize">
     <DockPanel>
-        <ListBox x:Name="ListBoxSysUser" DockPanel.Dock="Left" MinWidth="100px">
+        <ListBox x:Name="ListBoxSysUser" DockPanel.Dock="Left" MinWidth="180px">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100px"></ColumnDefinition>
+                            <ColumnDefinition Width="170px"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label  Grid.Column="0"  Background="{Binding Path=Color,Mode=OneWay}"  Content="{Binding Path=NickName,Mode=OneWay}"/>
+                        <Label HorizontalContentAlignment="Center"  Grid.Column="0"  Background="{Binding Path=Color,Mode=OneWay}"  Content="{Binding Path=NickName,Mode=OneWay}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <DockPanel DockPanel.Dock="Right">
-            <RichTextBox DockPanel.Dock="Top"  MinHeight="400">
+            <RichTextBox Name="TxtReciveMsg" DockPanel.Dock="Top"  MinHeight="350" IsReadOnly="True">
             </RichTextBox>
-            <RichTextBox DockPanel.Dock="Top"  MinHeight="130">
+            <RichTextBox Name="TxtMsg" DockPanel.Dock="Top"  MinHeight="170">
             </RichTextBox>
-            <DockPanel DockPanel.Dock="Bottom">
-                <Button DockPanel.Dock="Right">
-                </Button>
-                <Button DockPanel.Dock="Right">
-                </Button>
-            </DockPanel>
+            <Canvas DockPanel.Dock="Bottom" MinHeight="50">
+                <Button Width="100px" Height="30px" Content="语音" Canvas.Left="473" Canvas.Top="5"/>
+                <Button Name="ButtonMsg" Width="100px" Height="30px" Content="发送" Canvas.Left="594" Canvas.Top="5" Click="ButtonMsg_Click"/>
+            </Canvas>
         </DockPanel>
     </DockPanel>
 </Window>

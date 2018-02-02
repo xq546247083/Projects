@@ -3,9 +3,9 @@
 *************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace ChatClient
 {
@@ -16,11 +16,6 @@ namespace ChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// 缓存用户列表
-        /// </summary>
-        private List<SysUser> sysUserList = new List<SysUser>();
-
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -46,7 +41,7 @@ namespace ChatClient
         /// </summary>
         private void InitData()
         {
-            this.Title = $"{ChatClientConfig.NickName}-{ChatClientConfig.UserID}";
+            this.Title = $"{ChatClientConfig.UserID}-【昵称:{ChatClientConfig.NickName}】";
             try
             {
                 WebSocketClient.Send(ClientCmdEnum.SysUserGetList);
@@ -55,6 +50,73 @@ namespace ChatClient
             {
                 MessageBox.Show(ex.Message);
             }
+
+            ListBoxSysUser.ItemsSource = null;
+            ListBoxSysUser.ItemsSource = SysUserManager.GetCopyData();
+        }
+
+        /// <summary>
+        /// 刷新聊天窗口
+        /// </summary>
+        private void RefreshMsgBox()
+        {
+            // 目标用户
+            var item = ListBoxSysUser.SelectedItem;
+            if (item == null)
+            {
+                return;
+            }
+
+            var sysUser = ((SysUser)item);
+            var msgList = MsgManager.GetCopyData(sysUser.UserID);
+
+            Paragraph p = new Paragraph();
+            foreach (var msg in msgList)
+            {
+                Run r = new Run($"{msg.Message}");
+                p.Inlines.Add(r);
+            }
+
+            TxtReciveMsg.Document.Blocks.Add(p);
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
+        private void ButtonMsg_Click(object sender, RoutedEventArgs e)
+        {
+            // 发送消息
+            var txtMsgRange = new TextRange(TxtMsg.Document.ContentStart, TxtMsg.Document.ContentEnd);
+            if (String.IsNullOrEmpty(txtMsgRange.Text))
+            {
+                MessageBox.Show("发送消息不能为空！");
+                return;
+            }
+
+            // 目标用户
+            var item = ListBoxSysUser.SelectedItem;
+            if (item == null)
+            {
+                MessageBox.Show("请选中发送用户！");
+                return;
+            }
+
+            var request = new Dictionary<String, Object>();
+            request["ToUserID"] = ((SysUser)item).UserID;
+            request["Msg"] = txtMsgRange.Text;
+
+            try
+            {
+                WebSocketClient.Send(ClientCmdEnum.SysUserChat, request);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            TxtMsg.Document.Blocks.Clear();
         }
 
         /// <summary>
@@ -78,17 +140,14 @@ namespace ChatClient
         /// <param name="returnObject">返回值</param>
         private void HandleMessage(ReturnObject returnObject)
         {
-            // 处理连接命令
-            if (returnObject.Cmd == ClientCmdEnum.Connect)
+            // 如果返回错误，直接提示
+            if (returnObject.Code != 0)
             {
-                // 如果返回错误，直接提示
-                if (returnObject.Code != 0)
-                {
-                    MessageBox.Show(returnObject.Message);
-                }
+                MessageBox.Show(returnObject.Message);
+                return;
             }
 
-            // 处理登录命令
+            // 处理上线返回的用户列表
             if (returnObject.Cmd == ClientCmdEnum.SysUserGetList)
             {
                 // 如果返回错误，直接提示
@@ -100,45 +159,52 @@ namespace ChatClient
                 // 加载列表
                 if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
                 {
-                    sysUserList = JsonTool.Deserialize<List<SysUser>>(returnObject.Data.ToString());
+                    // 添加上线的玩家
+                    SysUserManager.AddOrUpdateUsers(JsonTool.Deserialize<List<SysUser>>(returnObject.Data.ToString()));
                 }
 
-                sysUserList.ForEach((r) => { r.Color = r.Status ? "LightBlue" : "Gray"; });
-
-                ListBoxSysUser.ItemsSource = sysUserList;
+                ListBoxSysUser.ItemsSource = null;
+                ListBoxSysUser.ItemsSource = SysUserManager.GetCopyData();
             }
 
             // 处理登录命令
             if (returnObject.Cmd == ClientCmdEnum.Push_SysUserInfo)
             {
-                var sysUser = new SysUser();
                 // 加载列表
                 if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
                 {
-                    sysUser = JsonTool.Deserialize<SysUser>(returnObject.Data.ToString());
-                }
-
-                if (String.IsNullOrEmpty(sysUser.UserID))
-                {
-                    return;
-                }
-
-                // 处理颜色
-                sysUser.Color = sysUser.Status ? "LightBlue" : "Gray";
-
-                // 更新数据
-                var sysUserTemp = sysUserList.FirstOrDefault(r => r.UserID == sysUser.UserID);
-                if (sysUserTemp == null)
-                {
-                    sysUserList.Add(sysUser);
-                }
-                else
-                {
-                    sysUserTemp.Copy(sysUser);
+                    var sysUser = JsonTool.Deserialize<SysUser>(returnObject.Data.ToString());
+                    SysUserManager.AddOrUpdateUsers(new List<SysUser>() { sysUser });
                 }
 
                 ListBoxSysUser.ItemsSource = null;
-                ListBoxSysUser.ItemsSource = sysUserList;
+                ListBoxSysUser.ItemsSource = SysUserManager.GetCopyData();
+            }
+
+            // 处理广播消息
+            if (returnObject.Cmd == ClientCmdEnum.Push_Broadcast)
+            {
+                // 加载列表
+                if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
+                {
+                    var msg = JsonTool.Deserialize<Msg>(returnObject.Data.ToString());
+                    MsgManager.AddBrocastMsg(msg);
+
+                    RefreshMsgBox();
+                }
+            }
+
+            // 处理私聊消息
+            if (returnObject.Cmd == ClientCmdEnum.Push_Chat)
+            {
+                // 加载列表
+                if (!String.IsNullOrEmpty(returnObject.Data?.ToString()))
+                {
+                    var msg = JsonTool.Deserialize<Msg>(returnObject.Data.ToString());
+                    MsgManager.AddMsg(msg);
+
+                    RefreshMsgBox();
+                }
             }
         }
     }

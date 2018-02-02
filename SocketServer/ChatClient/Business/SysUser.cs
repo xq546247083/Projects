@@ -2,8 +2,9 @@
 * 系统用户表
 *************************************************************************/
 
-using System;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace ChatClient
 {
@@ -34,6 +35,12 @@ namespace ChatClient
         /// </summary>
         [JsonIgnore]
         public String Color { set; get; }
+
+        /// <summary>
+        /// 消息列表
+        /// </summary>
+        [JsonIgnore]
+        public List<Msg> MsgList = new List<Msg>();
 
         #endregion
 
