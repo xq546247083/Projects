@@ -45,11 +45,12 @@ namespace Manage.DAL
         /// <param name="pageNo">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="filterStr">自定义筛选字段</param>
         /// <param name="orderStr">排序字符串</param>
         /// <returns></returns>
-        public static List<T> GetDefinedList(T paramObj, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "")
+        public static List<T> GetDefinedList(T paramObj, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = false, String filterStr = "", String orderStr = "")
         {
-            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GeDefinedList, paramObj, pageNo, pageSize, isLike, orderStr);
+            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GeDefinedList, paramObj, pageNo, pageSize, isLike, filterStr, orderStr);
             return ExecuteDataTable<T>(Conn, sqlStr);
         }
 
@@ -58,10 +59,11 @@ namespace Manage.DAL
         /// </summary>
         /// <param name="paramObj">参数</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="filterStr">自定义筛选字段</param>
         /// <returns>受影响的函数</returns>
-        public static Int32 GetDefinedCount(T paramObj, Boolean isLike = true)
+        public static Int32 GetDefinedCount(T paramObj, Boolean isLike = false, String filterStr = "")
         {
-            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GetDefinedCount, paramObj, -1, -1, isLike);
+            var sqlStr = SqlFactory.GetDefinedSqlStr(SqlType.GetDefinedCount, paramObj, -1, -1, isLike, filterStr);
             return Convert.ToInt32(ExecuteScalar(Conn, sqlStr));
         }
 

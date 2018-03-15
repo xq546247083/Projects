@@ -25,9 +25,9 @@ namespace Manage.BLL
             {
                 return ManageBaseDAL<T>.GetList(paramObj);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "GetList", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"查询列表失败，ex:{ex}", LogType.Error);
 
                 return new List<T>();
             }
@@ -40,17 +40,18 @@ namespace Manage.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="paramObj">参数</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="filterStr">自定义筛选字段</param>
         /// <param name="orderStr">排序字符串</param>
         /// <returns>数据</returns>
-        public static List<T> GetDefinedList<T>(T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "") where T : class
+        public static List<T> GetDefinedList<T>(T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = false, String filterStr = "", String orderStr = "") where T : class
         {
             try
             {
-                return ManageBaseDAL<T>.GetDefinedList(paramObj, pageNo, pageSize, isLike, orderStr);
+                return ManageBaseDAL<T>.GetDefinedList(paramObj, pageNo, pageSize, isLike, filterStr, orderStr);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "GetDefinedList", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"获得自定义查询列表失败，ex:{ex}", LogType.Error);
 
                 return new List<T>();
             }
@@ -61,16 +62,17 @@ namespace Manage.BLL
         /// </summary>
         /// <param name="paramObj">参数</param>
         /// <param name="isLike">是否使用like查询</param>
+        /// <param name="filterStr">自定义筛选字段</param>
         /// <returns>受影响的函数</returns>
-        public static Int32 GetDefinedCount<T>(T paramObj = null, Boolean isLike = true) where T : class
+        public static Int32 GetDefinedCount<T>(T paramObj = null, Boolean isLike = false, String filterStr = "") where T : class
         {
             try
             {
-                return ManageBaseDAL<T>.GetDefinedCount(paramObj, isLike);
+                return ManageBaseDAL<T>.GetDefinedCount(paramObj, isLike, filterStr);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "GetCount", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"获得自定义筛选的数据量失败，ex:{ex}", LogType.Error);
 
                 return 0;
             }
@@ -81,17 +83,24 @@ namespace Manage.BLL
         /// </summary>
         /// <param name="paramObj">参数</param>
         /// <returns>受影响的函数</returns>
-        public static Int32 Insert<T>(T paramObj) where T : class
+        public static Int32 Insert<T>(T paramObj, Boolean ifThrowException = false) where T : class
         {
             try
             {
                 return ManageBaseDAL<T>.Insert(paramObj);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "Instert", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"插入数据失败，ex:{ex}", LogType.Error);
 
-                return 0;
+                if (ifThrowException)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
@@ -100,17 +109,24 @@ namespace Manage.BLL
         /// </summary>
         /// <param name="paramObj">参数</param>
         /// <returns>受影响的函数</returns>
-        public static Int32 Update<T>(T paramObj) where T : class
+        public static Int32 Update<T>(T paramObj, Boolean ifThrowException = false) where T : class
         {
             try
             {
                 return ManageBaseDAL<T>.Update(paramObj);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "Update", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"更新数据失败，ex:{ex}", LogType.Error);
 
-                return 0;
+                if (ifThrowException)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
@@ -125,9 +141,9 @@ namespace Manage.BLL
             {
                 return ManageBaseDAL<T>.Delete(paramObj);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Write(String.Format("{0}Model:{1}{0}Method:{2}{0}Data:{3}{0}stackTrace:{0}{4}{0}Message:{0}{5}{0}", Environment.NewLine, typeof(T).Name, "Delete", "Null", e.StackTrace, e.Message), LogType.Error);
+                Log.Write($"删除数据失败，ex:{ex}", LogType.Error);
 
                 return 0;
             }

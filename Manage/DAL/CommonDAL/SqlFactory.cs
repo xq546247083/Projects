@@ -230,9 +230,10 @@ namespace Manage.DAL
         /// <param name="pageNo">页码</param>
         /// <param name="pageSize">页大小</param>
         /// <param name="isLike">是否用like</param>
+        /// <param name="filterStr">自定义筛选字段</param>
         /// <param name="orderStr">排序字符串</param>
         /// <returns>操作字符串</returns>
-        public static String GetDefinedSqlStr<T>(SqlType sqlType, T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = true, String orderStr = "") where T : class
+        public static String GetDefinedSqlStr<T>(SqlType sqlType, T paramObj = null, Int32 pageNo = -1, Int32 pageSize = -1, Boolean isLike = false, String filterStr = "", String orderStr = "") where T : class
         {
             var mType = GetType<T>(sqlType);
             var andStr = isLike ? "like" : "=";
@@ -260,14 +261,14 @@ namespace Manage.DAL
                         case "00000000-0000-0000-0000-000000000000":
                             break;
                         default:
-                            result += $" and `{field.Key}` " + andStr + $" '%{value}%'";
+                            result += $" and `{field.Key}` " + andStr + (isLike ? $" '%{value}%'" : $" '{value}'");
                             break;
                     }
 
                 }
             }
 
-            result += " " + orderStr;
+            result += " " + filterStr + orderStr;
 
             // page参数添加
             if (pageNo != -1 && pageSize != -1)
