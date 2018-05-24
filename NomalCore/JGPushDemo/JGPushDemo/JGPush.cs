@@ -133,7 +133,8 @@ namespace JGPushDemo
                 },
                 Options = new Options
                 {
-                    IsApnsProduction = true
+                    IsApnsProduction = true,
+                    TimeToLive = 0
                 }
             };
 
@@ -168,7 +169,8 @@ namespace JGPushDemo
                 },
                 Options = new Options
                 {
-                    IsApnsProduction = true
+                    IsApnsProduction = true,
+                    TimeToLive = 0
                 }
             };
 
