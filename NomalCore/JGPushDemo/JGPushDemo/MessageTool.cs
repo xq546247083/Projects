@@ -8,6 +8,8 @@
 //***********************************************************************************
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Threading;
 
 namespace JGPushDemo
@@ -204,10 +206,12 @@ namespace JGPushDemo
         /// <param name="message">消息</param>
         private static void HandleMessage(MessageObject message)
         {
+            var messageStr = String.Empty;
             try
             {
                 var returnStr = String.Empty;
                 Interlocked.Add(ref mCurHandleMessageCount, 1);
+                messageStr = JsonUtil.Serialize(message);
 
                 if (message.IsPost)
                 {
@@ -223,9 +227,33 @@ namespace JGPushDemo
                     LogUtil.Write($"消息工具推送返回消息：{returnStr}", LogType.Debug, true);
                 }
             }
+            catch (WebException webEx)
+            {
+                using (WebResponse response = webEx.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    if (response != null)
+                    {
+                        // 获取返回的消息
+                        using (Stream data = response.GetResponseStream())
+                        using (var reader = new StreamReader(data))
+                        {
+                            var responeInfo = reader.ReadToEnd();
+                            LogUtil.Write($"消息工具推送失败：message{messageStr},webEx:{webEx},ResponeInfo:{responeInfo}", LogType.Error, true);
+                        }
+                    }
+                    else
+                    {
+                        LogUtil.Write($"消息工具推送失败：message{messageStr},webEx:{webEx}", LogType.Error, true);
+                    }
+                }
+            }
             catch (Exception ex)
             {
-                LogUtil.Write($"消息工具推送失败：{ex}", LogType.Error, true);
+                LogUtil.Write($"消息工具推送失败：message{messageStr},ex:{ex}", LogType.Error, true);
+            }
+            finally
+            {
                 if (!message.IsThrowAway)
                 {
                     SaveMessage(message);
